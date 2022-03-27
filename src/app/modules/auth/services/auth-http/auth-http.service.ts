@@ -44,7 +44,7 @@ export class AuthHTTPService {
   // public methods
   login(user: UserModel): Observable<any> {
     const endPoint = 'http://localhost:8090/api/security/oauth/token';
-    const credentials = btoa('androidApp' + ':' + 'muyseguro');
+    const credentials = btoa('jirehApp' + ':' + 'muyseguro');
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Basic ' + credentials
