@@ -1,0 +1,96 @@
+<div class="card mb-10">
+  <div class="card-body d-flex align-items-center py-8">
+    <!-- begin::Icon -->
+    <div
+      class="d-flex h-80px w-80px flex-shrink-0 flex-center position-relative"
+    >
+      <img src="assets/media/icons/duotune/communication/com014.svg" class="h-40px me-10"/>
+    </div>
+    <!-- end::Icon  -->
+
+    <!-- begin::Description  -->
+    <div class="ms-6">
+      <p class="list-unstyled text-gray-600 fw-bold fs-6 p-0 m-0">
+        {{"DASHBOARD.ICONS.PROVIDERS"|translate}}
+      </p>
+    </div>
+    <!-- end::Description  -->
+  </div>
+</div>
+<div class="card card-custom">
+  <div class="card-header card-header-stretch overflow-auto">
+    <!-- begin::Header -->
+    <div class="card-header border-0 pt-5">
+      <h3 class="card-title align-items-start flex-column">
+        <span class="card-label fw-bolder fs-3 mb-1">Listado de Proveedores</span>
+        <span class="text-muted mt-1 fw-bold fs-7">Accesibles por esta sucursal</span>
+      </h3>
+      <div class="card-toolbar">
+        <!-- begin::Menu -->
+        <button
+          class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+          data-kt-menu-flip="top-end"
+          data-kt-menu-placement="bottom-end"
+          data-kt-menu-trigger="click"
+          type="button"
+        >
+      <span
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen024.svg'"
+        class="svg-icon svg-icon-2"
+      ></span>
+        </button>
+        <!-- begin::Menu 2 -->
+        <app-dropdown-menu2></app-dropdown-menu2>
+        <!-- end::Menu 2 -->
+        <!-- end::Menu -->
+      </div>
+    </div>
+    <!-- end::Header -->
+    <!-- begin::Body -->
+    <div class="card-body py-3">
+      <!-- begin::Table container -->
+      <div class="table-responsive">
+        <!-- begin::Table -->
+        <table class="table table-hover table-striped">
+          <thead>
+          <tr>
+            <th class="mb-1">Codigo</th>
+            <th class="mb-4">Nombre</th>
+            <th class="mb-3">Identificacion</th>
+            <th class="mb-3">Email</th>
+            <th class="mb-3">Tipo</th>
+            <th class="mb-3">Codigo Cliente Proveedor</th>
+            <th class="mb-3">Editar</th>
+            <th class="mb-3"  *ngIf="authHttpService.hasRole('ROLE_ADMIN')">Eliminar</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let providers of provider">
+            <td>{{providers.providerCode}}</td>
+            <td>{{providers.socialReasonName}}</td>
+            <td>{{providers.identification}}</td>
+            <td>{{providers.email}}</td>
+            <td>{{providers.providerType}}</td>
+            <td>{{providers.idProvedor}}</td>
+            <td>
+              <button type="submit" (click)="clickEnterProvider(providers.id)" class="btn btn-warning">
+                <i data-toggle="tooltip" data-placement="top" class="fas fa-edit"></i></button>
+            </td>
+            <td *ngIf="authHttpService.hasRole('ROLE_ADMIN')">
+              <button type="button" (click)="null" class="btn btn-danger">
+                <i data-toggle="tooltip" data-placement="top" class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <!-- end::Table -->
+        <mat-paginator (page)="paginator($event)" [length]="totalRegister" [pageSizeOptions]="[10, 50, 100]" aria-label="Select page" [pageSize]="pageSize">
+        </mat-paginator>
+      </div>
+      <!-- end::Table container -->
+    </div>
+    <!-- begin: paginator-->
+
+    <!-- end: paginator -->
+  </div>
+</div>

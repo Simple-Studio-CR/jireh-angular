@@ -1,0 +1,84 @@
+
+
+  <div class="row g-5 g-xl-8">
+    <div class="col-xl-6">
+      <app-stats-widget5
+        svgIcon="./assets/media/icons/duotune/general/gen032.svg"
+        class="card bg-white hoverable card-xl-stretch mb-xl-8"
+        color="white"
+        iconColor="primary"
+        title='{{"DASHBOARD.ICONS.BILL"| translate}}'
+        routerLink="/bills"
+      ></app-stats-widget5>
+    </div>
+
+    <div class="col-xl-6">
+      <app-stats-widget5
+        svgIcon="./assets/media/icons/duotune/ecommerce/ecm008.svg"
+        class="card bg-dark hoverable card-xl-stretch mb-xl-8"
+        color="dark"
+        iconColor="white"
+        title='{{"DASHBOARD.ICONS.SHOP"| translate}}'
+        routerLink="/buys"
+      ></app-stats-widget5>
+    </div>
+  </div>
+
+  <div class="row g-5 g-xl-8">
+    <div class="col-xl-4">
+      <app-stats-widget5
+        svgIcon="assets/media/icons/duotune/communication/com014.svg"
+        class="card bg-danger hoverable card-xl-stretch mb-xl-8"
+        color="danger"
+        iconColor="white"
+        title="{{'DASHBOARD.ICONS.CLIENTS'| translate}}"
+        description="Listar, Crear o Editar Clientes para esta Sucursal"
+        routerLink="/clients"
+      ></app-stats-widget5>
+    </div>
+
+    <div class="col-xl-4">
+      <app-stats-widget5
+        svgIcon="assets/media/icons/duotune/ecommerce/ecm009.svg"
+        class="card bg-primary hoverable card-xl-stretch mb-xl-8"
+        color="primary"
+        iconColor="white"
+        title='{{"DASHBOARD.ICONS.ITEMS"| translate}}'
+        description="Listar, Crear o Editar productos para esta Sucursal"
+        routerLink="/items"
+      ></app-stats-widget5>
+    </div>
+
+    <div class="col-xl-4">
+      <app-stats-widget5
+        svgIcon="./assets/media/icons/duotune/graphs/gra005.svg"
+        class="card bg-success hoverable card-xl-stretch mb-5 mb-xl-8"
+        color="success"
+        iconColor="white"
+        title='{{"DASHBOARD.ICONS.PROVIDERS"| translate}}'
+        routerLink="/providers"
+        description="Listar, Crear o Editar proveedores para esta Sucursal"
+      ></app-stats-widget5>
+    </div>
+  </div>
+  <div class="row g-5 g-xl-8">
+    <div class="col-xl-6">
+      <app-stats-widget3
+        class="card card-xl-stretch mb-xl-8"
+        color="success"
+        change="+100"
+        title="Reporte de Ventas"
+        description="Pronto"
+      ></app-stats-widget3>
+    </div>
+
+    <div class="col-xl-6">
+      <app-stats-widget4
+        class="card card-xl-stretch mb-xl-8"
+        color="danger"
+        change="-260"
+        title="Reporte de compras"
+        description="Pronto"
+      ></app-stats-widget4>
+    </div>
+  </div>

@@ -1,0 +1,277 @@
+<div class="card">
+  <div class="card-body">
+    <div
+      class="stepper stepper-links d-flex flex-column pt-15"
+      id="kt_create_account_stepper"
+    >
+      <div class="stepper-nav mb-1">
+        <div
+          (click)="goTo(1)"
+          [ngClass]="{
+            current: currentStep$.value === 1,
+            completed: currentStep$.value > 1
+          }"
+          class="stepper-item"
+        >
+          <h3 class="stepper-title">{{"ITEMS.ITEMS_PROVIDER_LIST.FORM.INFO" | translate}}</h3>
+        </div>
+
+      </div>
+
+      <form
+        (ngSubmit)="onUpdate()"
+        [formGroup]="itemProviderForm"
+        class="mx-auto mw-600px w-100 pt-15 pb-10"
+        id="itemProviderForm" noValidate
+      >
+        <fieldset [disabled]="!isEditing">
+          <div class="current">
+            <ng-container *ngIf="currentStep$.value === 1">
+
+              <div class="fv-row mb-10">
+                <!--PROVIDER CODE-->
+                <label class="form-label required">{{"ITEMS.ITEMS_PROVIDER_LIST.FORM.PROVIDER_CODE" | translate}}</label
+                ><input
+                class="form-control form-control-lg form-control-solid"
+                formControlName="providerCode"
+                name="providerCode"/>
+              </div>
+
+              <div class="fv-row mb-10">
+                <!--PROVIDER-->
+                <label class="form-label required">{{"ITEMS.ITEMS_PROVIDER_LIST.FORM.PROVIDER" | translate}}</label
+                ><input
+                class="form-control form-control-lg form-control-solid"
+                formControlName="provider"
+                name="provider"/>
+              </div>
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <!--PROVIDER NUMBER-->
+
+
+              </div>
+
+              <div class="separator my-12"></div>
+
+              <!--BARCODE-->
+              <div class="fv-row mb-10">
+                <label class="form-label required">{{"ITEMS.ITEMS_PROVIDER_LIST.FORM.BARCODE" | translate}}</label
+                >
+                <input (focus)="clearPreference()" class="form-control form-control-lg form-control-solid" formControlName="barcode"
+                       list="item" placeholder="Search..." type="text">
+                <datalist id="item">
+                  <option value="Unsure/No preference"></option>
+                  <option *ngFor="let items of item" [value]="items.barcode1">{{items.name}}</option>
+                </datalist>
+              </div>
+
+              <!--DESCRIPTION-->
+              <div class="fv-row mb-10">
+                <label class="form-label required">{{"ITEMS.ITEMS_PROVIDER_LIST.FORM.DESCRIPTION" | translate}}</label
+                ><input
+                class="form-control form-control-lg form-control-solid"
+                formControlName="description"
+                name="description"/>
+              </div>
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <!--DEPARTMENT-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.ITEMS_PROVIDER_LIST.FORM.DEPARTMENT" | translate}}</label
+                  ><select class="form-select" formControlName="department" id="department">
+                  <option *ngFor="let c of department"
+                          [ngValue]="c">{{c.department}}</option>
+                </select>
+                </div>
+
+                <!--FAMILY-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.ITEMS_PROVIDER_LIST.FORM.FAMILY" | translate}}</label
+                  ><select class="form-select" formControlName="family" id="family">
+                  <option *ngFor="let c of family"
+                          [value]="c">{{c.family}}</option>
+                </select>
+                </div>
+              </div>
+
+              <!--BRAND-->
+              <div class="fv-row mb-10">
+                <label class="form-label">{{"ITEMS.ITEMS_PROVIDER_LIST.FORM.BRAND" | translate}}</label
+                ><input
+                class="form-control form-control-lg form-control-solid"
+                formControlName="brand"
+                name="brand"/>
+              </div>
+
+              <div class="separator my-12"></div>
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <!--                DATE-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.ITEMS_PROVIDER_LIST.FORM.CODE_FROM_PROVIDER" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="codeFromProvider"
+                  name="codeFromProvider"/>
+
+                </div>
+
+                <!--PHONE 2-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.ITEMS_PROVIDER_LIST.FORM.DATE" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="date"
+                  name="date"
+                  type="date"/>
+                </div>
+              </div>
+
+              <!--DESCRIPTION-->
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+
+                <!--IVA-->
+                <div class="col-3">
+                  <label class="form-label">{{"ITEMS.FORM.SELECT_IVA" | translate}}</label
+                  ><select class="form-select form-select-lg form-select-solid" formControlName="iva"
+                           id="iva">
+                  <option *ngFor="let c of iva"
+                          [ngValue]="c">{{c.ivaRateDetail}}</option>
+                </select>
+                </div>
+
+                <!--IVA_PERCENTAGE-->
+                <div class="col-2">
+                  <label class="form-label">{{"ITEMS.FORM.IVA_PERCENTAGE" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="ivaPercentage"
+                  name="ivaPercentage"
+                  type="number"
+                  ui-number-mask/>
+                </div>
+
+
+                <!--PURCHASE_PRICE-->
+                <div class="col-3">
+                  <label class="form-label">{{"ITEMS.FORM.PURCHASE_PRICE" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="price"
+                  name="price"
+                  type="number"
+                  ui-number-mask/>
+                </div>
+
+                <!--PURCHASE_PRICE-->
+                <div class="col-3">
+                  <label class="form-label">{{"ITEMS.FORM.DISCOUNT" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="discountPercentage"
+                  name="discountPercentage"
+                  type="number"
+                  ui-number-mask/>
+                </div>
+
+                <!--PURCHASE_PRICE-->
+                <div class="col-3">
+                  <label class="form-label">{{"ITEMS.FORM.IV_SPECIAL" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="ivEspecial"
+                  name="ivEspecial"
+                  type="number"
+                  ui-number-mask/>
+                </div>
+
+                <div class="col-3">
+                  <label class="form-label">{{"ITEMS.FORM.DISCOUNT_FLAG" | translate}}</label
+                  ><select class="form-select form-select-lg form-select-solid" formControlName="activateDiscount"
+                           id="activateDiscount">
+                  <option [ngValue]="true">Si</option>
+                  <option [ngValue]="false">no</option>
+                </select>
+                </div>
+
+              </div>
+
+              <div class="fv-row mb-10">
+                <label class="form-label">{{"CLIENTS.FORM.NOTE" | translate}}</label
+                ><textarea
+                class="form-control form-control-lg form-control-solid"
+                formControlName="note"
+                name="note"
+                rows="3"
+              ></textarea>
+              </div>
+
+
+            </ng-container>
+
+          </div>
+        </fieldset>
+        <div class="d-flex flex-stack pt-15">
+          <div class="mr-2">
+            <ng-container *ngIf="currentStep$.value !== 1">
+              <button
+                (click)="prevStep()"
+                class="btn btn-lg btn-light-primary me-3"
+                type="button"
+              >
+                <span
+                  [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                  class="svg-icon svg-icon-4 me-1"
+                ></span>
+                Back
+              </button>
+            </ng-container>
+          </div>
+
+          <ng-container>
+            <div>
+              <ng-container *ngIf="currentStep$.value === formsCount && !isEditing">
+                <button
+                  (click)="enableEdit()"
+                  class="btn btn-lg btn-warning me-3"
+                  type="button"
+                >
+                <span class="indicator-label">
+
+                    Editar {{ " " }}
+                  <span
+                    [inlineSVG]="
+                        './assets/media/icons/duotune/arrows/arr064.svg'
+                      "
+                    class="svg-icon svg-icon-3 ms-2 me-0"
+                  ></span>
+                  </span>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="currentStep$.value === formsCount && isEditing">
+                <button
+                  class="btn btn-lg btn-primary me-3"
+                  form="itemProviderForm"
+                  type="submit"
+                >
+                <span class="indicator-label">
+                  Submit
+                  <span
+                    [inlineSVG]="
+                        './assets/media/icons/duotune/arrows/arr064.svg'
+                      "
+                    class="svg-icon svg-icon-3 ms-2 me-0"
+                  ></span>
+                  </span>
+                </button>
+              </ng-container>
+
+
+            </div>
+          </ng-container>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

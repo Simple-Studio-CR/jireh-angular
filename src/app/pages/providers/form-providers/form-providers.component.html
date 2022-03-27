@@ -1,0 +1,369 @@
+<div class="modal-body scroll-y m-5">
+  <!--begin::Stepper-->
+  <div class="stepper stepper-links d-flex flex-column" id="kt_create_account_stepper">
+    <!--begin::Nav-->
+    <div class="stepper-nav mb-5">
+      <div *ngIf="isNew"
+           [ngClass]="{
+            current: currentStep$.value === 1,
+            completed: currentStep$.value > 1
+          }"
+           class="stepper-item"
+      >
+        <h3 class="stepper-title" (click)="goTo(1)">Datos</h3>
+      </div>
+
+      <div *ngIf="isNew || isEditing"
+           [ngClass]="{
+            current: currentStep$.value === 2,
+            completed: currentStep$.value > 2
+          }"
+           class="stepper-item"
+      >
+        <h3 class="stepper-title" (click)="goTo(2)">Credito y registros de compras</h3>
+      </div>
+    </div>
+    <!--end::Nav-->
+    <!--begin::Form-->
+    <form (ngSubmit)="onProviderUpdate()"
+          [formGroup]="providerForm"
+          class="mx-auto mw-600px w-100 py-10"
+          enctype="multipart/form-data" id="issuingForm" novalidate="novalidate">
+      <!--begin::Step 1-->
+      <fieldset [disabled]="!isEditing">
+        <div class="current">
+          <ng-container *ngIf="currentStep$.value === 1">
+            <div class="w-100">
+              <div class="pb-10 pb-lg-12">
+                <!--begin::Title-->
+                <h2 class="fw-bolder text-dark">Información Comercial</h2>
+                <!--end::Title-->
+                <!--begin::Notice-->
+                <div class="text-muted fw-bold fs-6">Si necesita mas ayuda, por favor viste la
+                  <a class="link-primary fw-bolder" href="#">Página de Ayuda</a>.
+                </div>
+                <!--end::Notice-->
+              </div>
+
+              <div class="fv-row mb-10">
+                <!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="d-flex align-items-center form-label">Identificación</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="identification"
+                    name="identification"
+                    placeholder=""
+                    type="text"/>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="d-flex align-items-center form-label">Codigo Proveedor</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="providerCode"
+                    name="identification"
+                    placeholder=""
+                    type="text"/>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="d-flex align-items-center form-label">Nombre Razón Social</label>
+                  <input
+
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="socialReasonName"
+                    name="socialReasonName"
+                    placeholder=""
+                    type="text"/>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="d-flex align-items-center form-label">Nombre Comercial</label>
+                  <input
+
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="commercialName"
+                    name="commercialName"
+                    placeholder=""
+                    type="text"/>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <form [formGroup]="identificationTypeForm">
+                  <div class="col-xl-6">
+                    <label class="form-label" for="identificationType">Tipo de Identificacion</label>
+                    <select class="form-select form-select-lg form-select-solid" formControlName="identType"
+                            id="identificationType">
+                      <option [ngValue]="null" disabled>Seleccione Tipo de Identificacion</option>
+                      <option *ngFor="let identificationType of identificationType" [ngValue]="identificationType.id"
+                              [value]="identificationType">{{identificationType.identificationType}}</option>
+                    </select>
+                  </div>
+                </form>
+                <!--end::Col-->
+              </div>
+              <div class="fv-row mb-10">
+                <!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="d-flex align-items-center form-label">Email de contacto</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="email"
+                    name="email"
+                    placeholder=""
+                    type="email"/>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="d-flex align-items-center form-label">Email de contacto 2</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="email2"
+                    name="email"
+                    placeholder=""
+                    type="email"/>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="d-flex align-items-center form-label">Teléfono</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="phone"
+                    name="phone"
+                    placeholder=""
+                    type="text"/>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="d-flex align-items-center form-label">Teléfono 2</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="phone2"
+                    name="phone"
+                    placeholder=""
+                    type="text"/>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="d-flex align-items-center form-label">Teléfono 2</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="phone2"
+                    name="phone"
+                    placeholder=""
+                    type="text"/>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="d-flex align-items-center form-label">Direccion</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="description"
+                    name="phone"
+                    placeholder=""
+                    type="text"/>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="d-flex align-items-center form-label">Nota</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="note"
+                    name="phone"
+                    placeholder=""
+                    type="text"/>
+                </div>
+                <!--end::Col-->
+              </div>
+
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <ng-container *ngIf="currentStep$.value === 2">
+            <div class="w-100">
+              <div class="pb-10 pb-lg-12">
+                <!--begin::Title-->
+                <h2 class="fw-bolder text-dark">Información Comercial</h2>
+                <!--end::Title-->
+                <!--begin::Notice-->
+                <div class="text-muted fw-bold fs-6">Si necesita mas ayuda, por favor viste la
+                  <a class="link-primary fw-bolder" href="#">Página de Ayuda</a>.
+                </div>
+                <!--end::Notice-->
+              </div>
+
+              <div class="fv-row mb-10">
+                <!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="form-label" for="providerType">Tipo de Proveedor</label>
+                  <select class="form-select form-select-lg form-select-solid" formControlName="providerType"
+                          id="providerType">
+                    <option [ngValue]="'P.Gastos'">Gastos</option>
+                    <option [ngValue]="'P.Compras'">Compras</option>
+                  </select>
+                </div>
+                <!--end::Col--><!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="form-label" for="payMethod">Forma de Pago</label>
+                  <select class="form-select form-select-lg form-select-solid" formControlName="payMethod"
+                          id="payMethod">
+                    <option [ngValue]="'Contado'">Contado</option>
+                    <option [ngValue]="'Credito'">Credito</option>
+                  </select>
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div [hidden]="creditFlag" class="col-xl-6">
+                  <label class="d-flex align-items-center form-label">Dias de Credito</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="creditDays"
+                    name="creditDays"
+                    placeholder="0"
+                    type="text"/>
+                </div>
+                <!--end::Col-->
+                <!--end::Col--><!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="form-label" for="fe">Registrar Factura</label>
+                  <select class="form-select form-select-lg form-select-solid" formControlName="fe" id="fe">
+                    <option [ngValue]="true">Si</option>
+                    <option [ngValue]="false">No</option>
+                  </select>
+                </div>
+                <!--end::Col-->
+                <!--end::Col--><!--begin::Col-->
+                <div class="col-xl-6">
+                  <label class="form-label" for="billRegister">Tipo Factura</label>
+                  <select class="form-select form-select-lg form-select-solid" formControlName="billRegister"
+                          id="billRegister">
+                    <option [ngValue]="'FE'">Factura Electronica</option>
+                    <option [ngValue]="'TE'">Tiquete Electronico</option>
+                    <option [ngValue]="'P'">Proforma</option>
+                  </select>
+                </div>
+                <!--end::Col-->
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </fieldset>
+      <!--end::Step 5-->
+      <!--begin::Actions-->
+      <div class="d-flex flex-stack pt-15">
+        <!--begin::Wrapper-->
+        <div class="mr-2">
+          <button (click)="prevStep()"
+                  [disabled]="currentStep$.value === 1"
+                  class="btn btn-lg btn-light-primary me-3"
+                  type="button">
+            <!--begin::Svg Icon | path: icons/duotune/arrows/arr063.svg-->
+            <span class="svg-icon svg-icon-4 me-1">
+																<svg fill="none" height="24" viewBox="0 0 24 24" width="24"
+                                     xmlns="http://www.w3.org/2000/svg">
+																	<rect fill="black" height="2" opacity="0.5" rx="1" width="13" x="6" y="11"/>
+																	<path
+                                    d="M8.56569 11.4343L12.75 7.25C13.1642 6.83579 13.1642 6.16421 12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75L5.70711 11.2929C5.31658 11.6834 5.31658 12.3166 5.70711 12.7071L11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25C13.1642 17.8358 13.1642 17.1642 12.75 16.75L8.56569 12.5657C8.25327 12.2533 8.25327 11.7467 8.56569 11.4343Z"
+                                    fill="black"/>
+																</svg>
+															</span>
+            <!--end::Svg Icon-->Back
+          </button>
+        </div>
+        <!--end::Wrapper-->
+        <!--begin::Wrapper-->
+        <ng-container *ngIf="currentStep$.value !== formsCount + 1">
+          <div [hidden]="!isEditing">
+            <ng-container *ngIf="currentStep$.value < formsCount">
+              <button (click)="nextStep()"
+                      class="btn btn-lg btn-primary me-3"
+                      type="button">
+              <span class="indicator-label">
+                Continuar {{ " " }}
+                <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+              <span class="svg-icon svg-icon-4 ms-1 me-0">
+																<svg fill="none" height="24" viewBox="0 0 24 24" width="24"
+                                     xmlns="http://www.w3.org/2000/svg">
+																	<rect fill="black" height="2" opacity="0.5" rx="1" transform="rotate(-180 18 13)"
+                                        width="13"
+                                        x="18" y="13"/>
+																	<path
+                                    d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z"
+                                    fill="black"/>
+																</svg>
+                          </span>
+              </span>
+              </button>
+              <!--end::Svg Icon-->
+            </ng-container>
+            <ng-container *ngIf="currentStep$.value === formsCount">
+              <button
+                class="btn btn-lg btn-primary me-3"
+                form="issuingForm"
+                type="submit">
+              <span class="indicator-label">
+                Guardar
+                <!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr086.svg-->
+                    <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg fill="none" height="24" viewBox="0 0 24 24"
+                                                                            width="24"
+                                                                            xmlns="http://www.w3.org/2000/svg">
+                    <rect fill="black" height="20" opacity="0.3" rx="10" width="20" x="2" y="2"/>
+                    <path
+                      d="M12.4343 12.4343L10.75 10.75C10.3358 10.3358 9.66421 10.3358 9.25 10.75C8.83579 11.1642 8.83579 11.8358 9.25 12.25L12.2929 15.2929C12.6834 15.6834 13.3166 15.6834 13.7071 15.2929L19.25 9.75C19.6642 9.33579 19.6642 8.66421 19.25 8.25C18.8358 7.83579 18.1642 7.83579 17.75 8.25L13.5657 12.4343C13.2533 12.7467 12.7467 12.7467 12.4343 12.4343Z"
+                      fill="black"
+                      opacity="0.5"/>
+                    <path
+                      d="M8.43431 12.4343L6.75 10.75C6.33579 10.3358 5.66421 10.3358 5.25 10.75C4.83579 11.1642 4.83579 11.8358 5.25 12.25L8.29289 15.2929C8.68342 15.6834 9.31658 15.6834 9.70711 15.2929L15.25 9.75C15.6642 9.33579 15.6642 8.66421 15.25 8.25C14.8358 7.83579 14.1642 7.83579 13.75 8.25L9.56569 12.4343C9.25327 12.7467 8.74673 12.7467 8.43431 12.4343Z"
+                      fill="black"/>
+                    </svg></span>
+                <!--end::Svg Icon-->
+              </span>
+              </button>
+            </ng-container>
+          </div>
+          <div [hidden]="isEditing">
+            <ng-container *ngIf="currentStep$.value < formsCount &&isNew">
+              <button (click)="enabledEdit()"
+                      class="btn btn-lg btn-warning me-3"
+                      type="button">
+              <span class="indicator-label">
+                Editar {{ " " }}
+                <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+              <span class="svg-icon svg-icon-4 ms-1 me-0">
+																<svg fill="none" height="24" viewBox="0 0 24 24" width="24"
+                                     xmlns="http://www.w3.org/2000/svg">
+																	<rect fill="black" height="2" opacity="0.5" rx="1" transform="rotate(-180 18 13)"
+                                        width="13"
+                                        x="18" y="13"/>
+																	<path
+                                    d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z"
+                                    fill="black"/>
+																</svg>
+                          </span>
+              </span>
+              </button>
+              <!--end::Svg Icon-->
+            </ng-container>
+          </div>
+        </ng-container>
+        <!--end::Wrapper-->
+      </div>
+      <!--end::Actions-->
+    </form>
+    <!--end::Form-->
+  </div>
+  <!--end::Stepper-->
+  <!--end::Stepper-->
+</div>
+

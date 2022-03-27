@@ -1,0 +1,328 @@
+<div class="card bg-light mb-3">
+  <div class="card-header">{{title}}</div>
+  <div class="card-body">
+    <!-- success -->
+    <div *ngIf="updatedProduct" class="alert alert-success">
+      Producto guardado exitosamente.
+    </div>
+
+    <!-- edit -->
+    <button
+      (click)="enableEdit()"
+      *ngIf="authService.hasRole('ROLE_ADMIN') && !isEditing"
+      class="btn btn-warning mr-2 col-2"
+    >
+      Editar
+    </button>
+
+    <!-- on product update -->
+    <button
+      *ngIf="isEditing && activeTab === productTabsEnum.PRODUCT" [disabled]="isUpdating"
+      class="btn btn-success col-2"
+      form="productForm"
+      type="submit"
+    >
+      Guardar
+    </button>
+
+    <!-- on product measures update -->
+    <button
+      *ngIf="isEditing && activeTab === productTabsEnum.PRODUCT_MEASURES" [disabled]="isUpdating"
+      class="btn btn-success col-2"
+      form="productMeasuresForm"
+      type="submit"
+    >
+      Guardar
+    </button>
+
+    <!-- on product prices update -->
+    <button
+      *ngIf="isEditing && activeTab === productTabsEnum.PRODUCT_PRICES" [disabled]="isUpdating"
+      class="btn btn-success col-2"
+      form="productPricesForm"
+      type="submit"
+    >
+      Guardar
+    </button>
+
+    <!-- back -->
+    <button
+      (click)="back()"
+      [ngClass]="{'margin-left': authService.hasRole('ROLE_ADMIN')}"
+      class="btn btn-primary col-2">
+      Volver
+    </button>
+
+    <div class="mt-3">
+      <!-- tabs -->
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+
+        <!-- data tab -->
+        <li class="nav-item" role="presentation">
+          <button
+            (click)="setActiveTab(productTabsEnum.PRODUCT)"
+            aria-controls="item-details"
+            aria-selected="true"
+            class="nav-link active"
+            data-bs-target="#item-details"
+            data-bs-toggle="pill"
+            id="item-details-tab"
+            role="tab"
+            type="button"
+          >
+            Datos
+          </button>
+        </li>
+
+        <!-- meassure tab -->
+        <li *ngIf="!isNew" class="nav-item" role="presentation">
+          <button
+            (click)="setActiveTab(productTabsEnum.PRODUCT_MEASURES)"
+            aria-controls="item-measures"
+            aria-selected="false"
+            class="nav-link"
+            data-bs-target="#item-measures"
+            data-bs-toggle="pill"
+            id="item-measures-tab"
+            role="tab"
+            type="button"
+          >
+            Medidas
+          </button>
+        </li>
+
+        <!-- prices tab -->
+        <li *ngIf="!isNew" class="nav-item" role="presentation">
+          <button
+            (click)="setActiveTab(productTabsEnum.PRODUCT_PRICES)"
+            aria-controls="item-prices"
+            aria-selected="false"
+            class="nav-link"
+            data-bs-target="#item-prices"
+            data-bs-toggle="pill"
+            id="item-prices-tab"
+            role="tab"
+            type="button"
+          >
+            Precios
+          </button>
+        </li>
+      </ul>
+
+      <!-- views -->
+      <div class="tab-content" id="pills-tabContent">
+
+        <!-- view/edit product form -->
+        <div [ngClass]="{'active': activeTab === productTabsEnum.PRODUCT}" aria-labelledby="item-details-tab" class="tab-pane fade show"
+             id="item-details" role="tabpanel">
+          <form (ngSubmit)="onProductUpdate()" [formGroup]="productForm" id="productForm">
+            <fieldset [disabled]="!isEditing">
+              <legend>Información de producto</legend>
+              <div class="row p-t-20">
+
+                <!-- barcode1 -->
+                <div class="col-md-6">
+                  <label class="form-label" for="barcode1">EAN 1</label>
+                  <input class="form-control" formControlName="barcode1" id="barcode1" type="text">
+                </div>
+
+                <!-- barcode2 -->
+                <div class="col-md-6">
+                  <label class="form-label" for="barcode2">EAN 2</label>
+                  <input class="form-control" formControlName="barcode2" id="barcode2" type="text">
+                </div>
+
+                <!-- barcode3 -->
+                <div class="col-md-6">
+                  <label class="form-label" for="barcode3">EAN 3</label>
+                  <input class="form-control" formControlName="barcode3" id="barcode3" type="text">
+                </div>
+
+                <!-- code -->
+                <div class="col-md-6">
+                  <label class="form-label" for="code">Código</label>
+                  <input class="form-control" formControlName="code" id="code" type="text">
+                </div>
+
+                <!-- department -->
+                <div class="col-md-6">
+                  <label class="form-label" for="department">Departamento</label>
+                  <select class="form-select" formControlName="department" id="department">
+                    <option *ngFor="let c of department"
+                            [ngValue]="c" >{{c.department}}</option>
+                  </select>
+                </div>
+
+                <!-- family -->
+                <div class="col-md-6">
+                  <label class="form-label" for="family">Familia</label>
+                  <select class="form-select" formControlName="family" id="family">
+                    <option *ngFor="let c of family"
+                            [ngValue]="c" >{{c.family}}</option>
+                  </select>
+                </div>
+
+                <!-- name -->
+                <div class="col-md-12">
+                  <label class="form-label" for="name">Nombre</label>
+                  <input class="form-control" formControlName="name" id="name" type="text">
+                </div>
+
+                <div class="col-md-2">
+                  <label class="form-label">Buscar Cabys</label>
+                  <input (change)="cabysSelectedMethod($event)" class="form-control" list="cabys" type="text">
+
+                </div>
+                <div class="col-md-2" >
+                  <br>
+                  <a type="button" class="btn btn-success"><i class="fa fa-search"> </i> Buscar</a>
+                </div>
+                <div class="col-md-8">
+                  <label class="form-label">Cabys</label>
+                  <select class="form-select" formControlName="cabys" id="cabys">
+                    <option *ngFor="let c of cabysSelected"
+                            [ngValue]="c" >{{c.tax + ' - ' + c.haciendaCode + ' - ' + c.detail}}</option>
+                  </select>
+                </div>
+
+                <!-- note -->
+                <div class="col-md-12">
+                  <label class="form-label" for="note">Notas</label>
+                  <input class="form-control" formControlName="note" id="note" type="text">
+                </div>
+
+                <!--                 id -->
+                <!--                <div class="col-md-12" hidden>-->
+                <!--                  <label for="id" class="form-label">Id</label>-->
+                <!--                  <input id="id" type="text" class="form-control" formControlName="id">-->
+                <!--                </div>-->
+
+              </div>
+            </fieldset>
+          </form>
+
+        </div>
+
+        <!-- view/edit product meassures form -->
+        <div *ngIf="!isNew" aria-labelledby="item-measures-tab" class="tab-pane fade show" id="item-measures"
+             role="tabpanel">
+          <form (ngSubmit)="onProductMeasuresUpdate()" [formGroup]="productMeasuresForm" id="productMeasuresForm">
+            <fieldset [disabled]="!isEditing">
+              <legend>Medidas de producto</legend>
+              <div class="row p-t-20">
+
+                <!-- boxes -->
+                <div class="col-md-4">
+                  <label class="form-label" for="boxes">Cajas</label>
+                  <input class="form-control" formControlName="boxes" id="boxes" type="text">
+                </div>
+
+                <!-- packing -->
+                <div class="col-md-4">
+                  <label class="form-label" for="packing">Paquetes</label>
+                  <input class="form-control" formControlName="packing" id="packing" type="text">
+                </div>
+
+                <!-- units -->
+                <div class="col-md-4">
+                  <label class="form-label" for="units">Unidades</label>
+                  <input class="form-control" formControlName="units" id="units" type="text">
+                </div>
+
+                <div class="col-md-12" hidden>
+                  <label class="form-label" for="itemId">Id</label>
+                  <input class="form-control" formControlName="itemId" id="itemId" type="text">
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <!-- view/edit product prices form -->
+        <div *ngIf="!isNew" aria-labelledby="item-prices-tab" class="tab-pane fade show" id="item-prices"
+             role="tabpanel">
+          <form (ngSubmit)="onProductPricesUpdate()" [formGroup]="productPricesForm" id="productPricesForm">
+            <fieldset [disabled]="!isEditing">
+              <legend>Precios de producto</legend>
+              <div class="row p-t-20">
+
+                <!-- taxes_id -->
+                <div class="col-md-3">
+                  <label class="form-label required" for="taxes">Tipo de Impuesto</label>
+                  <select class="form-select form-select-lg form-select-solid" formControlName="taxes" id="taxes">
+                    <option [ngValue]="null">Seleccione Impuesto</option>
+                    <option *ngFor="let tax of taxes" [ngValue]="tax">{{tax.taxDetail}}</option>
+                  </select>
+                </div>
+
+                <!-- iva_id -->
+                <div  class="col-md-3" [hidden]="!isIVA">
+                  <label class="form-label" for="iva">Codigo IVA</label>
+                  <select class="form-select form-select-lg form-select-solid" formControlName="iva" id="iva">
+                    <option [ngValue]="null">Seleccione IVA</option>
+                    <option *ngFor="let iv of iva" [ngValue]="iv">{{iv.ivaRateDetail}}</option>
+                  </select>
+                </div>
+
+                <!-- purchase price -->
+                <div class="col-md-3">
+                  <label class="form-label" for="purchasePrice">Precio de compra</label>
+                  <input class="form-control" formControlName="purchasePrice" id="purchasePrice" type="number" [(ngModel)]="purchasePrice">
+                </div>
+
+                <!-- utility -->
+                <div class="col-md-3">
+                  <label class="form-label" for="utility">Utilidad</label>
+                  <input class="form-control" formControlName="utility" id="utility" type="number" [(ngModel)]="utility">
+                </div>
+
+                <!-- price -->
+                <div class="col-md-3">
+                  <label class="form-label" for="price">Precio sin Impuesto</label>
+                  <input class="form-control" formControlName="price" id="price" type="number" value="{{purchasePrice +(purchasePrice * (utility/100))}}" [(ngModel)]="price">
+                </div>
+
+                <!-- ivaPercentage -->
+                <div class="col-md-3">
+                  <label class="form-label" for="ivaPercentage">Porcentaje del IVA</label>
+                  <input class="form-control" formControlName="ivaPercentage" id="ivaPercentage" type="text" value="{{ivaPercentage/100}}" [(ngModel)]="ivaPercentage">
+                </div>
+
+                <!-- taxesAmount -->
+                <div class="col-md-3">
+                  <label class="form-label" for="taxesAmount">Impuestos</label>
+                  <input class="form-control" formControlName="taxesAmount" id="taxesAmount" type="text" value="{{price * (ivaPercentage/100)}}" [(ngModel)]="taxesAmount">
+                </div>
+
+                <!-- final price -->
+                <div class="col-md-3">
+                  <label class="form-label" for="finalPrice">Precio final</label>
+                  <input class="form-control" formControlName="finalPrice" id="finalPrice" type="number" value="{{price + (price * (ivaPercentage/100))}}" [(ngModel)]="finalPrice"/>
+                </div>
+
+                <!-- round out -->
+                <div class="col-md-3">
+                  <label class="form-label" for="roundOut">Redondeo</label>
+                  <input class="form-control" formControlName="roundOut" id="roundOut" type="text">
+                </div>
+
+                <!-- units -->
+                <div class="col-md-3">
+                  <label class="form-label" for="units">Unidades</label>
+                  <input class="form-control" formControlName="unit" id="unit" type="text">
+                </div>
+
+                <!-- weight -->
+                <div class="col-md-3">
+                  <label class="form-label" for="weight">Peso</label>
+                  <input class="form-control" formControlName="weight" id="weight" type="text">
+                </div>
+
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

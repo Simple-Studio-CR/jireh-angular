@@ -1,0 +1,397 @@
+<div class="card">
+  <div class="card-body">
+    <div
+      class="stepper stepper-links d-flex flex-column pt-15"
+      id="kt_create_account_stepper"
+    >
+      <div class="stepper-nav mb-4">
+        <div [ngClass]="{
+            current: currentStep$.value === 1,
+            completed: currentStep$.value > 1
+          }"
+             class="stepper-item"
+        >
+          <h3 (click)="goTo(1)" class="stepper-title">{{"ITEMS.FORM.HEADERS.DATA" | translate}}</h3>
+        </div>
+
+        <div [ngClass]="{
+            current: currentStep$.value === 2,
+            completed: currentStep$.value > 2
+          }"
+             class="stepper-item"
+        >
+          <h3 (click)="goTo(2)" class="stepper-title">{{"ITEMS.FORM.HEADERS.UNITS" | translate}}</h3>
+        </div>
+
+        <div [ngClass]="{
+            current: currentStep$.value === 3,
+            completed: currentStep$.value > 3
+          }"
+             class="stepper-item"
+        >
+          <h3 (click)="goTo(3)" class="stepper-title">{{"ITEMS.FORM.HEADERS.PRICES" | translate}}</h3>
+        </div>
+
+        <div [ngClass]="{
+            current: currentStep$.value === 4,
+            completed: currentStep$.value > 4
+          }"
+             class="stepper-item"
+        >
+          <h3 (click)="goTo(4)" class="stepper-title">{{"ITEMS.FORM.HEADERS.CABYS" | translate}}</h3>
+        </div>
+
+      </div>
+
+      <form (ngSubmit)="onProductUpdate()" [formGroup]="productForm"
+            class="mx-auto mw-600px w-100 pt-15 pb-10" id="productForm" noValidate>
+
+        <fieldset [disabled]="!isEditing">
+          <div class="current">
+            <ng-container *ngIf="currentStep$.value === 1">
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+
+                <!--CODE-->
+                <div class="col">
+                  <label class="form-label required">{{"ITEMS.FORM.CODE" | translate}}</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="code"
+                    name="code"/>
+                </div>
+
+                <!--BARCODE-->
+                <div class="col">
+                  <label class="form-label required">{{"ITEMS.FORM.BARCODE2" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="barcode1"
+                  name="barcode1"/>
+                </div>
+
+              </div>
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+
+                <!--BARCODE2-->
+                <div class="col">
+                  <label class="form-label required">{{"ITEMS.FORM.CODE" | translate}}</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="barcode2"
+                    name="barcode2"/>
+                </div>
+
+                <!--BARCODE3-->
+                <div class="col">
+                  <label class="form-label required">{{"ITEMS.FORM.BARCODE3" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="barcode3"
+                  name="barcode3"/>
+                </div>
+
+              </div>
+
+              <!--NAME-->
+              <div class="col fv-row mb-10">
+                <label class="form-label required">{{"ITEMS.FORM.NAME" | translate}}</label
+                ><input
+                class="form-control form-control-lg form-control-solid"
+                formControlName="name"
+                name="name"/>
+              </div>
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <!--DEPARTMENT-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.ITEMS_PROVIDER_LIST.FORM.DEPARTMENT" | translate}}</label
+                  ><select class="form-select form-select-lg form-select-solid" formControlName="department"
+                           id="department">
+                  <option *ngFor="let c of department"
+                          [ngValue]="c">{{c.department}}</option>
+                </select>
+                </div>
+
+                <!--FAMILY-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.ITEMS_PROVIDER_LIST.FORM.FAMILY" | translate}}</label
+                  ><select class="form-select form-select-lg form-select-solid" formControlName="family" id="family">
+                  <option *ngFor="let c of family"
+                          [ngValue]="c">{{c.family}}</option>
+                </select>
+                </div>
+              </div>
+
+              <!--NOTE-->
+              <div>
+                <label class="form-label">{{"CLIENTS.FORM.NOTE" | translate}}</label
+                ><textarea
+                class="form-control form-control-lg form-control-solid"
+                formControlName="note"
+                name="note"
+                rows="3"
+              ></textarea>
+              </div>
+
+            </ng-container>
+
+            <ng-container *ngIf="currentStep$.value === 2">
+
+              <!--UNITS-->
+              <div class="col fv-row mb-10">
+                <label class="form-label required">{{"ITEMS.FORM.UNITS" | translate}}</label
+                ><input
+                class="form-control form-control-lg form-control-solid"
+                formControlName="units"
+                name="units"/>
+              </div>
+
+              <!--PACKING-->
+              <div class="col fv-row mb-10">
+                <label class="form-label required">{{"ITEMS.FORM.PACKING" | translate}}</label
+                ><input
+                class="form-control form-control-lg form-control-solid"
+                formControlName="packing"
+                name="packing"/>
+              </div>
+
+              <!--BOXES-->
+              <div class="col fv-row mb-10">
+                <label class="form-label required">{{"ITEMS.FORM.BOXES" | translate}}</label
+                ><input
+                class="form-control form-control-lg form-control-solid"
+                formControlName="boxes"
+                name="boxes"/>
+              </div>
+
+            </ng-container>
+
+            <ng-container *ngIf="currentStep$.value === 3">
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+
+                <div class="col fv-row mb-10">
+                  <label class="form-label">{{"ITEMS.FORM.FOR_SELL" | translate}}</label>
+                </div>
+
+                <div class="col fv-row mb-10">
+                  <div class="checkbox">
+                    <label class="form-label">{{"ITEMS.FORM.SALE_UNIT" | translate}}
+                      <input
+                        [(ngModel)]="unit"
+                        [ngModelOptions]="{standalone: true}"
+                        type="checkbox"/>
+                    </label>
+                  </div>
+
+                  <div class="checkbox">
+                    <label class="form-label">{{"ITEMS.FORM.SALE_WEIGHT" | translate}}
+                      <input
+                        [(ngModel)]="weight"
+                        [ngModelOptions]="{standalone: true}"
+                        type="checkbox"/>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.FORM.CURRENCY" | translate}}</label
+                  ><select class="form-select form-select-lg form-select-solid" formControlName="currency"
+                           id="currency">
+                  <option *ngFor="let c of currency"
+                          [ngValue]="c">{{c.abbreviation}}</option>
+                </select>
+                </div>
+
+                <!--TAXES-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.FORM.TYPE_TAX" | translate}}</label
+                  ><select class="form-select form-select-lg form-select-solid" formControlName="taxes" id="taxes">
+                  <option *ngFor="let c of taxes"
+                          [ngValue]="c">{{c.taxDetail}}</option>
+                </select>
+                </div>
+              </div>
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+
+                <!--IVA-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.FORM.SELECT_IVA" | translate}}</label
+                  ><select class="form-select form-select-lg form-select-solid" formControlName="iva"
+                           id="iva">
+                  <option *ngFor="let c of iva"
+                          [ngValue]="c">{{c.ivaRateDetail}}</option>
+                </select>
+                </div>
+
+                <!--IVA_PERCENTAGE-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.FORM.IVA_PERCENTAGE" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="ivaPercentage"
+                  name="ivaPercentage"
+                  type="number"
+                  ui-number-mask/>
+                </div>
+              </div>
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+
+                <!--PURCHASE_PRICE-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.FORM.PURCHASE_PRICE" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="purchasePrice"
+                  name="purchasePrice"
+                  type="number"
+                  ui-number-mask/>
+                </div>
+
+                <!--UTILITY-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.FORM.UTILITY" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="utility"
+                  name="utility"
+                  type="number"
+                  ui-number-mask/>
+                </div>
+              </div>
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+
+                <!--PRICE-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.FORM.PRICE" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="price"
+                  name="price"
+                  type="number"
+                  ui-number-mask/>
+                </div>
+
+                <!--TAX_AMOUNT-->
+                <div class="col">
+                  <label class="form-label">{{"ITEMS.FORM.TAX_AMOUNT" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="taxesAmount"
+                  name="taxesAmount"
+                  ngModel="number" type="number"
+                  ui-number-mask/>
+                </div>
+              </div>
+
+              <!--FINAL PRICE-->
+              <div class="col fv-row mb-10">
+                <label class="form-label required">{{"ITEMS.FORM.FINAL_PRICE" | translate}}</label
+                ><input
+                class="form-control form-control-lg form-control-solid"
+                formControlName="finalPrice"
+                name="finalPrice"
+                ngModel="number" type="number"
+                ui-number-mask/>
+              </div>
+
+            </ng-container>
+
+            <ng-container *ngIf="currentStep$.value === 4">
+
+              <div class="col-md-2">
+                <label class="form-label">Buscar Cabys</label>
+                <input (change)="cabysSelectedMethod($event)" class="form-control" list="cabys" type="text">
+
+              </div>
+              <div class="col-md-2">
+                <br>
+                <a class="btn btn-success" type="button"><i class="fa fa-search"> </i> Buscar</a>
+              </div>
+              <div class="col-md-8">
+                <label class="form-label">Cabys</label>
+                <select class="form-select" formControlName="cabys" id="cabys">
+                  <option *ngFor="let c of cabysSelected"
+                          [ngValue]="c">{{c.tax + ' - ' + c.haciendaCode + ' - ' + c.detail}}</option>
+                </select>
+              </div>
+
+            </ng-container>
+          </div>
+
+          <div class="d-flex flex-stack pt-15">
+            <div class="mr-2">
+              <ng-container *ngIf="currentStep$.value !== 1">
+                <button
+                  (click)="prevStep()"
+                  class="btn btn-lg btn-light-primary me-3"
+                  type="button"
+                >
+                <span
+                  [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                  class="svg-icon svg-icon-4 me-1"
+                ></span>
+                  Back
+                </button>
+              </ng-container>
+            </div>
+
+            <ng-container>
+              <div>
+                <ng-container *ngIf="currentStep$.value < formsCount">
+                  <button
+                    (click)="nextStep()"
+                    class="btn btn-lg btn-primary me-3"
+                    type="button"
+                  >
+                <span class="indicator-label">
+
+                    Continue {{ " " }}
+                  <span
+                    [inlineSVG]="
+                        './assets/media/icons/duotune/arrows/arr064.svg'
+                      "
+                    class="svg-icon svg-icon-3 ms-2 me-0"
+                  ></span>
+                  </span>
+                  </button>
+                </ng-container>
+                <ng-container *ngIf="currentStep$.value === formsCount">
+                  <button
+                    class="btn btn-lg btn-primary me-3"
+                    form="productForm"
+                    type="submit"
+                  >
+                <span class="indicator-label">
+                  Submit
+                  <span
+                    [inlineSVG]="
+                        './assets/media/icons/duotune/arrows/arr064.svg'
+                      "
+                    class="svg-icon svg-icon-3 ms-2 me-0"
+                  ></span>
+                  </span>
+                  </button>
+                </ng-container>
+              </div>
+            </ng-container>
+
+          </div>
+        </fieldset>
+
+
+      </form>
+
+
+    </div>
+
+  </div>
+
+</div>

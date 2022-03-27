@@ -1,0 +1,440 @@
+<div class="card">
+  <div class="card-body">
+    <div
+      class="stepper stepper-links d-flex flex-column pt-15"
+      id="kt_create_account_stepper"
+    >
+      <div class="stepper-nav mb-4">
+        <div
+          [ngClass]="{
+            current: currentStep$.value === 1,
+            completed: currentStep$.value > 1
+          }"
+          class="stepper-item"
+        >
+          <h3 class="stepper-title">{{"CLIENTS.FORM.INFO" | translate}}</h3>
+        </div>
+
+        <div
+          [ngClass]="{
+            current: currentStep$.value === 2,
+            completed: currentStep$.value > 2
+          }"
+          class="stepper-item"
+        >
+          <h3 class="stepper-title">{{"CLIENTS.FORM.CREDIT" | translate}}</h3>
+        </div>
+
+        <div
+          [ngClass]="{
+            current: currentStep$.value === 3,
+            completed: currentStep$.value > 3
+          }"
+          class="stepper-item"
+        >
+          <h3 class="stepper-title">{{"CLIENTS.FORM.DISCOUNT" | translate}}</h3>
+        </div>
+
+        <div
+          [ngClass]="{
+            current: currentStep$.value === 4,
+            completed: currentStep$.value > 4
+          }"
+          class="stepper-item"
+        >
+          <h3 class="stepper-title">{{"CLIENTS.FORM.EXONERATION" | translate}}</h3>
+        </div>
+      </div>
+
+      <form
+        (ngSubmit)="onClientUpdate()"
+        [formGroup]="clientForm"
+        class="mx-auto mw-600px w-100 pt-15 pb-10"
+        id="clientForm" noValidate
+      >
+        <fieldset [disabled]="!isEditing">
+          <div class="current">
+            <ng-container *ngIf="currentStep$.value === 1">
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <!--IDENTIFICATION-->
+                <div class="col">
+                  <label class="form-label required">{{"CLIENTS.FORM.IDENTIFICATION" | translate}}</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="identification"
+                    name="businessName"/>
+                  <div
+                    *ngIf="clientForm.get('identification')?.hasError('required') &&clientForm.get('identification')?.touched"
+                    class="fv-plugins-message-container invalid-feedback">
+                    Identification is required
+                  </div>
+                </div>
+
+                <!--SOCIAL REASON NAME-->
+                <div class="col">
+                  <label class="form-label required">{{"CLIENTS.FORM.BUSINESS" | translate}}</label
+                  ><input
+                  class="form-control form-control-lg form-control-solid"
+                  formControlName="socialReasonName"
+                  name="businessName"/>
+                  <div
+                    *ngIf="clientForm.get('socialReasonName')?.hasError('required') &&clientForm.get('socialReasonName')?.touched"
+                    class="fv-plugins-message-container invalid-feedback">
+                    Business Name is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <!--IDENTIFICATION TYPE-->
+                <form [formGroup]="identificationTypeForm">
+                  <div class="col">
+                    <label class="form-label required">{{"CLIENTS.FORM.IDTYPE" | translate}}</label
+                    ><select
+                    class="form-select form-select-lg form-select-solid"
+                    formControlName="identType"
+                    name="identificationType"
+                  >
+                    <option *ngFor="let identificationType of clientIdentificationType"
+                            [ngValue]="identificationType.id"
+                            disabled>{{identificationType.identificationType}}</option>
+                  </select>
+                  </div>
+                </form>
+
+                <!--COMERCIAL NAME-->
+                <div class="col">
+                  <label class="form-label">{{"CLIENTS.FORM.COMERCIAL" | translate}}</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="email"
+                    name="email"/>
+                </div>
+              </div>
+
+              <form [formGroup]="addressForm">
+                <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                  <div class="col">
+                    <label class="form-label" for="clientProvince">{{"CLIENTS.FORM.PROVINCE" | translate}}</label>
+                    <select class="form-select form-select-lg form-select-solid" formControlName="clientProvince"
+                            id="clientProvince">
+                      <option [ngValue]="null" disabled>Seleccione Provincia</option>
+                      <option *ngFor="let provinces of province"
+                              [ngValue]="provinces">{{provinces.province}}</option>
+                    </select>
+
+                  </div>
+                  <div class="col">
+                    <label class="form-label" for="clientCanton">{{"CLIENTS.FORM.CANTON" | translate}}</label>
+                    <select class="form-select form-select-lg form-select-solid" formControlName="clientCanton"
+                            id="clientCanton">
+                      <option [ngValue]="null" disabled>Seleccione Canton</option>
+                      <option *ngFor="let cantons of canton" [ngValue]="cantons">{{cantons.canton}}</option>
+                    </select>
+                  </div>
+
+                  <div class="col">
+                    <label class="form-label" for="clientDistrict">{{"CLIENTS.FORM.DISTRICT" | translate}}</label>
+                    <select class="form-select form-select-lg form-select-solid" formControlName="clientDistrict"
+                            id="clientDistrict">
+                      <option [ngValue]="null" disabled>Seleccione Distrito</option>
+                      <option *ngFor="let districts of district"
+                              [ngValue]="districts">{{districts.districtName}}</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+              <div class="col fv-row mb-10">
+                <label class="form-label" for="neighborhood">{{"CLIENTS.FORM.NEIGH" | translate}}</label>
+                <select class="form-select form-select-lg form-select-solid" formControlName="neighborhood"
+                        id="neighborhood">
+                  <option [ngValue]="null" disabled>Seleccione Barrio</option>
+                  <option *ngFor="let neighs of neigh" [ngValue]="neighs">{{neighs.neighborhoodName}}</option>
+                </select>
+              </div>
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <!--MAIL 1-->
+                <div class="col">
+                  <label class="form-label required">{{"CLIENTS.FORM.EMAIL" | translate}} 1</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="email"
+                    name="email"
+                  />
+                  <div
+                    *ngIf="clientForm.get('email')?.hasError('required') && clientForm.get('email')?.touched"
+                    class="fv-plugins-message-container invalid-feedback"
+                  >
+                    Email-1 is required
+                  </div>
+                </div>
+
+                <!--MAIL 2-->
+                <div class="col">
+                  <label class="form-label">{{"CLIENTS.FORM.EMAIL" | translate}} 2</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="email2"
+                    name="email2"/>
+                </div>
+              </div>
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <!--PHONE 1-->
+                <div class="col">
+                  <label class="form-label">{{"CLIENTS.FORM.PHONE" | translate}} 1</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="phone"
+                    name="phone"/>
+                </div>
+
+                <!--PHONE 2-->
+                <div class="col">
+                  <label class="form-label">{{"CLIENTS.FORM.PHONE" | translate}} 2</label>
+                  <input
+                    class="form-control form-control-lg form-control-solid"
+                    formControlName="phone2"
+                    name="phone2"/>
+                </div>
+              </div>
+
+              <!--DESCRIPTION-->
+              <div class="fv-row mb-10">
+                <label class="form-label">{{"CLIENTS.FORM.DESCRIPTION" | translate}}</label
+                ><textarea
+                class="form-control form-control-lg form-control-solid"
+                formControlName="description"
+                name="description"
+                rows="3"
+              ></textarea>
+              </div>
+
+              <!--NOTE-->
+              <div>
+                <label class="form-label">{{"CLIENTS.FORM.NOTE" | translate}}</label
+                ><textarea
+                class="form-control form-control-lg form-control-solid"
+                formControlName="note"
+                name="note"
+                rows="3"
+              ></textarea>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="currentStep$.value === 2">
+              <!--FLAG CREDIT-->
+              <div class="col fv-row mb-10">
+                <label class="form-label" for="enabledCredit">{{"CLIENTS.FORM.CREDIT_FLAG" | translate}}</label>
+                <select class="form-select form-select-lg form-select-solid" formControlName="enabledCredit"
+                        id="enabledCredit">
+                  <option [value]="false">No</option>
+                  <option [value]="true">Si</option>
+                </select>
+              </div>
+
+              <!--CREDIT ENDLESS-->
+              <form [formGroup]="addressForm">
+                <div [hidden]="this.clientForm.get('enabledCredit')?.value == false"
+                     class="fv-row mb-9 fv-plugins-icon-container fv-plugins-bootstrap5-row-valid"
+                     data-kt-calendar="datepicker">
+                  <label class="form-label"
+                         for="creditEnd">{{"CLIENTS.FORM.CREDIT_DAYS" | translate}}</label>
+                  <div class="input-group">
+                    <input #q="ngbDatepicker" class="form-control form-control-solid flatpickr-input active"
+                           formControlName="dateCredit" [(ngModel)]="dateCreditEnd" id="creditEnd" ngbDatepicker type="text">
+                    <div class="input-group-append">
+                      <button (click)="q.toggle()" class="btn btn-outline-secondary" type="button"><i
+                        class="far fa-calendar-alt"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              <div [hidden]="this.clientForm.get('enabledCredit')?.value == false"
+                   class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <!--CREDIT TYPE-->
+                <div class="col">
+                  <label class="form-label" for="creditType">{{"CLIENTS.FORM.CREDIT_TYPE" | translate}}</label>
+                  <select class="form-select form-select-lg form-select-solid" formControlName="creditType"
+                          id="creditType">
+                    <option [ngValue]="null">Seleccione tipo de Credito</option>
+                    <option *ngFor="let credits of clientCreditType"
+                            [ngValue]="credits">{{credits.creditType}}</option>
+                  </select>
+                </div>
+
+                <!--PERIOD PAY-->
+                <div class="col">
+                  <label class="form-label" for="creditPeriod">{{"CLIENTS.FORM.PAY_PERIOD" | translate}}</label>
+                  <input class="form-control form-control-lg form-control-solid" formControlName="creditPeriod"
+                         id="creditPeriod"
+                         type="text">
+                </div>
+              </div>
+
+              <div [hidden]="this.clientForm.get('enabledCredit')?.value == false"
+                   class="row row-cols-lg-2 g-10 fv-row mb-10">
+
+                <!--CREDIT DAYS-->
+                <div class="col">
+                  <label class="form-label" for="creditDays">{{"CLIENTS.FORM.CREDIT_DAYS" | translate}}</label>
+                  <input class="form-control form-control-lg form-control-solid" formControlName="creditDays"
+                         id="creditDays"
+                         type="text">
+                </div>
+
+                <div class="col">
+                  <label class="form-label" for="creditGrace">{{"CLIENTS.FORM.CREDIT_GRACE" | translate}}</label>
+                  <input class="form-control form-control-lg form-control-solid" formControlName="creditGrace"
+                         id="creditGrace" type="text">
+                </div>
+                <div class="col">
+                  <label class="form-label" for="debt">{{"CLIENTS.FORM.DEBT" | translate}}</label>
+                  <input class="form-control form-control-lg form-control-solid" formControlName="debt" id="debt"
+                         type="number">
+                </div>
+              </div>
+
+            </ng-container>
+
+            <ng-container *ngIf="currentStep$.value === 3">
+
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+
+                <div class="col">
+                  <label class="form-label" for="type">{{"CLIENTS.FORM.TYPE_DISCOUNT" | translate}}</label>
+                  <select class="form-select form-select-lg form-select-solid" formControlName="type" id="type">
+                    <option [ngValue]="null" disabled>Seleccione tipo de Credito</option>
+                    <option *ngFor="let types of clientsTypes"
+                            [ngValue]="types">{{types.type}}</option>
+                  </select>
+                </div>
+
+                <div class="col">
+                  <label class="form-label" for="discount">{{"CLIENTS.FORM.DISCOUNT" | translate}}</label>
+                  <input class="form-control form-control-lg form-control-solid" formControlName="discount"
+                         id="discount"
+                         type="number">
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="currentStep$.value === 4">
+
+              <div class="col">
+                <label class="form-label" for="documentNumber">Numero de Exoneracion</label>
+                <div class="input-group">
+                  <input class="form-control" formControlName="documentNumber" id="documentNumber" type="text">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"><i
+                      class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <div class="col">
+                  <label class="form-label" for="law">Ley de Exoneracion</label>
+                  <input class="form-control" formControlName="law" id="law" maxlength=25 type="text">
+                </div>
+                <div class="col">
+                  <label class="form-label" for="exonerationType">Tipo de Exoneracion</label>
+                  <select class="form-select" formControlName="exonerationType" id="exonerationType">
+                    <option *ngFor="let exoneration of exonerationType"
+                            [ngValue]="exoneration">{{exoneration.exonerationOrAuthorization}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <div class="col">
+                  <label class="form-label" for="institutionNumber">Institucion</label>
+                  <input class="form-control" formControlName="institutionNumber" id="institutionNumber" type="text">
+                </div>
+                <div class="col">
+                  <label class="form-label" for="exoneration">Porncentaje de Exoneracion del IVA</label>
+                  <input class="form-control" formControlName="exoneration" id="exoneration" maxlength=4 type="number">
+                </div>
+              </div>
+              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
+                <div class="col">
+                  <label class="form-label" for="exonerationDateStart">Porncentaje de Exoneracion del IVA</label>
+                  <input class="form-control" formControlName="exonerationDateStart" id="exonerationDateStart"
+                         maxlength=4 type="text">
+                </div>
+
+                <div class="col">
+                  <label class="form-label" for="exonerationDateEnd">Porncentaje de Exoneracion del IVA</label>
+                  <input class="form-control" formControlName="exonerationDateEnd" id="exonerationDateEnd" maxlength=4
+                         type="text">
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
+
+          <div class="d-flex flex-stack pt-15">
+            <div class="mr-2">
+              <ng-container *ngIf="currentStep$.value !== 1">
+                <button
+                  (click)="prevStep()"
+                  class="btn btn-lg btn-light-primary me-3"
+                  type="button"
+                >
+                <span
+                  [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                  class="svg-icon svg-icon-4 me-1"
+                ></span>
+                  Back
+                </button>
+              </ng-container>
+            </div>
+
+            <ng-container>
+              <div>
+                <ng-container *ngIf="currentStep$.value < formsCount">
+                  <button
+                    (click)="nextStep()"
+                    class="btn btn-lg btn-primary me-3"
+                    type="button"
+                  >
+                <span class="indicator-label">
+
+                    Continue {{ " " }}
+                  <span
+                    [inlineSVG]="
+                        './assets/media/icons/duotune/arrows/arr064.svg'
+                      "
+                    class="svg-icon svg-icon-3 ms-2 me-0"
+                  ></span>
+                  </span>
+                  </button>
+                </ng-container>
+                <ng-container *ngIf="currentStep$.value === formsCount">
+                  <button
+                    class="btn btn-lg btn-primary me-3"
+                    form="clientForm"
+                    type="submit"
+                  >
+                <span class="indicator-label">
+                  Submit
+                  <span
+                    [inlineSVG]="
+                        './assets/media/icons/duotune/arrows/arr064.svg'
+                      "
+                    class="svg-icon svg-icon-3 ms-2 me-0"
+                  ></span>
+                  </span>
+                  </button>
+                </ng-container>
+
+
+              </div>
+            </ng-container>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

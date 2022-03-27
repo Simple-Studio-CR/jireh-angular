@@ -1,0 +1,164 @@
+<div class="card mb-10">
+  <div class="card-body d-flex align-items-center py-8">
+    <!-- begin::Icon -->
+    <div
+      class="d-flex h-80px w-80px flex-shrink-0 flex-center position-relative"
+    >
+      <img src="assets/media/icons/duotune/finance/fin001.svg" class="h-40px me-10"/>
+    </div>
+    <!-- end::Icon  -->
+
+    <!-- begin::Description  -->
+    <div class="ms-6">
+      <p class="list-unstyled text-gray-600 fw-bold fs-6 p-0 m-0">
+        {{"ISSUING.ISSUING.TITTLE"|translate}}
+      </p>
+    </div>
+    <!-- end::Description  -->
+  </div>
+</div>
+<div class="card card-custom">
+  <div class="card-header card-header-stretch overflow-auto">
+    <!-- begin::Header -->
+    <div class="card-header border-0 pt-5">
+      <h3 class="card-title align-items-start flex-column">
+        <span class="card-label fw-bolder fs-3 mb-1">Listado de Empresas</span>
+        <span class="text-muted mt-1 fw-bold fs-7">Accesibles por este usuario</span>
+      </h3>
+      <div class="card-toolbar">
+        <!-- begin::Menu -->
+        <button
+          class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+          data-kt-menu-flip="top-end"
+          data-kt-menu-placement="bottom-end"
+          data-kt-menu-trigger="click"
+          type="button"
+        >
+      <span
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen024.svg'"
+        class="svg-icon svg-icon-2"
+      ></span>
+        </button>
+        <!-- begin::Menu 2 -->
+        <app-dropdown-menu2></app-dropdown-menu2>
+        <!-- end::Menu 2 -->
+        <!-- end::Menu -->
+      </div>
+    </div>
+    <!-- end::Header -->
+    <!-- begin::Body -->
+    <div class="card-body py-3">
+      <!-- begin::Table container -->
+      <div class="table-responsive">
+        <!-- begin::Table -->
+        <table class="table align-middle gs-0 gy-4">
+          <!-- begin::Table head -->
+          <thead>
+          <tr class="fw-bolder text-muted bg-light">
+            <th class="min-w-200px">Nombre</th>
+            <th class="min-w-100px">Contacto</th>
+            <th class="min-w-125px">Identification</th>
+            <th class="min-w-125px">Direction</th>
+            <th class="min-w-50px">Acciones</th>
+          </tr>
+          </thead>
+          <!-- end::Table head -->
+          <!-- begin::Table body -->
+          <tbody>
+          <tr *ngFor="let issuing of issuings">
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="symbol symbol-50px me-5">
+                <span class="symbol-label bg-light">
+                  <img
+                    alt=""
+                    class="h-75 align-self-end"
+                    src="./assets/media/svg/avatars/001-boy.svg"
+                  />
+                </span>
+                </div>
+                <div class="d-flex justify-content-start flex-column">
+                  <a
+                    class="text-dark fw-bolder text-hover-primary mb-1 fs-6"
+                    (click)="clickEnterIssuing(issuing.id)"
+                  >
+                    {{issuing.commercialName}}
+                  </a>
+                  <span class="text-muted fw-bold text-muted d-block fs-7">
+                  {{issuing.socialReasonName}}
+                </span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <a
+                class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                (click)="clickEnterIssuing(issuing.id)"
+              >
+                {{issuing.email}}
+              </a>
+              <span class="text-muted fw-bold text-muted d-block fs-7"
+              >{{issuing.phone}}</span
+              >
+            </td>
+            <td>
+              <a
+                class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                (click)="clickEnterIssuing(issuing.id)"
+              >
+                {{issuing.identification}}
+              </a>
+              <span class="text-muted fw-bold text-muted d-block fs-7">{{issuing.identificationType.identificationType}}</span>
+            </td>
+            <td>
+              <a
+                class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                (click)="clickEnterIssuing(issuing.id)"
+              >
+                {{issuing.province.province}}
+              </a>
+              <span class="text-muted fw-bold text-muted d-block fs-7">{{issuing.addressDetails}}</span>
+            </td>
+            <td>
+              <a
+                (click)="clickEnterIssuing(issuing.id)"
+                class="
+                btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm
+                px-4
+                me-2
+              "
+              >
+                Ingresar
+              </a>
+              <a
+                (click)="newIssuing(issuing.id, true)"
+                class="
+                btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm
+                px-4
+              "
+              >
+                Editar
+              </a>
+            </td>
+          </tr>
+          </tbody>
+          <!-- end::Table body -->
+        </table>
+        <!-- end::Table -->
+        <mat-paginator (page)="paginator($event)"
+                       [length]="totalRegister"
+                       [pageIndex]="pageNo"
+                       [pageSizeOptions]="[5, 10, 25, 100]"
+                       [pageSize]="pageSize"
+                       class="pagination"
+                       showFirstLastButtons
+                       aria-label="Select page">
+        </mat-paginator>
+      </div>
+      <!-- end::Table container -->
+    </div>
+    <!-- begin: paginator-->
+
+    <!-- end: paginator -->
+  </div>
+</div>

@@ -1,0 +1,163 @@
+<div class="card mb-10">
+  <div class="card-body d-flex align-items-center py-8">
+    <!-- begin::Icon -->
+    <div
+      class="d-flex h-80px w-80px flex-shrink-0 flex-center position-relative"
+    >
+      <img class="h-40px me-10" src="assets/media/icons/duotune/coding/cod008.svg"/>
+    </div>
+    <!-- end::Icon  -->
+
+    <!-- begin::Description  -->
+    <div class="ms-6">
+      <h1 class="list-unstyled text-gray-600 fw-bold fs-6 p-0 m-0">
+        {{"ITEMS.ITEMS_PROVIDER_LIST.TITTLE"|translate}}
+      </h1>
+      <p>
+        {{"ITEMS.ITEMS_PROVIDER_LIST.INSTRUCTIONS"|translate}}
+      </p>
+    </div>
+    <!-- end::Description  -->
+  </div>
+</div>
+<div class="card card-custom">
+  <div class="card-header card-header-stretch overflow-auto">
+    <!-- begin::Header -->
+    <div class="card-header border-0 pt-5">
+      <h3 class="card-title align-items-start flex-column">
+        <span class="card-label fw-bolder fs-3 mb-1">{{"ITEMS.ITEMS_PROVIDER_LIST.TABLE_HEADER"|translate}}</span>
+        <span class="text-muted mt-1 fw-bold fs-7">Accesibles por este usuario</span>
+      </h3>
+      <div class="card-toolbar">
+        <!-- begin::Menu -->
+        <button
+          (click)="clickEditItemProvider(0, null)"
+          class="btn btn-success btn-hover-scale"
+          type="button"
+        >
+          {{"ITEMS.ITEMS_PROVIDER_LIST.NEW_RELATION"|translate}}
+      <span
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen024.svg'"
+        class="svg-icon svg-icon-2"
+      ></span>
+        </button>
+        <!-- begin::Menu 2 -->
+        <!-- end::Menu 2 -->
+
+        <!--begin::Input Form-->
+        <!-- end::Menu -->
+      </div>
+      <form [formGroup]="searchForm" autocomplete="off" class="w-100 position-relative mb-5"
+            data-kt-search-element="form" id="searchForm">
+
+        <input class="form-control form-control-lg form-control-solid px-15" data-kt-search-element="input"
+               formControlName="providerCode"
+               id="providerCode"
+               name="providerCode"
+               placeholder="Buscar por código de proveedor"
+               type="text"
+               value=""/>
+      </form>
+      <!--end::Form-->
+    </div>
+    <!-- end::Header -->
+    <!-- begin::Body -->
+    <div class="card-body py-3">
+      <!-- begin::Table container -->
+      <div class="table-responsive">
+        <!-- begin::Table -->
+        <table class="table align-middle gs-0 gy-4">
+          <thead>
+          <tr class="fw-bolder text-muted bg-light">
+            <th class="min-w-100px">Producto</th>
+            <th class="min-w-125px">{{"ITEMS.ITEMS_PROVIDER_LIST.TABLE.BARCODE"|translate}}</th>
+            <th class="min-w-200px">{{"ITEMS.ITEMS_PROVIDER_LIST.TABLE.PRICE"|translate}}</th>
+            <th class="min-w-100px">{{"ITEMS.ITEMS_PROVIDER_LIST.TABLE.DISCOUNT"|translate}}</th>
+            <th class="min-w-175px">{{"ITEMS.ITEMS_PROVIDER_LIST.TABLE.IVA"|translate}}</th>
+            <th class="min-w-10px">{{"ITEMS.ITEMS_PROVIDER_LIST.TABLE.ACTIONS"|translate}}</th>
+          </tr>
+          </thead>
+          <!-- end::Table head -->
+          <!-- begin::Table body -->
+          <tbody>
+          <tr *ngFor="let itemProvider of item_provider">
+            <td>
+              <a
+                class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                <!--                (click)="clickEnterIssuing(issuing.id)"-->
+                <!--              >-->
+                {{itemProvider.item.name}}
+              </a>
+              <span class="text-muted fw-bold text-muted d-block fs-7"
+              >Código Interno: {{itemProvider.item.code}}</span
+              >
+            </td>
+            <td>
+              <a
+                class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                <!--                (click)="clickEnterIssuing(issuing.id)"-->
+                <!--              >-->
+                {{itemProvider.barcode}}
+              </a>
+              <span class="text-muted fw-bold text-muted d-block fs-7"
+              >Código Proveedor: {{itemProvider.providerCode}}</span
+              >
+            </td>
+            <td>
+              <a
+                class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                <!--                (click)="clickEnterIssuing(issuing.id)"-->
+                <!--              >-->
+                Precio en factura: {{itemProvider.price}}
+              </a>
+              <span class="text-muted fw-bold text-muted d-block fs-7"
+              >Precio guardado: {{itemProvider.item.purchasePrice}}</span
+              >
+            </td>
+            <td>
+              <a
+                class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                <!--                (click)="clickEnterIssuing(issuing.id)"-->
+                <!--              >-->
+                Descuento: {{itemProvider.discount}}
+              </a>
+              <span class="text-muted fw-bold text-muted d-block fs-7"
+              >Descuento Porcentaje: {{itemProvider.discountPercentage}}</span
+              >
+            </td>
+            <td>
+              <a
+                class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                <!--                (click)="clickEnterIssuing(issuing.id)"-->
+                <!--              >-->
+                Impuesto: {{itemProvider.ivaPercentage}}
+              </a>
+              <span class="text-muted fw-bold text-muted d-block fs-7"
+              >Impuesto Porcentaje: {{itemProvider.iva.ivaRateDetail}}</span
+              >
+            </td>
+            <td class="text-end">
+              <a
+                (click)="clickEditItemProvider(itemProvider.id, itemProvider)"
+                class="
+                btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm
+                px-4
+                me-2
+              "
+              >
+                Editar
+              </a>
+            </td>
+          </tr>
+        </table>
+        <!-- end::Table -->
+        <!-- begin: paginator-->
+        <mat-paginator (page)="paginator($event)" [length]="totalRegister" [pageSizeOptions]="[10, 50, 100]"
+                       [pageSize]="pageSize" aria-label="Select page">
+        </mat-paginator>
+        <!-- end: paginator -->
+      </div>
+      <!-- end::Table container -->
+    </div>
+  </div>
+</div>
