@@ -12,6 +12,8 @@ import XAxis from './modules/axes/XAxis'
 import YAxis from './modules/axes/YAxis'
 import InitCtxVariables from './modules/helpers/InitCtxVariables'
 import Destroy from './modules/helpers/Destroy'
+import { addResizeListener, removeResizeListener } from './utils/Resize'
+import apexCSS from './assets/apexcharts.css'
 
 /**
  *
@@ -69,7 +71,29 @@ export default class ApexCharts {
 
         this.events.fireEvent('beforeMount', [this, this.w])
         window.addEventListener('resize', this.windowResizeHandler)
-        window.addResizeListener(this.el.parentNode, this.parentResizeHandler)
+        addResizeListener(this.el.parentNode, this.parentResizeHandler)
+
+        // Add CSS if not already added
+        if (!this.css) {
+          let rootNode = this.el.getRootNode && this.el.getRootNode()
+          let inShadowRoot = Utils.is('ShadowRoot', rootNode)
+          let doc = this.el.ownerDocument
+          let globalCSS = doc.getElementById('apexcharts-css')
+
+          if (inShadowRoot || !globalCSS) {
+            this.css = document.createElement('style')
+            this.css.id = 'apexcharts-css'
+            this.css.textContent = apexCSS
+
+            if (inShadowRoot) {
+              // We are in Shadow DOM, add to shadow root
+              rootNode.prepend(this.css)
+            } else {
+              // Add to <head> of element's document
+              doc.head.appendChild(this.css)
+            }
+          }
+        }
 
         let graphData = this.create(this.w.config.series, {})
         if (!graphData) return resolve(this)
@@ -180,6 +204,10 @@ export default class ApexCharts {
     // we need to generate yaxis for heatmap separately as we are not showing numerics there, but seriesNames. There are some tweaks which are required for heatmap to align labels correctly which are done in below function
     // Also we need to do this before calculating Dimensions plotCoords() method of Dimensions
     this.formatters.heatmapLabelFormatters()
+
+    // get the largest marker size which will be needed in dimensions calc
+    const coreUtils = new CoreUtils(this)
+    coreUtils.getLargestMarkerSize()
 
     // We got plottable area here, next task would be to calculate axis areas
     this.dimensions.plotCoords()
@@ -297,7 +325,7 @@ export default class ApexCharts {
           w.globals.axisCharts &&
           (w.globals.isXNumeric ||
             w.config.xaxis.convertedCatToNumeric ||
-            w.globals.isTimelineBar)
+            w.globals.isRangeBar)
         ) {
           if (
             w.config.chart.zoom.enabled ||
@@ -347,7 +375,7 @@ export default class ApexCharts {
   destroy() {
     window.removeEventListener('resize', this.windowResizeHandler)
 
-    window.removeResizeListener(this.el.parentNode, this.parentResizeHandler)
+    removeResizeListener(this.el.parentNode, this.parentResizeHandler)
     // remove the chart's instance from the global Apex._chartInstances
     const chartID = this.w.config.chart.id
     if (chartID) {
@@ -583,6 +611,10 @@ export default class ApexCharts {
 
   toggleSeries(seriesName) {
     return this.series.toggleSeries(seriesName)
+  }
+
+  highlightSeriesOnLegendHover(e, targetElement) {
+    return this.series.toggleSeriesOnHover(e, targetElement)
   }
 
   showSeries(seriesName) {

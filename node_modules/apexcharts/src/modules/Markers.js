@@ -45,9 +45,19 @@ export default class Markers {
 
     let point
 
-    if (w.globals.markers.size[seriesIndex] > 0 || alwaysDrawMarker) {
+    const hasDiscreteMarkers =
+      w.config.markers.discrete && w.config.markers.discrete.length
+
+    if (
+      w.globals.markers.size[seriesIndex] > 0 ||
+      alwaysDrawMarker ||
+      hasDiscreteMarkers
+    ) {
       elPointsWrap = graphics.group({
-        class: alwaysDrawMarker ? '' : 'apexcharts-series-markers'
+        class:
+          alwaysDrawMarker || hasDiscreteMarkers
+            ? ''
+            : 'apexcharts-series-markers'
       })
 
       elPointsWrap.attr(
@@ -77,18 +87,18 @@ export default class Markers {
           ? w.globals.markers.size[seriesIndex] > 0
           : w.config.markers.size > 0
 
-        if (shouldMarkerDraw || alwaysDrawMarker) {
+        if (shouldMarkerDraw || alwaysDrawMarker || hasDiscreteMarkers) {
           if (Utils.isNumber(p.y[q])) {
             PointClasses += ` w${Utils.randomId()}`
           } else {
             PointClasses = 'apexcharts-nullpoint'
           }
 
-          let opts = this.getMarkerConfig(
-            PointClasses,
+          let opts = this.getMarkerConfig({
+            cssClass: PointClasses,
             seriesIndex,
             dataPointIndex
-          )
+          })
 
           if (w.config.series[i].data[dataPointIndex]) {
             if (w.config.series[i].data[dataPointIndex].fillColor) {
@@ -132,7 +142,12 @@ export default class Markers {
     return elPointsWrap
   }
 
-  getMarkerConfig(cssClass, seriesIndex, dataPointIndex = null) {
+  getMarkerConfig({
+    cssClass,
+    seriesIndex,
+    dataPointIndex = null,
+    finishRadius = null
+  }) {
     const w = this.w
     let pStyle = this.getMarkerStyle(seriesIndex)
     let pSize = w.globals.markers.size[seriesIndex]
@@ -156,7 +171,7 @@ export default class Markers {
     }
 
     return {
-      pSize,
+      pSize: finishRadius === null ? pSize : finishRadius,
       pRadius: m.radius,
       width: Array.isArray(m.width) ? m.width[seriesIndex] : m.width,
       height: Array.isArray(m.height) ? m.height[seriesIndex] : m.height,

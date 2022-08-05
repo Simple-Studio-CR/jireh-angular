@@ -1,0 +1,198 @@
+<div [hidden]="!editing">
+  <div>
+    <button *ngIf="!addNewDetailProduct" class="btn btn-info margin-left" (click)="addNewDetail()">
+      <i class="fas fa-plus" data-placement="top" data-toggle="tooltip"></i> Crear
+    </button>
+    <button *ngIf="addNewDetailProduct" class="btn btn-success margin-left" (click)="saveNewDetail()">
+      <i class="fas fa-save" data-placement="top" data-toggle="tooltip"></i> Guardar
+    </button>
+  </div>
+  <form *ngIf="addNewDetailProduct" [formGroup]="detailsForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="products">Producto</label>
+            <select  id="products" class="form-control" formControlName="products">
+              <option [ngValue]="null">Seleccione un Producto</option>
+              <option *ngFor="let products of product" [ngValue]="products">
+                {{products.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6" >
+          <div class="form-group">
+            <label for="email">Ingrediente Activo</label>
+            <input
+              class="form-control"
+              formControlName="activeIngredient"
+              id="email"
+              placeholder="Ingrediente Activo"
+              type="text"
+            />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="dose">Dosis</label>
+            <input
+              class="form-control"
+              formControlName="dose"
+              id="dose"
+              placeholder="Dosis"
+              type="text"
+            />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="sanitaryPermission">Permiso Sanitario</label>
+            <input
+              class="form-control"
+              formControlName="sanitaryPermission"
+              id="sanitaryPermission"
+              placeholder="Permiso Sanitario"
+              type="text"
+            />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="timeOff">Tiempo de Reingreso</label>
+            <input
+              class="form-control"
+              formControlName="timeOff"
+              id="timeOff"
+              placeholder="Reingreso"
+              type="text"
+            />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="labelColor">Etiqueta</label>
+            <input
+              class="form-control"
+              formControlName="labelColor"
+              id="labelColor"
+              placeholder="Reingreso"
+              type="color"
+              value="{{labelColor}}"
+            />
+          </div>
+        </div>
+        <div class="col-md-3" hidden>
+          <div class="form-group">
+            <label for="serviceProviderId">Etiqueta</label>
+            <input
+              class="form-control"
+              formControlName="serviceProviderId"
+              id="serviceProviderId"
+              placeholder="service provider"
+              type="text"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="equipment">Equipo</label>
+            <select  id="equipment" class="form-control" formControlName="equipment">
+              <option [ngValue]="null">Seleccione el equipo utilizado</option>
+              <option *ngFor="let equiments of equipment" [ngValue]="equiments">
+                {{equiments.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="applicationType">Tipo de aplicación</label>
+            <input
+              class="form-control"
+              formControlName="applicationType"
+              id="applicationType"
+              placeholder="Aplicacion"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+  </form>
+  <!-- begin::Body -->
+  <div class="card-body py-3">
+    <!-- begin::Table container -->
+    <div class="table-responsive">
+      <!-- begin::Table -->
+      <table class="table table-row-dashed table-striped table-row-gray-300 align-middle gs-0 gy-4">
+        <thead>
+        <tr class="fw-bolder text-muted">
+          <th class="mb-1">Info</th>
+          <th class="mb-1">Producto</th>
+          <th class="mb-1">Aplicación</th>
+          <th class="mb-1 text-end">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let detail of details">
+          <td>
+            <a
+              class="text-dark fw-bolder text-hover-primary d-block fs-6"
+            >
+              {{detail.products.name}}
+            </a>
+            <span class="text-muted fw-bold text-muted d-block fs-7">
+                  {{detail.products.sanitaryPermission}}
+
+                </span>
+          </td>
+          <td>
+            <a
+              class="text-dark fw-bolder text-hover-primary d-block fs-6"
+            >
+              {{detail.products.activeingredient}}
+            </a>
+            <span class="text-muted fw-bold text-muted d-block fs-7">
+                  {{detail.products.dose}}
+
+                </span>
+          </td>
+          <td>
+            <a
+              class="text-dark fw-bolder text-hover-primary d-block fs-6"
+            >
+              {{detail.equipment.name}}
+            </a>
+            <span class="text-muted fw-bold text-muted d-block fs-7">
+                  {{detail.equipment.type}}
+
+                </span>
+          </td>
+          <td class="text-end">
+            <a
+              (click)="clickEditDetail(detail)"
+              class="
+                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
+                me-1
+              "
+            >
+              <span
+                [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                class="svg-icon svg-icon-3 svg-icon-warning"
+              ></span>
+            </a>
+            <a
+              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+              href="#"
+            >
+              <span
+                [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                class="svg-icon svg-icon-3 svg-icon-danger"
+              ></span>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

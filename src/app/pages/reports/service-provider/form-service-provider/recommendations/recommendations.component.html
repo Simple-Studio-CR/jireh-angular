@@ -1,0 +1,82 @@
+<form [formGroup]="recommendationsListForm">
+    <h2>Antes de la fumigación</h2>
+    <div *ngFor="let recommendationsList of getArrayBefore().controls; let i = index;"
+         formArrayName="serviceProviderRecommendationsFormsBefore">
+      <div class="row p-t-20 col-md-12" formGroupName="{{i}}">
+        <div class="col-md-3" hidden>
+          <label class="form-label">Codigo</label>
+          <input class="form-control" formControlName="recommendationId">
+        </div>
+        <div class="col-md-1">
+          <fieldset [disabled]="!editing">
+            <label class="form-label">Aplica</label><br>
+            <input class="form-check-input" formControlName="apply"
+                   type="checkbox" value="">
+          </fieldset>
+        </div>
+        <div class="col-md-11">
+          <fieldset [disabled]="!false">
+            <label class="form-label">Nombre</label>
+            <input class="form-control" formControlName="name">
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    <div class="separator my-10"></div>
+</form>
+
+<form [formGroup]="recommendationsListForm">
+
+    <h2>Durante la fumigación</h2>
+    <div *ngFor="let recommendationsList of getArrayDuring().controls; let i = index;"
+         formArrayName="serviceProviderRecommendationsFormsDuring">
+      <div class="row p-t-20 col-md-12" formGroupName="{{i}}">
+        <div class="col-md-3" hidden>
+          <label class="form-label">Codigo</label>
+          <input class="form-control" formControlName="recommendationId">
+        </div>
+        <div class="col-md-1">
+          <fieldset [disabled]="!editing">
+            <label class="form-label">Aplica</label><br>
+            <input class="form-check-input" formControlName="apply"
+                   type="checkbox" value="">
+          </fieldset>
+        </div>
+        <div class="col-md-11">
+          <fieldset [disabled]="!false">
+            <label class="form-label">Nombre</label>
+            <input class="form-control" formControlName="name">
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    <div class="separator my-10"></div>
+</form>
+
+<form [formGroup]="recommendationsListForm">
+
+    <h2>Después de la fumigación</h2>
+    <div *ngFor="let recommendationsList of getArrayAfter().controls; let i = index;"
+         formArrayName="serviceProviderRecommendationsFormsAfter">
+      <div class="row p-t-20 col-md-12" formGroupName="{{i}}">
+        <div class="col-md-3" hidden>
+          <label class="form-label">Codigo</label>
+          <input class="form-control" formControlName="recommendationId">
+        </div>
+        <div class="col-md-1">
+          <fieldset [disabled]="!editing">
+            <label class="form-label">Aplica</label><br>
+            <input class="form-check-input" formControlName="apply"
+                   type="checkbox" value="">
+          </fieldset>
+        </div>
+        <div class="col-md-11">
+          <fieldset [disabled]="!false">
+            <label class="form-label">Nombre</label>
+            <input class="form-control" formControlName="name">
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    <div class="separator my-10"></div>
+</form>

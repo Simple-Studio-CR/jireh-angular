@@ -6,12 +6,13 @@ import {TranslationModule} from "../../modules/i18n";
 import {ClientsComponent} from "./clients.component";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {InlineSVGModule} from "ng-inline-svg";
-import { FormClientsComponent } from './form-clients/form-clients.component';
+import {FormClientsComponent} from './form-clients/form-clients.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {BranchFormClientsComponent} from "./form-clients/branch-clients/branch-form-clients.component";
 
 @NgModule({
-  declarations: [ClientsComponent, FormClientsComponent],
+  declarations: [ClientsComponent, FormClientsComponent, BranchFormClientsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -23,6 +24,12 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         path: 'view',
         component: FormClientsComponent,
       },
+      {
+        path: 'view/branch',
+        component: BranchFormClientsComponent,
+
+      },
+
     ]),
     WidgetsModule,
     TranslationModule,
@@ -34,4 +41,5 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     ReactiveFormsModule,
   ],
 })
-export class ClientsModule {}
+export class ClientsModule {
+}

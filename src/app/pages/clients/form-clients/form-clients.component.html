@@ -1,440 +1,279 @@
-<div class="card">
-  <div class="card-body">
-    <div
-      class="stepper stepper-links d-flex flex-column pt-15"
-      id="kt_create_account_stepper"
-    >
-      <div class="stepper-nav mb-4">
-        <div
-          [ngClass]="{
-            current: currentStep$.value === 1,
-            completed: currentStep$.value > 1
-          }"
-          class="stepper-item"
-        >
-          <h3 class="stepper-title">{{"CLIENTS.FORM.INFO" | translate}}</h3>
-        </div>
-
-        <div
-          [ngClass]="{
-            current: currentStep$.value === 2,
-            completed: currentStep$.value > 2
-          }"
-          class="stepper-item"
-        >
-          <h3 class="stepper-title">{{"CLIENTS.FORM.CREDIT" | translate}}</h3>
-        </div>
-
-        <div
-          [ngClass]="{
-            current: currentStep$.value === 3,
-            completed: currentStep$.value > 3
-          }"
-          class="stepper-item"
-        >
-          <h3 class="stepper-title">{{"CLIENTS.FORM.DISCOUNT" | translate}}</h3>
-        </div>
-
-        <div
-          [ngClass]="{
-            current: currentStep$.value === 4,
-            completed: currentStep$.value > 4
-          }"
-          class="stepper-item"
-        >
-          <h3 class="stepper-title">{{"CLIENTS.FORM.EXONERATION" | translate}}</h3>
+<div class="card bg-light mb-3">
+  <div class="page_title_section">
+    <div class="page_title_overlay"></div>
+    <div class="page_header text-center">
+      <div class="container">
+        <div class="row">
+          <!-- section_heading start -->
+          <div class="col-lg-12 col-md-12 col-12 col-sm-12">
+            <div class="page_header_line">
+              <h1 class="pst_bottompadder30"><span>{{title}}</span></h1>
+            </div>
+          </div>
         </div>
       </div>
-
-      <form
-        (ngSubmit)="onClientUpdate()"
-        [formGroup]="clientForm"
-        class="mx-auto mw-600px w-100 pt-15 pb-10"
-        id="clientForm" noValidate
-      >
-        <fieldset [disabled]="!isEditing">
-          <div class="current">
-            <ng-container *ngIf="currentStep$.value === 1">
-
-              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
-                <!--IDENTIFICATION-->
-                <div class="col">
-                  <label class="form-label required">{{"CLIENTS.FORM.IDENTIFICATION" | translate}}</label>
-                  <input
-                    class="form-control form-control-lg form-control-solid"
-                    formControlName="identification"
-                    name="businessName"/>
-                  <div
-                    *ngIf="clientForm.get('identification')?.hasError('required') &&clientForm.get('identification')?.touched"
-                    class="fv-plugins-message-container invalid-feedback">
-                    Identification is required
-                  </div>
-                </div>
-
-                <!--SOCIAL REASON NAME-->
-                <div class="col">
-                  <label class="form-label required">{{"CLIENTS.FORM.BUSINESS" | translate}}</label
-                  ><input
-                  class="form-control form-control-lg form-control-solid"
-                  formControlName="socialReasonName"
-                  name="businessName"/>
-                  <div
-                    *ngIf="clientForm.get('socialReasonName')?.hasError('required') &&clientForm.get('socialReasonName')?.touched"
-                    class="fv-plugins-message-container invalid-feedback">
-                    Business Name is required
-                  </div>
-                </div>
-              </div>
-
-              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
-                <!--IDENTIFICATION TYPE-->
-                <form [formGroup]="identificationTypeForm">
-                  <div class="col">
-                    <label class="form-label required">{{"CLIENTS.FORM.IDTYPE" | translate}}</label
-                    ><select
-                    class="form-select form-select-lg form-select-solid"
-                    formControlName="identType"
-                    name="identificationType"
-                  >
-                    <option *ngFor="let identificationType of clientIdentificationType"
-                            [ngValue]="identificationType.id"
-                            disabled>{{identificationType.identificationType}}</option>
-                  </select>
-                  </div>
-                </form>
-
-                <!--COMERCIAL NAME-->
-                <div class="col">
-                  <label class="form-label">{{"CLIENTS.FORM.COMERCIAL" | translate}}</label>
-                  <input
-                    class="form-control form-control-lg form-control-solid"
-                    formControlName="email"
-                    name="email"/>
-                </div>
-              </div>
-
-              <form [formGroup]="addressForm">
-                <div class="row row-cols-lg-2 g-10 fv-row mb-10">
-                  <div class="col">
-                    <label class="form-label" for="clientProvince">{{"CLIENTS.FORM.PROVINCE" | translate}}</label>
-                    <select class="form-select form-select-lg form-select-solid" formControlName="clientProvince"
-                            id="clientProvince">
-                      <option [ngValue]="null" disabled>Seleccione Provincia</option>
-                      <option *ngFor="let provinces of province"
-                              [ngValue]="provinces">{{provinces.province}}</option>
-                    </select>
-
-                  </div>
-                  <div class="col">
-                    <label class="form-label" for="clientCanton">{{"CLIENTS.FORM.CANTON" | translate}}</label>
-                    <select class="form-select form-select-lg form-select-solid" formControlName="clientCanton"
-                            id="clientCanton">
-                      <option [ngValue]="null" disabled>Seleccione Canton</option>
-                      <option *ngFor="let cantons of canton" [ngValue]="cantons">{{cantons.canton}}</option>
-                    </select>
-                  </div>
-
-                  <div class="col">
-                    <label class="form-label" for="clientDistrict">{{"CLIENTS.FORM.DISTRICT" | translate}}</label>
-                    <select class="form-select form-select-lg form-select-solid" formControlName="clientDistrict"
-                            id="clientDistrict">
-                      <option [ngValue]="null" disabled>Seleccione Distrito</option>
-                      <option *ngFor="let districts of district"
-                              [ngValue]="districts">{{districts.districtName}}</option>
-                    </select>
-                  </div>
-                </div>
-              </form>
-              <div class="col fv-row mb-10">
-                <label class="form-label" for="neighborhood">{{"CLIENTS.FORM.NEIGH" | translate}}</label>
-                <select class="form-select form-select-lg form-select-solid" formControlName="neighborhood"
-                        id="neighborhood">
-                  <option [ngValue]="null" disabled>Seleccione Barrio</option>
-                  <option *ngFor="let neighs of neigh" [ngValue]="neighs">{{neighs.neighborhoodName}}</option>
-                </select>
-              </div>
-
-              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
-                <!--MAIL 1-->
-                <div class="col">
-                  <label class="form-label required">{{"CLIENTS.FORM.EMAIL" | translate}} 1</label>
-                  <input
-                    class="form-control form-control-lg form-control-solid"
-                    formControlName="email"
-                    name="email"
-                  />
-                  <div
-                    *ngIf="clientForm.get('email')?.hasError('required') && clientForm.get('email')?.touched"
-                    class="fv-plugins-message-container invalid-feedback"
-                  >
-                    Email-1 is required
-                  </div>
-                </div>
-
-                <!--MAIL 2-->
-                <div class="col">
-                  <label class="form-label">{{"CLIENTS.FORM.EMAIL" | translate}} 2</label>
-                  <input
-                    class="form-control form-control-lg form-control-solid"
-                    formControlName="email2"
-                    name="email2"/>
-                </div>
-              </div>
-
-              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
-                <!--PHONE 1-->
-                <div class="col">
-                  <label class="form-label">{{"CLIENTS.FORM.PHONE" | translate}} 1</label>
-                  <input
-                    class="form-control form-control-lg form-control-solid"
-                    formControlName="phone"
-                    name="phone"/>
-                </div>
-
-                <!--PHONE 2-->
-                <div class="col">
-                  <label class="form-label">{{"CLIENTS.FORM.PHONE" | translate}} 2</label>
-                  <input
-                    class="form-control form-control-lg form-control-solid"
-                    formControlName="phone2"
-                    name="phone2"/>
-                </div>
-              </div>
-
-              <!--DESCRIPTION-->
-              <div class="fv-row mb-10">
-                <label class="form-label">{{"CLIENTS.FORM.DESCRIPTION" | translate}}</label
-                ><textarea
-                class="form-control form-control-lg form-control-solid"
-                formControlName="description"
-                name="description"
-                rows="3"
-              ></textarea>
-              </div>
-
-              <!--NOTE-->
-              <div>
-                <label class="form-label">{{"CLIENTS.FORM.NOTE" | translate}}</label
-                ><textarea
-                class="form-control form-control-lg form-control-solid"
-                formControlName="note"
-                name="note"
-                rows="3"
-              ></textarea>
-              </div>
-            </ng-container>
-
-            <ng-container *ngIf="currentStep$.value === 2">
-              <!--FLAG CREDIT-->
-              <div class="col fv-row mb-10">
-                <label class="form-label" for="enabledCredit">{{"CLIENTS.FORM.CREDIT_FLAG" | translate}}</label>
-                <select class="form-select form-select-lg form-select-solid" formControlName="enabledCredit"
-                        id="enabledCredit">
-                  <option [value]="false">No</option>
-                  <option [value]="true">Si</option>
-                </select>
-              </div>
-
-              <!--CREDIT ENDLESS-->
-              <form [formGroup]="addressForm">
-                <div [hidden]="this.clientForm.get('enabledCredit')?.value == false"
-                     class="fv-row mb-9 fv-plugins-icon-container fv-plugins-bootstrap5-row-valid"
-                     data-kt-calendar="datepicker">
-                  <label class="form-label"
-                         for="creditEnd">{{"CLIENTS.FORM.CREDIT_DAYS" | translate}}</label>
-                  <div class="input-group">
-                    <input #q="ngbDatepicker" class="form-control form-control-solid flatpickr-input active"
-                           formControlName="dateCredit" [(ngModel)]="dateCreditEnd" id="creditEnd" ngbDatepicker type="text">
-                    <div class="input-group-append">
-                      <button (click)="q.toggle()" class="btn btn-outline-secondary" type="button"><i
-                        class="far fa-calendar-alt"></i></button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-
-              <div [hidden]="this.clientForm.get('enabledCredit')?.value == false"
-                   class="row row-cols-lg-2 g-10 fv-row mb-10">
-                <!--CREDIT TYPE-->
-                <div class="col">
-                  <label class="form-label" for="creditType">{{"CLIENTS.FORM.CREDIT_TYPE" | translate}}</label>
-                  <select class="form-select form-select-lg form-select-solid" formControlName="creditType"
-                          id="creditType">
-                    <option [ngValue]="null">Seleccione tipo de Credito</option>
-                    <option *ngFor="let credits of clientCreditType"
-                            [ngValue]="credits">{{credits.creditType}}</option>
-                  </select>
-                </div>
-
-                <!--PERIOD PAY-->
-                <div class="col">
-                  <label class="form-label" for="creditPeriod">{{"CLIENTS.FORM.PAY_PERIOD" | translate}}</label>
-                  <input class="form-control form-control-lg form-control-solid" formControlName="creditPeriod"
-                         id="creditPeriod"
-                         type="text">
-                </div>
-              </div>
-
-              <div [hidden]="this.clientForm.get('enabledCredit')?.value == false"
-                   class="row row-cols-lg-2 g-10 fv-row mb-10">
-
-                <!--CREDIT DAYS-->
-                <div class="col">
-                  <label class="form-label" for="creditDays">{{"CLIENTS.FORM.CREDIT_DAYS" | translate}}</label>
-                  <input class="form-control form-control-lg form-control-solid" formControlName="creditDays"
-                         id="creditDays"
-                         type="text">
-                </div>
-
-                <div class="col">
-                  <label class="form-label" for="creditGrace">{{"CLIENTS.FORM.CREDIT_GRACE" | translate}}</label>
-                  <input class="form-control form-control-lg form-control-solid" formControlName="creditGrace"
-                         id="creditGrace" type="text">
-                </div>
-                <div class="col">
-                  <label class="form-label" for="debt">{{"CLIENTS.FORM.DEBT" | translate}}</label>
-                  <input class="form-control form-control-lg form-control-solid" formControlName="debt" id="debt"
-                         type="number">
-                </div>
-              </div>
-
-            </ng-container>
-
-            <ng-container *ngIf="currentStep$.value === 3">
-
-              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
-
-                <div class="col">
-                  <label class="form-label" for="type">{{"CLIENTS.FORM.TYPE_DISCOUNT" | translate}}</label>
-                  <select class="form-select form-select-lg form-select-solid" formControlName="type" id="type">
-                    <option [ngValue]="null" disabled>Seleccione tipo de Credito</option>
-                    <option *ngFor="let types of clientsTypes"
-                            [ngValue]="types">{{types.type}}</option>
-                  </select>
-                </div>
-
-                <div class="col">
-                  <label class="form-label" for="discount">{{"CLIENTS.FORM.DISCOUNT" | translate}}</label>
-                  <input class="form-control form-control-lg form-control-solid" formControlName="discount"
-                         id="discount"
-                         type="number">
-                </div>
-              </div>
-            </ng-container>
-
-            <ng-container *ngIf="currentStep$.value === 4">
-
-              <div class="col">
-                <label class="form-label" for="documentNumber">Numero de Exoneracion</label>
-                <div class="input-group">
-                  <input class="form-control" formControlName="documentNumber" id="documentNumber" type="text">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"><i
-                      class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>
-              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
-                <div class="col">
-                  <label class="form-label" for="law">Ley de Exoneracion</label>
-                  <input class="form-control" formControlName="law" id="law" maxlength=25 type="text">
-                </div>
-                <div class="col">
-                  <label class="form-label" for="exonerationType">Tipo de Exoneracion</label>
-                  <select class="form-select" formControlName="exonerationType" id="exonerationType">
-                    <option *ngFor="let exoneration of exonerationType"
-                            [ngValue]="exoneration">{{exoneration.exonerationOrAuthorization}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
-                <div class="col">
-                  <label class="form-label" for="institutionNumber">Institucion</label>
-                  <input class="form-control" formControlName="institutionNumber" id="institutionNumber" type="text">
-                </div>
-                <div class="col">
-                  <label class="form-label" for="exoneration">Porncentaje de Exoneracion del IVA</label>
-                  <input class="form-control" formControlName="exoneration" id="exoneration" maxlength=4 type="number">
-                </div>
-              </div>
-              <div class="row row-cols-lg-2 g-10 fv-row mb-10">
-                <div class="col">
-                  <label class="form-label" for="exonerationDateStart">Porncentaje de Exoneracion del IVA</label>
-                  <input class="form-control" formControlName="exonerationDateStart" id="exonerationDateStart"
-                         maxlength=4 type="text">
-                </div>
-
-                <div class="col">
-                  <label class="form-label" for="exonerationDateEnd">Porncentaje de Exoneracion del IVA</label>
-                  <input class="form-control" formControlName="exonerationDateEnd" id="exonerationDateEnd" maxlength=4
-                         type="text">
-                </div>
-              </div>
-            </ng-container>
-
-          </div>
-
-          <div class="d-flex flex-stack pt-15">
-            <div class="mr-2">
-              <ng-container *ngIf="currentStep$.value !== 1">
-                <button
-                  (click)="prevStep()"
-                  class="btn btn-lg btn-light-primary me-3"
-                  type="button"
-                >
-                <span
-                  [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
-                  class="svg-icon svg-icon-4 me-1"
-                ></span>
-                  Back
-                </button>
-              </ng-container>
-            </div>
-
-            <ng-container>
-              <div>
-                <ng-container *ngIf="currentStep$.value < formsCount">
-                  <button
-                    (click)="nextStep()"
-                    class="btn btn-lg btn-primary me-3"
-                    type="button"
-                  >
-                <span class="indicator-label">
-
-                    Continue {{ " " }}
-                  <span
-                    [inlineSVG]="
-                        './assets/media/icons/duotune/arrows/arr064.svg'
-                      "
-                    class="svg-icon svg-icon-3 ms-2 me-0"
-                  ></span>
-                  </span>
-                  </button>
-                </ng-container>
-                <ng-container *ngIf="currentStep$.value === formsCount">
-                  <button
-                    class="btn btn-lg btn-primary me-3"
-                    form="clientForm"
-                    type="submit"
-                  >
-                <span class="indicator-label">
-                  Submit
-                  <span
-                    [inlineSVG]="
-                        './assets/media/icons/duotune/arrows/arr064.svg'
-                      "
-                    class="svg-icon svg-icon-3 ms-2 me-0"
-                  ></span>
-                  </span>
-                  </button>
-                </ng-container>
-
-
-              </div>
-            </ng-container>
-          </div>
-        </fieldset>
-      </form>
     </div>
   </div>
 </div>
+<div class="card bg-light mb-3">
+  <div class="sp_choose_main_wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="card-body">
+
+          <!-- success -->
+          <div *ngIf="editedClient" class="alert alert-success">
+            Cliente guardado exitosamente.
+          </div>
+
+          <!-- edit -->
+          <button
+            (click)="enableEdit()"
+            *ngIf="authService.hasRole('ROLE_ADMIN') && !isEditing"
+            class="btn btn-warning mr-2"
+          >
+            Editar
+          </button>
+
+
+          <!-- on client update -->
+          <button
+            *ngIf="isEditing && !isNew" [disabled]="isUpdating"
+            class="btn btn-success mr-2"
+            form="clientForm"
+            type="submit"
+          >
+            Guardar
+          </button>
+
+          <!-- on client update -->
+          <button
+            *ngIf="isEditing && isNew && activeTab===clientTabsEnum.CLIENT" [disabled]="isUpdating"
+            class="btn btn-success mr-2"
+            form="clientForm"
+            type="submit"
+          >
+            Guardar
+          </button>
+
+          <!-- on branches update -->
+          <button
+            *ngIf="isEditing && isNew && activeTab===clientTabsEnum.BRANCHES" [disabled]="isUpdating"
+            class="btn btn-success mr-2"
+            form="clientForm"
+            type="submit"
+          >
+            Guardar
+          </button>
+
+          <!-- on branch create -->
+          <button
+            (click)="branchEnterReport(null, null)" *ngIf="isEditing && !isNew && activeTab===clientTabsEnum.BRANCHES"
+            [disabled]="isUpdating"
+            class="btn btn-light-info mr-2"
+            type="button"
+          >
+            Añadir Sucursal
+          </button>
+
+          <!-- back -->
+          <button
+            (click)="back()"
+            [ngClass]="{'margin-left': authService.hasRole('ROLE_ADMIN')}"
+            class="btn btn-light-primary mr-2">
+            Volver
+          </button>
+
+          <div class="mt-3">
+            <!-- tabs -->
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <!-- data tab -->
+              <li class="nav-item" role="presentation">
+                <button
+                  (click)="setActiveTab(clientTabsEnum.CLIENT)"
+                  aria-controls="client-data"
+                  aria-selected="false"
+                  class="nav-link"
+                  data-bs-target="#client-data"
+                  data-bs-toggle="pill"
+                  id="client-data-tab"
+                  role="tab"
+                  type="button"
+                >
+                  Datos
+                </button>
+              </li>
+
+              <!-- data tab -->
+              <li *ngIf="!isNew" class="nav-item" role="presentation">
+                <button
+                  (click)="setActiveTab(clientTabsEnum.BRANCHES)"
+                  aria-controls="branches-data"
+                  aria-selected="false"
+                  class="nav-link"
+                  data-bs-target="#branches-data"
+                  data-bs-toggle="pill"
+                  id="branches-data-tab"
+                  role="tab"
+                  type="button"
+                >
+                  Sucursales
+                </button>
+              </li>
+            </ul>
+
+
+            <!-- views -->
+            <div class="tab-content" id="pills-tabContent">
+              <!--client data tab-->
+              <div [ngClass]="{'active': activeTab === clientTabsEnum.CLIENT}" aria-labelledby="client-data-tab"
+                   class="tab-pane fade show active" id="client-data"
+                   role="tabpanel">
+                <!--client form-->
+                <form (ngSubmit)="onClientUpdate()" [formGroup]="clientForm" id="clientForm">
+                  <fieldset [disabled]="!isEditing">
+                    <div class="row p-t-20">
+
+                      <div class="col-md-6">
+                        <label class="form-label" for="name">Nombre</label>
+                        <input class="form-control" formControlName="name" id="name" maxlength=80
+                               type="text">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label" for="typeOfId">Tipo de Identificacion</label>
+                        <select class="form-select" formControlName="typeOfId" id="typeOfId">
+                          <option disabled value="null">Seleccione Tipo de Identificacion</option>
+                          <option value="01">Física</option>
+                          <option value="02">Jurídica</option>
+                          <option value="03">DIMEX</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label" for="identification">Identificacion</label>
+                        <input [maxLength]="idTypeLength" class="form-control" formControlName="identification"
+                               id="identification"
+                               type="text">
+                      </div>
+
+                      <div class="col-md-3">
+                        <label class="form-label" for="mail">Correo</label>
+                        <input class="form-control" formControlName="mail" id="mail" type="text">
+                      </div>
+                      <div class="col-md-3">
+                        <label class="form-label" for="contact">Telefono</label>
+                        <input class="form-control" formControlName="contact" id="contact" maxlength=8 type="text">
+                      </div>
+                      <div class="col-md-3">
+                        <label class="form-label" for="scope">Alcance</label>
+                        <input class="form-control" formControlName="scope" id="scope" maxlength=250 type="text">
+                      </div>
+
+                      <div class="col-md-3">
+                        <label class="form-label">Provincia</label>
+                        <select class="form-select" formControlName="province">
+                          <option *ngFor="let prov of province"
+                                  [ngValue]="prov.numberProvince">{{prov.province}}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-3">
+                        <label class="form-label">Cantón</label>
+                        <select class="form-select" formControlName="canton">
+                          <option *ngFor="let cant of canton"
+                                  [ngValue]="cant.cantonId">{{cant.canton}}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-3">
+                        <label class="form-label">Distrito</label>
+                        <select class="form-select" formControlName="district">
+                          <option *ngFor="let distr of district"
+                                  [ngValue]="distr.districtId">{{distr.district}}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-3">
+                        <label class="form-label">Barrio</label>
+                        <select class="form-select" formControlName="neigh">
+                          <option *ngFor="let nei of neigh"
+                                  [ngValue]="nei.neighborhoodId">{{nei.neighborhood}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+              <!--client data tab-->
+              <div [ngClass]="{'active': activeTab === clientTabsEnum.BRANCHES}" aria-labelledby="branches-data-tab"
+                   class="tab-pane fade show" id="branches-data"
+                   role="tabpanel">
+                <table class="table table-row-dashed table-striped table-row-gray-300 align-middle gs-0 gy-4">
+                  <thead>
+                  <tr class="fw-bolder text-muted">
+                    <th class="mb-1">Info</th>
+                    <th class="mb-1 text-end">Acciones</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let branch of listBranches">
+                    <td>
+                      <a
+                        class="text-dark fw-bolder text-hover-primary d-block fs-6"
+                      >
+                        {{branch.name}}
+                      </a>
+                      <span class="text-muted fw-bold text-muted d-block fs-7">
+                  {{branch.id}}
+
+                </span>
+                    </td>
+
+                    <td class="text-end">
+                      <a
+                        (click)="branchEnterReport(branch.id, branch.name)"
+                        class="
+                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
+                me-1
+              "
+                      >
+              <span
+                [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                class="svg-icon svg-icon-3 svg-icon-warning"
+              ></span>
+                      </a>
+                      <a
+                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                        href="#"
+                      >
+              <span
+                [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                class="svg-icon svg-icon-3 svg-icon-danger"
+              ></span>
+                      </a>
+                    </td>
+
+                  </tr>
+                  </tbody>
+                </table>
+                <mat-paginator (page)="paginator($event)"
+                               [length]="totalRegister"
+                               [pageIndex]="pageNo"
+                               [pageSizeOptions]="[5, 10, 25, 100]"
+                               [pageSize]="pageSize"
+                               aria-label="Select page"
+                               class="float-left mx-2"
+                               showFirstLastButtons>
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

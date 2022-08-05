@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UserModel} from '../../models/user.model';
 import {environment} from '../../../../../environments/environment';
+import {GlobalVariablesService} from "../../../../services/globalVariables.service";
 
 const API_USERS_URL = `${environment.apiUrl}/auth`;
 
@@ -12,6 +13,7 @@ const API_USERS_URL = `${environment.apiUrl}/auth`;
 export class AuthHTTPService {
   private _user: UserModel | null;
   private _token: string | null;
+
 
   constructor(private http: HttpClient) {
   }
@@ -43,7 +45,7 @@ export class AuthHTTPService {
 
   // public methods
   login(user: UserModel): Observable<any> {
-    const endPoint = 'http://localhost:8090/api/security/oauth/token';
+    const endPoint = 'https://goldfish-app-3cv8h.ondigitalocean.app/api/security/oauth/token';
     const credentials = btoa('jirehApp' + ':' + 'muyseguro');
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -74,7 +76,7 @@ export class AuthHTTPService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<UserModel>('http://localhost:8090/api/servicing/v1/search/findUserName?username=andres', {
+    return this.http.get<UserModel>('https://goldfish-app-3cv8h.ondigitalocean.app/api/servicing/v1/search/findUserName?username=andres', {
       headers: httpHeaders,
     });
   }

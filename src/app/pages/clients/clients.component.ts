@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ClientsService} from "../../services/clients.service";
 import {Router} from "@angular/router";
 import {PageEvent} from "@angular/material/paginator";
 import {Clients} from "../../models/clients";
 import {AuthHTTPService} from "../../modules/auth/services/auth-http";
-import {FormClientsComponent} from "./form-clients/form-clients.component";
 
 @Component({
   selector: 'app-clients',
@@ -14,40 +13,63 @@ import {FormClientsComponent} from "./form-clients/form-clients.component";
 export class ClientsComponent implements OnInit {
 
   title = 'Clientes';
-  clientList: Clients[];
-
   totalRegister = 0;
   pageNo = 0;
   pageSize = 10;
+  clients: Clients[];
+  edit = false;
 
-
-  constructor(private service: ClientsService, public authHttpService: AuthHTTPService, private router: Router) {
+  constructor(private service: ClientsService,
+              public authHttpService: AuthHTTPService,
+              private router: Router,
+              private cd: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
-    this.rangePage();
     sessionStorage.removeItem('clientId');
-    sessionStorage.removeItem('itemId');
-    sessionStorage.removeItem('providerId');
+    sessionStorage.removeItem('clientName');
+    sessionStorage.removeItem('client');
+    this.rangePage();
   }
 
-  clickEnterClient(id: number) {
-    sessionStorage.setItem('clientId', String(id));
-    this.router.navigate(['/clients/view']);
+  clickEnterReport(id: string, name: string, client: Clients) {
+    sessionStorage.setItem('clientId', id);
+    sessionStorage.setItem('clientName', name);
+    sessionStorage.setItem('client', JSON.stringify(client));
+    this.router.navigate(['reports']);
   }
 
-  private rangePage() {
-    this.service.listAll(this.pageNo + 1, this.pageSize)
-      .subscribe(i => {
-        this.clientList = i.content as Clients[];
-        this.totalRegister = i.totalElements as number;
-      });
+  clickEnterClientForm(id: string | null, name: string | null, client: Clients | null) {
+    if (typeof id === "string") {
+      sessionStorage.setItem('clientId', id);
+    }
+    if (typeof name === "string") {
+      sessionStorage.setItem('clientName', name);
+    }
+    if (client) {
+      sessionStorage.setItem('client', JSON.stringify(client));
+    }
+
+    this.router.navigate(['clients/view'])
   }
 
   paginator(event: PageEvent): void {
     this.pageNo = event.pageIndex;
     this.pageSize = event.pageSize;
     this.rangePage();
+  }
+
+  private rangePage() {
+    let letsContinue = false;
+
+    let min = 0;
+    let max = 3;
+
+    this.service.listAll()
+      .subscribe(i => {
+        this.clients = i as Clients[];
+        this.cd.detectChanges();
+      })
   }
 
 }

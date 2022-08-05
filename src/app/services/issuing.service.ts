@@ -42,7 +42,7 @@ export class IssuingService {
   }
 
   public save(issuing: FormData): Observable<any> {
-    return this.http.post<FormData>(this.variables.getServicingEndpoint() + '/emisor/save/v2', issuing, {headers: this.variables.getAuthHeaderMultiPart()})
+    return this.http.post<FormData>(this.variables.getServicingEndpoint() + '/emisor/save/v2', issuing, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
           allowedService.notAllowed(err);
             return throwError(err);

@@ -64,9 +64,9 @@ export const locale = {
     HEADER: {
       MENU: {
         CLIENTS: 'Clientes',
-        PROVIDERS: 'Proveedores',
+        PROVIDERS: 'Técnicos',
         ITEMS: 'Productos',
-        SHOPPING: 'Compras',
+        SHOPPING: 'Reportes',
         BILL: 'Facturar'
       }
     },
@@ -80,9 +80,16 @@ export const locale = {
         BILL: 'Facturar',
         ITEMS: 'Productos',
         SHOP: 'Compras',
-        PROVIDERS: 'Proveedores',
+        USERS: 'Usuarios',
+        USER_ADMIN: 'Administradores',
+        USER_TECH: 'Técnicos',
+        USER: 'Clientes',
         CLIENTS: 'Clientes',
         INVENTORY: 'Inventarios',
+        EQUIP: 'Equipo',
+        REPORTS: 'Reportes',
+        FE: 'Facturación',
+        FEEDLOTS: 'Cebaderos',
       }
     },
     CLIENTS: {
@@ -115,11 +122,17 @@ export const locale = {
     BUYS: {
       ICONS: {
         BACK: 'Atrás',
-        BILL_IN_REPORTS: 'Compras Procesadas',
-        BILL_IN_PROGRESS: 'Compras Pendientes de Aprobar/Procesar',
-        ADD_NEW_BILL: 'Nueva factura de compra',
-        ITEMS_PROVIDER_LIST: 'Lista de Items por proveedor',
-        ADD: 'Añadir items a proveedor',
+        ADD_NEW_BILL: 'MIP',
+        ITEMS_PROVIDER_LIST: 'Servicios Prestados',
+        ADD: 'Control de Cebaderos',
+      }
+    },
+    REPORTS:{
+      SERVICE:{
+        NAME:'Servicios Prestados',
+        RECOMMENDATIONS: 'Recomendaciones',
+        DETAILS: 'Productos Utilizados',
+        PEST: 'Plagas Encontradas'
       }
     },
     ITEMS: {
@@ -158,8 +171,8 @@ export const locale = {
       },
       ITEMS_PROVIDER_LIST: {
         TITTLE: 'Productos por Proveedor',
-        INSTRUCTIONS: 'Se muestran los productos que están ligados a un proveedor con su condición de venta',
-        TABLE_HEADER: 'Lista de productos y sus condiciones por proveedor',
+        INSTRUCTIONS: 'Se muestran los productos que están ligados a un Técnico con su condición de venta',
+        TABLE_HEADER: 'Lista de productos y sus condiciones por Técnico',
         TABLE: {
           ITEM: 'Producto',
           BARCODE: 'Código de Barras',
@@ -181,7 +194,7 @@ export const locale = {
           FAMILY: "Familia",
           BRAND: "Marca",
           DATE: "Fecha",
-          CODE_FROM_PROVIDER: 'Codigo Producto del proveedor',
+          CODE_FROM_PROVIDER: 'Codigo Producto del Técnico',
         }
       }
     }

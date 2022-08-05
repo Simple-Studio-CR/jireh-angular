@@ -1,4 +1,5 @@
 export class AddressProvince {
-  id: number;
+  id: string;
   province: string;
+  numberProvince: number
 }

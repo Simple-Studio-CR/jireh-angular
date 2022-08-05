@@ -1,10 +1,16 @@
 import {Routes} from '@angular/router';
+import {ReportsModule} from "./reports/reports.module";
 
 const Routing: Routes = [
   {
     path: 'issuing',
     loadChildren: () =>
       import('./issuing/issuing.module').then((m) => m.IssuingModule),
+  },
+  {
+    path: 'users',
+    loadChildren: () =>
+      import('./user/user.module').then((m) => m.UserModule),
   },
   {
     path: 'branch',
@@ -27,6 +33,16 @@ const Routing: Routes = [
       import('./items/items.module').then((m) => m.ItemsModule),
   },
   {
+    path: 'equipment',
+    loadChildren: () =>
+      import('./equipment/equipment.module').then((m) => m.EquipmentModule),
+  },
+  {
+    path: 'reports',
+    loadChildren: () =>
+      import('./reports/reports.module').then((m) => m.ReportsModule),
+  },
+  {
     path: 'item-provider',
     loadChildren: () =>
       import('./item-provider/item-provider.module').then((m) => m.ItemProviderModule),
@@ -35,11 +51,6 @@ const Routing: Routes = [
     path: 'dashboard',
     loadChildren: () =>
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
-  },
-  {
-    path: 'buys',
-    loadChildren: () =>
-      import('./buy/buys.module').then((m) => m.BuysModule),
   },
   {
     path: 'builder',

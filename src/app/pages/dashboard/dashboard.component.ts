@@ -8,5 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class DashboardComponent implements OnInit {
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    sessionStorage.removeItem('clientName')
+    sessionStorage.removeItem('clientId')
+    sessionStorage.removeItem('clientIdentification')
+  }
 }

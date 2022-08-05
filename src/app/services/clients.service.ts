@@ -4,10 +4,10 @@ import {Router} from "@angular/router";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {GlobalVariablesService} from "./globalVariables.service";
-import {ClientsCreditType} from "../models/clients-credit-type";
 import {Clients} from "../models/clients";
-import {ClientsType} from "../models/clients-type";
 import {AuthHTTPService} from "../modules/auth/services/auth-http";
+import {ClientsWarehouse} from "../models/clients-warehouse";
+import {ClientsBranchOffice} from "../models/clients-branch-office";
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +22,8 @@ export class ClientsService {
     return err.status == 401 || err.status == 403;
   }
 
-  public listAll(page:number, size:number ): Observable<any> {
-    let branchId = sessionStorage.getItem('branchId');
-    console.log('se envia username al endpoint', branchId);
-    return this.http.get<Clients[]>(this.variables.getServicingEndpoint() + '/clients/branch/' + branchId + '/' + page + '/' + size, {headers: this.variables.getAuthHeader()})
+  listAll(): Observable<any> {
+    return this.http.get<Clients[]>(this.variables.getServiceEndpoint() + '/clients/all/', {})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -34,19 +32,8 @@ export class ClientsService {
       );
   }
 
-  public findById(): Observable<any>{
-    let clientId = sessionStorage.getItem('clientId');
-    console.log('se filtra el cliente por id = ', clientId);
-    return this.http.get<(Clients[])>(this.variables.getServicingEndpoint() + '/clients/' + clientId, {headers: this.variables.getAuthHeader()})
-      .pipe(catchError(err => {
-            this.notAllowed(err);
-            return throwError(err);
-          }
-        )
-      );
-  }
-  public save(client:Clients): Observable<any>{
-    return this.http.post<Clients>(this.variables.getServicingEndpoint()+'/clients/save/',client,{headers: this.variables.getAuthHeader()})
+  save(client: Clients): Observable<any> {
+    return this.http.post<Clients>(this.variables.getServiceEndpoint() + '/clients', client, {})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -55,8 +42,8 @@ export class ClientsService {
       );
   }
 
-  public findCreditTypeAll(): Observable<any>{
-    return this.http.get<(ClientsCreditType[])>(this.variables.getServicingEndpoint() + '/clients/creditTypeAll/', {headers: this.variables.getAuthHeader()})
+  updateClient(client: Clients, clientId: any): Observable<any> {
+    return this.http.put<Clients>(this.variables.getServiceEndpoint() + '/clients/' + clientId, client, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -64,8 +51,9 @@ export class ClientsService {
         )
       );
   }
-  public findTypeAll(): Observable<any>{
-    return this.http.get<(ClientsType[])>(this.variables.getServicingEndpoint() + '/clients/typeAll/', {headers: this.variables.getAuthHeader()})
+
+  findById(id: string | null): Observable<any> {
+    return this.http.get<Clients[]>(this.variables.getServiceEndpoint() + '/clients/' + id, {})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -73,12 +61,45 @@ export class ClientsService {
         )
       );
   }
-  public updateClient(client: Clients): Observable<any> {
-    return this.http.put(this.variables.getServicingEndpoint() + '/clients/' + client.id, client , {headers: this.variables.getAuthHeader()})
+
+  warehouseFindById(id: string | undefined | null): Observable<any> {
+    return this.http.get<ClientsWarehouse>(this.variables.getServiceEndpoint() + '/clients/warehouse/id/' + id, {})
       .pipe(catchError(err => {
-        this.notAllowed(err);
-        return throwError(err);
-      }));
+            this.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
+  warehouseFindByBranchId(id: string | undefined | null): Observable<any> {
+    return this.http.get<ClientsWarehouse>(this.variables.getServiceEndpoint() + '/clients/warehouse/branch/' + id, {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
+  branchFindById(id: string | undefined | null): Observable<any> {
+    return this.http.get<ClientsBranchOffice>(this.variables.getServiceEndpoint() + '/clients/branches/id/' + id, {})
+      .pipe(catchError(err => {
+            this.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
+  branchFindByClient(clientId: string | undefined | null): Observable<any> {
+    return this.http.get<ClientsBranchOffice>(this.variables.getServiceEndpoint() + '/clients/branches/client/' + clientId, {})
+      .pipe(catchError(err => {
+            this.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
   }
 
 }
