@@ -18,13 +18,13 @@ export class GlobalVariablesService {
   }
 
   public getAuthEndpoint() {
-    return 'https://goldfish-app-3cv8h.ondigitalocean.app/api/security/oauth/token';
+    return 'https://zuul-server-dit4h.ondigitalocean.app/api/security/oauth/token';
     // return 'http://localhost:8090/api/security/oauth/token';
 
   }
 
   public getBaseEndpoint() {
-    return 'https://goldfish-app-3cv8h.ondigitalocean.app';
+    return 'https://zuul-server-dit4h.ondigitalocean.app';
     // return 'http://localhost:8090';
   }
 

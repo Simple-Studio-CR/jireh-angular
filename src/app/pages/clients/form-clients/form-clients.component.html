@@ -1,21 +1,4 @@
 <div class="card bg-light mb-3">
-  <div class="page_title_section">
-    <div class="page_title_overlay"></div>
-    <div class="page_header text-center">
-      <div class="container">
-        <div class="row">
-          <!-- section_heading start -->
-          <div class="col-lg-12 col-md-12 col-12 col-sm-12">
-            <div class="page_header_line">
-              <h1 class="pst_bottompadder30"><span>{{title}}</span></h1>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="card bg-light mb-3">
   <div class="sp_choose_main_wrapper">
     <div class="container">
       <div class="row">
@@ -29,10 +12,19 @@
           <!-- edit -->
           <button
             (click)="enableEdit()"
-            *ngIf="authService.hasRole('ROLE_ADMIN') && !isEditing"
+            *ngIf="authService.hasRole('ROLE_ADMIN') && !isEditing && activeTab===clientTabsEnum.CLIENT"
             class="btn btn-warning mr-2"
           >
             Editar
+          </button>
+
+          <!-- add branch -->
+          <button
+            (click)="branchEnterReport(null, null)"
+            *ngIf="authService.hasRole('ROLE_ADMIN') && !isEditing && activeTab===clientTabsEnum.BRANCHES"
+            class="btn btn-info mr-2"
+          >
+            Nueva Sucursal
           </button>
 
 

@@ -64,6 +64,8 @@ export class FormClientsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    sessionStorage.removeItem('branchId')
+    sessionStorage.removeItem('branchName')
 
     this.clientForm = new FormGroup({
       identification: new FormControl(''),
@@ -264,11 +266,16 @@ export class FormClientsComponent implements OnInit {
   }
 
   branchEnterReport(id: string | null, name: string | null) {
-    //todo entrar a la sucursal
     if (typeof id === "string") {
       sessionStorage.setItem('branchId', id)
       this.router.navigate(['/clients/view/branch'])
     }
+    if(id==null){
+      this.router.navigate(['/clients/view/branch'])
+    }
   }
 
+  addBranch() {
+
+  }
 }

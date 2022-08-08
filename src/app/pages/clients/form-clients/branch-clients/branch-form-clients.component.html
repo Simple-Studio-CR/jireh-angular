@@ -1,22 +1,4 @@
-<div class="card bg-light mb-3">
-  <div class="page_title_section">
-    <div class="page_title_overlay"></div>
-    <div class="page_header text-center">
-      <div class="container">
-        <div class="row">
-          <!-- section_heading start -->
-          <div class="col-lg-12 col-md-12 col-12 col-sm-12">
-            <div class="page_header_line">
-              <h1 class="pst_bottompadder30">
-                <span>{{ title }}</span>
-              </h1>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 <div class="card bg-light mb-3">
   <div class="sp_choose_main_wrapper">
     <div class="container">
@@ -26,6 +8,16 @@
           <div *ngIf="editedBranch" class="alert alert-success">
             Cliente guardado exitosamente.
           </div>
+
+          <!-- save -->
+          <button (click)="onCreateBranch()" *ngIf="
+              authService.hasRole('ROLE_ADMIN') &&
+              isEditing &&
+              activeTab === clientTabsEnum.BRANCHES &&
+              isNew
+            " class="btn btn-success mr-2">
+            Guardar Sucursal
+          </button>
 
           <!-- edit -->
           <button (click)="enableEdit()" *ngIf="
@@ -39,14 +31,14 @@
           <!-- on client update -->
           <button *ngIf="isEditing && !isNew && !newWarehouse && !isUpdateWarehouse" [disabled]="isUpdating" class="btn btn-success mr-2"
                   form="clientForm" type="submit">
-            Guardar
+            Actualizar Sucursal
           </button>
 
           <!-- on add new warehouse update -->
           <button *ngIf="isEditing && (newWarehouse || isUpdateWarehouse)" [disabled]="isUpdating"
                   class="btn btn-success mr-2"
                   form="warehouseForm" type="submit">
-            Guardar
+            Guardar Bodega
           </button>
 
           <!-- on branch create -->

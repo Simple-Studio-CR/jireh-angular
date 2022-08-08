@@ -103,13 +103,13 @@
           </tbody>
         </table>
         <mat-paginator (page)="paginator($event)"
+                       [disabled]="false"
                        [length]="totalRegister"
                        [pageIndex]="pageNo"
                        [pageSizeOptions]="[5, 10, 25, 100]"
                        [pageSize]="pageSize"
                        class="float-left mx-2"
                        showFirstLastButtons>
-          aria-label="Select page">
         </mat-paginator>
       </div>
     </div>

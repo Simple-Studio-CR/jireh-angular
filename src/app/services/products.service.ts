@@ -30,6 +30,16 @@ export class ProductsService {
       );
   }
 
+  count(): Observable<any> {
+    return this.http.get<number>(this.variables.getServiceEndpoint() + '/products/count/all', {})
+      .pipe(catchError(err => {
+            this.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
   save(products: Products): Observable<any> {
     return this.http.post<Products>(this.variables.getServiceEndpoint() + '/products', products, {})
       .pipe(catchError(err => {

@@ -67,6 +67,10 @@ export class BranchFormClientsComponent implements OnInit {
     if (sessionStorage.getItem('branchId')) {
       this.loadBranch()
     }
+    if(!(sessionStorage.getItem('branchId'))) {
+      this.isNew = true
+      this.isEditing = true
+    }
   }
 
   paginator(event: PageEvent): void {
@@ -224,5 +228,20 @@ export class BranchFormClientsComponent implements OnInit {
     this.newWarehouse = false
     this.isUpdateWarehouse = false
     this.isEditing = false
+  }
+
+  onCreateBranch() {
+    this.clientForm.patchValue({
+      clientId: sessionStorage.getItem('clientId'),
+    })
+    console.log(this.clientForm.value)
+    this.branchService.saveBranch(this.clientForm.value).subscribe(branch => {
+      Swal.fire('Nueva Sucursal ' + branch.Branch.name + ' creada con éxito', branch.Branch.name, 'success')
+      sessionStorage.setItem('branchId', branch.Branch.id)
+      this.isNew = false
+      this.isUpdating = false
+      this.isEditing = false
+      this.cd.detectChanges()
+    })
   }
 }

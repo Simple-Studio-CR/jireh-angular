@@ -45,7 +45,7 @@ export class AuthHTTPService {
 
   // public methods
   login(user: UserModel): Observable<any> {
-    const endPoint = 'https://goldfish-app-3cv8h.ondigitalocean.app/api/security/oauth/token';
+    const endPoint = 'https://zuul-server-dit4h.ondigitalocean.app/api/security/oauth/token';
     const credentials = btoa('jirehApp' + ':' + 'muyseguro');
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -76,7 +76,7 @@ export class AuthHTTPService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<UserModel>('https://goldfish-app-3cv8h.ondigitalocean.app/api/servicing/v1/search/findUserName?username=andres', {
+    return this.http.get<UserModel>('https://zuul-server-dit4h.ondigitalocean.app/api/servicing/v1/search/findUserName?username=andres', {
       headers: httpHeaders,
     });
   }

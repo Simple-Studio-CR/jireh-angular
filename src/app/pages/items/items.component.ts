@@ -36,11 +36,6 @@ export class ItemsComponent implements OnInit {
     this.rangePage();
   }
 
-  clickEnterIssuing(id: string) {
-    sessionStorage.setItem('emisorId', id);
-    this.router.navigate(['/issuing/branch']);
-  }
-
   paginator(event: PageEvent): void {
     this.pageNo = event.pageIndex;
     this.pageSize = event.pageSize;
@@ -50,6 +45,11 @@ export class ItemsComponent implements OnInit {
   private rangePage() {
     this.service.listAll(this.pageNo + 1, this.pageSize)
       .subscribe(i => {
+        this.service.count().subscribe(c => {
+          this.totalRegister = c;
+          console.log(this.totalRegister)
+          this.cd.detectChanges();
+        });
         this.product = i as Products[];
         this.cd.detectChanges();
       });
