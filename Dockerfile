@@ -7,3 +7,5 @@ COPY package.json .
 RUN yarn install
 
 RUN yarn run ng serve
+
+EXPOSE 4200
