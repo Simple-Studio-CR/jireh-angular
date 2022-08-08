@@ -1,7 +1,7 @@
 FROM node:16-alpine AS node-base
 
 FROM node-base AS app
-WORKDIR /tmp/app
+WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY ./ ./
@@ -10,8 +10,6 @@ FROM node-base AS test
 RUN yarn test
 
 FROM app AS build
-ENV NODE_ENV production
-WORKDIR /tmp/app
 RUN yarn build
 
 FROM nginx:stable-alpine AS production
