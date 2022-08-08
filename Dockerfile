@@ -1,20 +1,11 @@
-
-FROM node:16-alpine as build
-
+FROM node:16-alpine AS build
 WORKDIR /app
-
-COPY package.json .
-
-RUN yarn install
-
+COPY package.json ./
+RUN npm install
 COPY . .
+RUN npm run build --prod
 
-RUN apk add gettext
-
-RUN yarn build --base-href
-
-FROM nginx:latest
-
-COPY --from=build /app/dist/demo2 /usr/share/nginx/html
-
+FROM nginx:1.20-alpine AS prod-satege
+COPY --from=build /app/dist/demo2 /usr/share/ngix/html
 EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
