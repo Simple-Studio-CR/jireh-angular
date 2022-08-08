@@ -1,19 +1,12 @@
-FROM node:16-alpine AS node-base
-
-FROM node-base AS app
+FROM node:16-alpine AS build
 WORKDIR /app
-COPY package.json yarn.lock ./
+COPY package.json ./
+COPY package-lock.json
 RUN yarn install
-COPY ./ ./
+COPY . .
+RUN yarn build --prod
 
-FROM node-base AS test
-RUN yarn test
-
-FROM app AS build
-RUN yarn build
-
-FROM nginx:stable-alpine AS production
-COPY --from=build /tmp/app/dist/demo2/ /usr/share/nginx/html/
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-# HTTPS (certificate not included)
-EXPOSE 443
+FROM nginx:stable-alpine AS prod-satege
+COPY --from=build /app/dist/demo2 /usr/share/ngix/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
