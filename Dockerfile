@@ -8,6 +8,6 @@ RUN yarn run build --base-href
 RUN apk add gettext
 
 FROM nginx:1.20-alpine AS prod-satege
-COPY --from=build /app/dist/jireh-angular /usr/share/ngix/html
+COPY --from=build /app/dist/demo2 /usr/share/ngix/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
