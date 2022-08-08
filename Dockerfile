@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package.json ./
 RUN yarn install
 COPY . .
-RUN yarn run build --base-href
+RUN yarn build --base-href
 
 RUN apk add gettext
 
