@@ -10,10 +10,10 @@ WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
 
 # Install all the dependencies
-RUN npm install
+RUN yarn install
 
 # Generate the build of the application
-RUN npm run build
+RUN yarn build
 
 
 # Stage 2: Serve app with nginx server
