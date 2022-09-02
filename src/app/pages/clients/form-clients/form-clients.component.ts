@@ -5,7 +5,6 @@ import {AddressProvinceService} from "../../../services/address-province.service
 import {ClientsService} from "../../../services/clients.service";
 import {Router} from "@angular/router";
 import {AuthHTTPService} from "../../../modules/auth/services/auth-http";
-import {IdentificationType} from "../../../models/identification-type";
 import swal from "sweetalert2";
 import {ClientsBranchesService} from "../../../services/clients-branches.service";
 import {AddressProvince} from "../../../models/address-province";
@@ -14,7 +13,6 @@ import {AddressDistrict} from "../../../models/address-district";
 import {AddressNeighborhood} from "../../../models/address-neighborhood";
 import {PageEvent} from "@angular/material/paginator";
 import {ClientsBranchOffice} from "../../../models/clients-branch-office";
-import {BranchFormClientsComponent} from "./branch-clients/branch-form-clients.component";
 
 enum ClientTabsEnum {
   CLIENT,
@@ -32,7 +30,6 @@ export class FormClientsComponent implements OnInit {
 
   editedClient: Clients;
   listBranches: ClientsBranchOffice[];
-  clientIdentificationType: IdentificationType[];
   clientForm: FormGroup;
 
   clientTabsEnum = ClientTabsEnum;
@@ -66,6 +63,7 @@ export class FormClientsComponent implements OnInit {
   ngOnInit(): void {
     sessionStorage.removeItem('branchId')
     sessionStorage.removeItem('branchName')
+    sessionStorage.removeItem('branch')
 
     this.clientForm = new FormGroup({
       identification: new FormControl(''),
@@ -86,8 +84,9 @@ export class FormClientsComponent implements OnInit {
     }
 
     if (sessionStorage.getItem('clientId')) {
-      this.editClient();
+      this.loadClient();
     }
+    this.rangePage();
     this.loadIdType()
   }
 
@@ -98,7 +97,12 @@ export class FormClientsComponent implements OnInit {
   }
 
   private rangePage() {
-
+    let clientId = sessionStorage.getItem('clientId');
+    this.branchesService.findByClientId(clientId, this.pageNo + 1, this.pageSize + 0).subscribe(branches => {
+      this.listBranches = branches.content as ClientsBranchOffice[];
+      this.totalRegister = branches.totalElements
+      this.cd.detectChanges();
+    })
   }
 
   setActiveTab(tabId: ClientTabsEnum) {
@@ -106,35 +110,62 @@ export class FormClientsComponent implements OnInit {
   }
 
   onClientUpdate() {
-    if (this.isEditing && !this.isNew) {
-      this.isUpdating = true;
-      this.service.updateClient(this.clientForm.value, sessionStorage.getItem('clientId')).subscribe(
-        client => {
-          this.editedClient = client;
-          this.isUpdating = false;
-          swal.fire('Cliente Actualizado', 'El cliente se actualizó correctamente', 'success');
-          this.isNew = false;
-          this.isEditing = false;
-        }
-      );
-    }
-    if (this.isEditing && this.isNew) {
-      this.service.save(this.clientForm.value).subscribe(client => {
-        this.editedClient = client.client;
-        this.isUpdating = false;
-        this.isNew = false;
-        this.isEditing = true;
-        sessionStorage.setItem('clientId', this.editedClient.id);
-        this.cd.detectChanges()
-        swal.fire('Correcto', `Se guardó el cliente ${this.editedClient.name}`, 'success');
-        this.router.navigate(['/clients/view']);
-      });
-    }
+    let clientForm: any
+    // @ts-ignore
+    let client: Clients = JSON.parse(sessionStorage.getItem('client'))
+    this.serviceProvince.findProvinceById(this.clientForm.controls.province.value).subscribe(p => {
+      this.serviceProvince.findCantonById(this.clientForm.controls.canton.value).subscribe(c => {
+        this.serviceProvince.findDistrictById(this.clientForm.controls.district.value).subscribe(d => {
+          this.serviceProvince.findNeightById(this.clientForm.controls.neigh.value).subscribe(n => {
+            clientForm = {
+              name: this.clientForm.controls.name.value,
+              identification: this.clientForm.controls.identification.value,
+              typeOfId: this.clientForm.controls.typeOfId.value,
+              mail: this.clientForm.controls.mail.value,
+              contact: this.clientForm.controls.contact.value,
+              scope: this.clientForm.controls.scope.value,
+              address: this.clientForm.controls.address.value,
+              province: p,
+              canton: c,
+              district: d,
+              neigh: n,
+            }
+
+            if (this.isEditing && !this.isNew) {
+              this.isUpdating = true;
+              this.service.updateClient(clientForm, sessionStorage.getItem('clientId')).subscribe(
+                client => {
+                  this.editedClient = client;
+                  this.isUpdating = false;
+                  swal.fire('Cliente Actualizado', 'El cliente se actualizó correctamente', 'success');
+                  this.isNew = false;
+                  this.isEditing = false;
+                }
+              );
+            }
+            if (this.isEditing && this.isNew) {
+              console.log(clientForm)
+              this.service.save(clientForm).subscribe(client => {
+                this.editedClient = client;
+                this.isUpdating = false;
+                this.isNew = false;
+                this.isEditing = true;
+                sessionStorage.setItem('clientId', this.editedClient.id.toString());
+                this.cd.detectChanges()
+                swal.fire('Correcto', `Se guardó el cliente ${this.editedClient.name}`, 'success');
+                this.router.navigate(['/clients/view']);
+              });
+            }
+          })
+        })
+      })
+    })
   }
 
   public loadProvince() {
     this.serviceProvince.listAll().subscribe(province => {
       this.province = province as AddressProvince[]
+      console.log(this.province)
       this.cd.detectChanges()
     })
     this.clientForm.controls.province.valueChanges.subscribe(f => {
@@ -144,6 +175,7 @@ export class FormClientsComponent implements OnInit {
   }
 
   public loadCanton(province: any) {
+    console.log(province, 'lo que llega a canton')
     this.serviceProvince.listCanton(province).subscribe(cantons => {
       this.canton = cantons as AddressCanton[]
       this.cd.detectChanges()
@@ -201,13 +233,14 @@ export class FormClientsComponent implements OnInit {
     this.router.navigate(['/clients']);
   }
 
-  private editClient() {
+  private loadClient() {
 
     this.loadProvince()
     this.cd.detectChanges()
 
     let clientId = sessionStorage.getItem('clientId');
     this.service.findById(clientId).subscribe(clients => {
+      console.log(clients)
       this.clientForm.patchValue({
         identification: clients.identification,
         typeOfId: clients.typeOfId,
@@ -215,29 +248,19 @@ export class FormClientsComponent implements OnInit {
         mail: clients.mail,
         contact: clients.contact,
         scope: clients.scope,
-        province: clients.province,
-        canton: clients.canton,
-        district: clients.district,
-        neigh: clients.neigh,
+        province: clients.province.id,
+        canton: clients.canton.id,
+        district: clients.district.id,
+        neigh: clients.neigh.id,
         address: clients.address,
       })
     });
-
-    this.branchesService.findByClientId(clientId).subscribe(branches => {
-      //todo listar las sucursales
-      this.listBranches = branches as ClientsBranchOffice[];
-      this.cd.detectChanges();
-    })
   }
 
   private createClient() {
     this.loadProvince()
     this.isNewClient();
     this.enableEdit();
-  }
-
-  saveBranches() {
-
   }
 
   loadBranch(id: any, name: any, province: any, canton: any, district: any, neigh: any, address: any): FormGroup {
@@ -253,24 +276,13 @@ export class FormClientsComponent implements OnInit {
     })
   }
 
-  createItem(id: any): FormGroup {
-    return this.formBuilder.group({
-      clientId: sessionStorage.getItem('clientId'),
-    })
-
-  }
-
-  onBranchsIsUpdating() {
-    //todo actualizar las sucursales
-    console.log('estamos updatiando las sucurusales')
-  }
-
-  branchEnterReport(id: string | null, name: string | null) {
-    if (typeof id === "string") {
-      sessionStorage.setItem('branchId', id)
+  branchEnterReport(id: number | null, name: string | null, branch: ClientsBranchOffice | null) {
+    if (typeof id === "number") {
+      sessionStorage.setItem('branchId', String(id))
+      sessionStorage.setItem('branch', JSON.stringify(branch));
       this.router.navigate(['/clients/view/branch'])
     }
-    if(id==null){
+    if (id == null) {
       this.router.navigate(['/clients/view/branch'])
     }
   }

@@ -4,7 +4,6 @@ import {AuthService} from "../modules/auth";
 import {Router} from "@angular/router";
 import {GlobalVariablesService} from "./globalVariables.service";
 import {Observable, throwError} from "rxjs";
-import {Provider} from "../models/provider";
 import {catchError} from "rxjs/operators";
 import {ServiceProvider} from "../models/service-provider";
 import {ServiceProviderPestTypeDetail} from "../models/service-provider-pest-type-detail";

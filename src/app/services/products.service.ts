@@ -7,11 +7,14 @@ import {Clients} from "../models/clients";
 import {catchError} from "rxjs/operators";
 import {Products} from "../models/products";
 import {AuthService} from "../modules/auth";
+import {ListProducts} from "../models/list-products";
+import {ActiveIngredient} from "../models/active-ingredient";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
+
   constructor(private http: HttpClient, private authService: AuthService, private router: Router,
               private variables: GlobalVariablesService) {
   }
@@ -21,17 +24,7 @@ export class ProductsService {
   }
 
   listAll(pageNo: number, pageSize: number): Observable<any> {
-    return this.http.get<Products[]>(this.variables.getServiceEndpoint() + '/products/all/' + pageNo + '/' + pageSize, {})
-      .pipe(catchError(err => {
-            this.notAllowed(err);
-            return throwError(err);
-          }
-        )
-      );
-  }
-
-  count(): Observable<any> {
-    return this.http.get<number>(this.variables.getServiceEndpoint() + '/products/count/all', {})
+    return this.http.get<ListProducts[]>(this.variables.getServicingEndpoint() + '/products/all/' + pageNo + '/' + pageSize, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -41,7 +34,7 @@ export class ProductsService {
   }
 
   save(products: Products): Observable<any> {
-    return this.http.post<Products>(this.variables.getServiceEndpoint() + '/products', products, {})
+    return this.http.post<Products>(this.variables.getServicingEndpoint() + '/products', products, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -51,7 +44,7 @@ export class ProductsService {
   }
 
   updateClient(products: Products): Observable<any> {
-    return this.http.put<Products>(this.variables.getServiceEndpoint() + '/products/' + products.id, products, {})
+    return this.http.put<Products>(this.variables.getServicingEndpoint() + '/products/update/' + products.id, products, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -60,8 +53,38 @@ export class ProductsService {
       );
   }
 
-  findById(id: string | null): Observable<any>{
-    return this.http.get<Products[]>(this.variables.getServiceEndpoint() + '/products/' + id, {})
+  findById(id: string | null): Observable<any> {
+    return this.http.get<Products[]>(this.variables.getServicingEndpoint() + '/products/' + id, {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
+  findIngredientsList(): Observable<any> {
+    return this.http.get<ActiveIngredient>(this.variables.getServicingEndpoint() + '/active-ingredients/all', {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
+  saveListProduct(objectListForSave: any): Observable<any> {
+    return this.http.post<ActiveIngredient>(this.variables.getServicingEndpoint() + '/products/save-list-products', objectListForSave, {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
+  getListProductsAll(): Observable<any> {
+    return this.http.get<ListProducts>(this.variables.getServicingEndpoint() + '/products/all-list-products/1/2000', {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);

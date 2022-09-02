@@ -32,16 +32,16 @@ export class ClientsComponent implements OnInit {
     this.rangePage();
   }
 
-  clickEnterReport(id: string, name: string, client: Clients) {
-    sessionStorage.setItem('clientId', id);
+  clickEnterReport(id: number, name: string, client: Clients) {
+    sessionStorage.setItem('clientId', String(id));
     sessionStorage.setItem('clientName', name);
     sessionStorage.setItem('client', JSON.stringify(client));
     this.router.navigate(['reports']);
   }
 
-  clickEnterClientForm(id: string | null, name: string | null, client: Clients | null) {
-    if (typeof id === "string") {
-      sessionStorage.setItem('clientId', id);
+  clickEnterClientForm(id: number | null, name: string | null, client: Clients | null) {
+    if (typeof id === "number") {
+      sessionStorage.setItem('clientId', String(id));
     }
     if (typeof name === "string") {
       sessionStorage.setItem('clientName', name);
@@ -60,14 +60,11 @@ export class ClientsComponent implements OnInit {
   }
 
   private rangePage() {
-    let letsContinue = false;
-
-    let min = 0;
-    let max = 3;
-
-    this.service.listAll()
+    this.service.listAll(this.pageNo + 1, this.pageSize)
       .subscribe(i => {
-        this.clients = i as Clients[];
+        this.clients = i.content as Clients[];
+        this.totalRegister = i.totalElements
+        console.log(i)
         this.cd.detectChanges();
       })
   }

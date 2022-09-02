@@ -1,10 +1,14 @@
+import {ListProducts} from "./list-products";
 
 export class Products{
-  id:string;
+  id:number;
   name:string;
   sanitaryPermission:string;
   features:string;
-  activeingredient:string;
   dose:string;
   labelColor:string;
+  reEntryTime: string
+  control: string
+  listProducts: ListProducts[]
+  isActive: boolean
 }

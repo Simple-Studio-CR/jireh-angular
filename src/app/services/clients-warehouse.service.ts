@@ -39,7 +39,7 @@ export class ClientsWarehouseService {
       );
   }
 
-  edit(warehouse: ClientsWarehouse, id: string | null): Observable<any> {
+  edit(warehouse: ClientsWarehouse, id: number | null): Observable<any> {
     return this.http.put<ClientsWarehouse[]>(this.variables.getServiceEndpoint() + '/clients/edit-warehouse/' + id, warehouse, {})
       .pipe(catchError(err => {
             this.notAllowed(err);

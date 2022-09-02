@@ -3,7 +3,6 @@ import {ControlReport} from "../../../models/control-report";
 import {ControlReportService} from "../../../services/control-report.service";
 import {AuthHTTPService} from "../../../modules/auth/services/auth-http";
 import {Router} from "@angular/router";
-import {Provider} from "../../../models/provider";
 import {PageEvent} from "@angular/material/paginator";
 
 @Component({

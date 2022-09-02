@@ -1,9 +1,8 @@
 import {AddressCanton} from "./address-canton";
 
 export class AddressDistrict {
-  id: string
+  id: number
   district: string
-  districtId:number
-  numberDistrict: number
+  districtNumber: number
   cantonId: number
 }

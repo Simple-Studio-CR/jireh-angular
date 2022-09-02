@@ -1,6 +1,8 @@
+import {ClientsBranchOffice} from "./clients-branch-office";
+
 export class ClientsWarehouse{
-  id:string;
-  branchId:string;
+  id:number;
+  branchId:ClientsBranchOffice;
   name:string;
   sketch: string;
 }

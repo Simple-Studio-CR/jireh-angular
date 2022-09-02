@@ -120,7 +120,7 @@ export class ServiceProviderFormComponent implements OnInit {
 
         this.serviceProviderId = sessionStorage.getItem('serviceReportId')
         this.warehouseId = reports?.warehouseId;
-        let branchId: string | undefined | null
+        let branchId: number | undefined | null
 
         this.serviceProviderForm.patchValue({
             warehouseId: reports?.warehouseId,
@@ -148,7 +148,7 @@ export class ServiceProviderFormComponent implements OnInit {
                 this.branch = brancesByClientId as ClientsBranchOffice[];
 
                 //se buscan todas las bodegas del cliente para colocar el la lista
-                this.serviceClient.warehouseFindByBranchId(branchId).subscribe(w => {
+                this.serviceClient.warehouseFindByBranchId(branchId, 1 , 5000).subscribe(w => {
                     this.warehouse = w as ClientsWarehouse[];
 
                     //se busca obtiene los datos de la sucursal seleccionada
@@ -186,7 +186,7 @@ export class ServiceProviderFormComponent implements OnInit {
             this.branch = b as ClientsBranchOffice[];
             this.cd.detectChanges();
             this.serviceProviderForm.controls.branchIdForm.valueChanges.subscribe(brcn => {
-                this.serviceClient.warehouseFindByBranchId(brcn.id).subscribe(w => {
+                this.serviceClient.warehouseFindByBranchId(brcn.id, 1 , 5000).subscribe(w => {
                     this.warehouse = w as ClientsWarehouse[];
                     console.log(this.warehouse)
                     this.serviceProviderForm.patchValue({

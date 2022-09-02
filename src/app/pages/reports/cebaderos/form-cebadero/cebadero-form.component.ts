@@ -150,7 +150,7 @@ export class CebaderoFormComponent implements OnInit {
       this.branch = b as ClientsBranchOffice[];
       this.cd.detectChanges();
       this.controlReportForm.controls.branchIdForm.valueChanges.subscribe(brcn => {
-        this.serviceClient.warehouseFindByBranchId(brcn.id).subscribe(w => {
+        this.serviceClient.warehouseFindByBranchId(brcn.id, 1, 5000).subscribe(w => {
           this.warehouse = w as ClientsWarehouse[];
           this.controlReportForm.patchValue({
             clientName: client?.name,
@@ -192,7 +192,7 @@ export class CebaderoFormComponent implements OnInit {
     let reports: ControlReport | null = JSON.parse(<string>sessionStorage.getItem('reports'));
     this.reportId = sessionStorage.getItem('reportId')
     this.idWarehouse = reports?.idWarehouse;
-    let branchId: string | undefined | null
+    let branchId: number | undefined | null
 
     this.controlReportForm.patchValue({
       idClients: client?.id,
@@ -234,7 +234,7 @@ export class CebaderoFormComponent implements OnInit {
           this.branch = brancesByClientId as ClientsBranchOffice[];
 
           //se buscan todas las bodegas del cliente para colocar el la lista
-          this.serviceClient.warehouseFindByBranchId(branchId).subscribe(w => {
+          this.serviceClient.warehouseFindByBranchId(branchId, 1, 5000).subscribe(w => {
             this.warehouse = w as ClientsWarehouse[];
 
             //se busca obtiene los datos de la sucursal seleccionada

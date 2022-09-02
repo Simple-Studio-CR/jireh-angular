@@ -2,9 +2,8 @@ import {AddressDistrict} from "./address-district";
 
 export class AddressNeighborhood {
 
-  id: string
+  id: number
   neighborhood: string
-  neighborhoodId: number
-  numberNeighborhood: number
+  neighborhoodNumber: number
   districtId: number
 }

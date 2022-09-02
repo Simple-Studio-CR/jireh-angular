@@ -68,33 +68,47 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let products of product">
+          <tr *ngFor="let product of products let i = index" [attr.data-index]="i">
             <td>
               <a
                 class="text-dark fw-bolder text-hover-primary d-block fs-6"
               >
-                {{products.name}}
+                {{product.name}}
               </a>
-              <span class="text-muted fw-bold text-muted d-block fs-7">
-                  {{products.activeingredient}}
+              <span *ngIf="product.listProducts.length>0" class="text-muted fw-bold text-muted d-block fs-7">
+                  {{product.listProducts[0].activeIngredient.name}} - {{product.listProducts[0].quantity}}
+              <span *ngIf="product.listProducts.length>1" class="text-muted fw-bold text-muted d-block fs-7">
+                +
+                {{product.listProducts[1].activeIngredient.name}} - {{product.listProducts[1].quantity}}
                 </span>
+
+              <span *ngIf="product.listProducts.length>2" class="text-muted fw-bold text-muted d-block fs-7">
+                +
+                {{product.listProducts[2].activeIngredient.name}} - {{product.listProducts[2].quantity}}
+                </span>
+
+              <span *ngIf="product.listProducts.length>3" class="text-muted fw-bold text-muted d-block fs-7">
+                +
+                {{product.listProducts[3].activeIngredient.name}} - {{product.listProducts[3].quantity}}
+                </span>
+              </span>
 
             </td>
             <td>
               <a
                 class="text-dark fw-bolder text-hover-primary d-block fs-6"
               >
-                {{products.sanitaryPermission}}
+                {{product.sanitaryPermission}}
               </a>
               <span class="text-muted fw-bold text-muted d-block fs-7">
-                  {{products.features}}
+                  {{product.features}}
 
                 </span>
 
             </td>
             <td>
               <div class="d-flex justify-content-end flex-shrink-0">
-                <button (click)="clickEnterClient(products.id)"
+                <button (click)="clickEnterClient(product.id)"
                         class="btn btn-warning" type="submit"><i class="fas fa-edit" data-placement="top"
                                                                  data-toggle="tooltip"></i></button>
               </div>
