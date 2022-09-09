@@ -38,7 +38,7 @@ export class CebaderoComponent implements OnInit {
     let clientId:string | null = sessionStorage.getItem('clientId');
     this.service.findControlByClient(clientId,true,this.pageNo + 1, this.pageSize)
       .subscribe(i => {
-        console.log(i.length)
+        console.log(i)
         this.controlReport = i as ControlReport[];
         this.cd.detectChanges();
       });

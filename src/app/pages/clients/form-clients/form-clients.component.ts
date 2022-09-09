@@ -239,7 +239,8 @@ export class FormClientsComponent implements OnInit {
     this.cd.detectChanges()
 
     let clientId = sessionStorage.getItem('clientId');
-    this.service.findById(clientId).subscribe(clients => {
+    // @ts-ignore
+    this.service.findById(Number.parseInt(clientId)).subscribe(clients => {
       console.log(clients)
       this.clientForm.patchValue({
         identification: clients.identification,

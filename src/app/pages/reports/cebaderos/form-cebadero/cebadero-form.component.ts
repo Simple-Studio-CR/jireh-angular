@@ -30,6 +30,7 @@ export class CebaderoFormComponent implements OnInit {
   warehouse: ClientsWarehouse[];
 
   form: FormGroup;
+  branchIdForm: FormGroup;
   fl: FormArray;
 
   edit: boolean = false;
@@ -42,7 +43,7 @@ export class CebaderoFormComponent implements OnInit {
   totalRegister = 0;
   pageNo = 0;
   pageSize = 10;
-  private idWarehouse: string | undefined | null;
+  private idWarehouse: ClientsWarehouse | undefined | null;
   private crProv: JsonObject;
 
   constructor(
@@ -80,16 +81,19 @@ export class CebaderoFormComponent implements OnInit {
 
   loadReportForm() {
     this.controlReportForm = new FormGroup({
+      id: new FormControl(''),
       enabled: new FormControl(''),
-      idClients: new FormControl(''),
+      clients: new FormControl(''),
       clientName: new FormControl(''),
       clientAddress: new FormControl(''),
-      idWarehouse: new FormControl(''),
+      warehouse: new FormControl(''),
       createAt: new FormControl(''),
       startTime: new FormControl(''),
       endTime: new FormControl(''),
       total: new FormControl(''),
-      branchIdForm: new FormControl(''),
+    })
+    this.branchIdForm = new FormGroup({
+      branch: new FormControl('')
     })
 
     this.form = new FormGroup({
@@ -147,19 +151,20 @@ export class CebaderoFormComponent implements OnInit {
     }
 
     this.serviceClient.branchFindByClient(client?.id).subscribe(b => {
-      this.branch = b as ClientsBranchOffice[];
+      console.log(b, 'esto devuelve')
+      this.branch = b.content as ClientsBranchOffice[];
       this.cd.detectChanges();
-      this.controlReportForm.controls.branchIdForm.valueChanges.subscribe(brcn => {
+      this.branchIdForm.controls.branch.valueChanges.subscribe(brcn => {
         this.serviceClient.warehouseFindByBranchId(brcn.id, 1, 5000).subscribe(w => {
-          this.warehouse = w as ClientsWarehouse[];
+          this.warehouse = w.content as ClientsWarehouse[];
           this.controlReportForm.patchValue({
             clientName: client?.name,
-            createAt: new Date(),
-            clientAddress: this.controlReportForm.controls.branchIdForm.value.province + ', ' +
-              this.controlReportForm.controls.branchIdForm.value.canton + ', ' +
-              this.controlReportForm.controls.branchIdForm.value.district + ', ' +
-              this.controlReportForm.controls.branchIdForm.value.neighborhood + ', ' +
-              this.controlReportForm.controls.branchIdForm.value.addressDetails,
+            createAt: new Date().getFullYear() + '/' + month + '/' + day,
+            clientAddress: this.branchIdForm.controls.branch.value.province.province + ', ' +
+              this.branchIdForm.controls.branch.value.canton.canton + ', ' +
+              this.branchIdForm.controls.branch.value.district.district+ ', ' +
+              this.branchIdForm.controls.branch.value.neighborhood.neighborhood + ', ' +
+              this.branchIdForm.controls.branch.value.addressDetails,
             startTime: this.functions.setTimeHour(),
             enabled: true,
             idClients: client?.id,
@@ -191,23 +196,32 @@ export class CebaderoFormComponent implements OnInit {
     let client: Clients | null = JSON.parse(<string>sessionStorage.getItem('client'));
     let reports: ControlReport | null = JSON.parse(<string>sessionStorage.getItem('reports'));
     this.reportId = sessionStorage.getItem('reportId')
-    this.idWarehouse = reports?.idWarehouse;
+    this.idWarehouse = reports?.warehouse;
     let branchId: number | undefined | null
+    console.log(reports)
+
+    this.branchIdForm.patchValue({
+      branch: reports?.warehouse.branchId.name
+    })
+    this.cd.detectChanges()
 
     this.controlReportForm.patchValue({
       idClients: client?.id,
-      clientName: client?.name,
-      clientAddress: client?.province + ', ' + client?.canton + ', ' + client?.district + ', ' + client?.neigh,
+      clientName: reports?.clientName,
+      clientAddress:  reports?.clientAddress
     })
 
     this.controlReportForm.patchValue({
-      idWarehouse: reports?.idWarehouse,
+      id: reports?.id,
+      warehouse: reports?.warehouse.name,
       createAt: reports?.createAt.slice(0, 10),
       startTime: reports?.startTime,
       endTime: reports?.endTime,
       total: reports?.total
     })
 
+
+    // @ts-ignore
     this.service.findByControlReport(reports?.id).subscribe(feed => {
       this.feedlots = feed as Feedlots[];
       this.numberOfFeedLots = feed.length;
@@ -225,32 +239,6 @@ export class CebaderoFormComponent implements OnInit {
         this.cd.detectChanges();
       }
 
-      //se busca la informacion de la bodega por el id de bodega, para obtener el id de la sucursal
-      this.serviceClient.warehouseFindById(this.idWarehouse).subscribe(warehouseById => {
-        branchId = warehouseById.branchId
-
-        //se busca las sucursales por el id del cliente para obtener todas las sucursales del cliente
-        this.serviceClient.branchFindByClient(client?.id).subscribe(brancesByClientId => {
-          this.branch = brancesByClientId as ClientsBranchOffice[];
-
-          //se buscan todas las bodegas del cliente para colocar el la lista
-          this.serviceClient.warehouseFindByBranchId(branchId, 1, 5000).subscribe(w => {
-            this.warehouse = w as ClientsWarehouse[];
-
-            //se busca obtiene los datos de la sucursal seleccionada
-            this.serviceClient.branchFindById(branchId).subscribe(branchSelected => {
-              this.controlReportForm.patchValue({
-                branchIdForm: branchSelected.id,
-                warehouseId: warehouseById.id
-              })
-              this.cd.detectChanges();
-            })
-          })
-          this.cd.detectChanges();
-        })
-
-
-      })
     })
 
   }
@@ -260,25 +248,32 @@ export class CebaderoFormComponent implements OnInit {
   }
 
   save() {
+    this.controlReportForm.patchValue({
+      // @ts-ignore
+      clients: JSON.parse(sessionStorage.getItem('client'))
+    })
     let crForm = this.controlReportForm.value;
     let feedLotProv: JsonObject;
+    console.log(crForm, 'form del header')
     this.serviceControl.saveControlReport(crForm).subscribe(cr => {
       this.cd.detectChanges();
+      console.log(cr, 'lo que responde el back')
       for (let i = 0; i < crForm.total; i++) {
         feedLotProv = {
-          "idControlReport": cr.ControlReport.id,
-          "idWarehouse": crForm.idWarehouse,
+          "controlReport": cr,
+          "warehouse": crForm.warehouse,
           "numberFeedlot": i + 1,
-          "type": "Cebadero",
+          "type": crForm.type,
           "eats": false,
           "status": true,
           "observations": ""
         }
+        console.log(feedLotProv, ' feedlot')
         this.service.saveFeedlot(feedLotProv).subscribe(newFL => {
           this.cd.detectChanges();
         })
-        sessionStorage.setItem('reports', JSON.stringify(cr.ControlReport))
-        sessionStorage.setItem('reportId', cr.ControlReport.id)
+        sessionStorage.setItem('reports', JSON.stringify(cr))
+        sessionStorage.setItem('reportId', cr.id)
         this.cd.detectChanges();
       }
     })
@@ -330,5 +325,13 @@ export class CebaderoFormComponent implements OnInit {
         window.location.reload()
       }
     })
+  }
+
+  generatePDF() {
+    let id: any = this.controlReportForm.controls.id.value
+    this.service.genereatePDF(id).subscribe(pdf=>{
+      console.log(pdf)
+      }
+    )
   }
 }

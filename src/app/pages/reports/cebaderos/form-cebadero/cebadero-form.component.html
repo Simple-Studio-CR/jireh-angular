@@ -35,19 +35,39 @@
                 <input class="form-control" formControlName="clientName" id="clientName" maxlength=80 type="text">
               </fieldset>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <fieldset [disabled]="!editing">
                 <label class="form-label" for="clientAddress">Direccion</label>
                 <input class="form-control" formControlName="clientAddress" id="clientAddress" maxlength=80 type="text">
               </fieldset>
             </div>
 
+            <form [formGroup]="branchIdForm" id="branchIdForm">
+              <div *ngIf="isNew" class="col-md-6">
+                <fieldset [disabled]="!editing">
+                  <label class="form-label">Sucursal</label>
+                  <select class="form-select" formControlName="branch">
+                    <option *ngFor="let b of branch"
+                            [ngValue]="b">{{b.name}}
+                    </option>
+                  </select>
+                </fieldset>
+              </div>
+
+              <div *ngIf="!isNew" class="col-md-6">
+                <fieldset [disabled]="!editing">
+                  <label class="form-label">Sucursal</label>
+                  <input class="form-control" formControlName="branch">
+                </fieldset>
+              </div>
+            </form>
+
             <div *ngIf="isNew" class="col-md-6">
               <fieldset [disabled]="!editing">
-                <label class="form-label">Sucursal</label>
-                <select class="form-select" formControlName="branchIdForm">
-                  <option *ngFor="let b of branch"
-                          [ngValue]="b">{{b.name}}
+                <label class="form-label">Bodega/Almacén</label>
+                <select class="form-select" formControlName="warehouse">
+                  <option *ngFor="let w of warehouse"
+                          [ngValue]="w">{{w.name}}
                   </option>
                 </select>
               </fieldset>
@@ -55,23 +75,8 @@
 
             <div *ngIf="!isNew" class="col-md-6">
               <fieldset [disabled]="!editing">
-                <label class="form-label">Sucursal</label>
-                <select class="form-select" formControlName="branchIdForm">
-                  <option *ngFor="let b of branch"
-                          [ngValue]="b.id">{{b.name}}
-                  </option>
-                </select>
-              </fieldset>
-            </div>
-
-            <div class="col-md-6">
-              <fieldset [disabled]="!editing">
                 <label class="form-label">Bodega/Almacén</label>
-                <select class="form-select" formControlName="idWarehouse">
-                  <option *ngFor="let w of warehouse"
-                          [ngValue]="w.id">{{w.name}}
-                  </option>
-                </select>
+                <input class="form-control" formControlName="warehouse">
               </fieldset>
             </div>
 
@@ -85,13 +90,13 @@
             <div class="col-md-3">
               <fieldset [disabled]="!editing">
                 <label class="form-label" for="startTime">Hora Ingreso</label>
-                <input class="form-control" formControlName="startTime" id="startTime" maxlength=80 type="text">
+                <input class="form-control" formControlName="startTime" id="startTime" maxlength=80 type="time">
               </fieldset>
             </div>
             <div class="col-md-3">
               <fieldset [disabled]="!editing">
                 <label class="form-label" for="endTime">Hora Salida</label>
-                <input class="form-control" formControlName="endTime" id="endTime" maxlength=80 type="text">
+                <input class="form-control" formControlName="endTime" id="endTime" maxlength=80 type="time">
               </fieldset>
             </div>
             <div class="col-md-3">
@@ -128,6 +133,7 @@
                 <button
                   class="btn btn-info"
                   data-kt-menu-trigger="click"
+                  (click)="generatePDF()"
                 >
                   <i class="bi bi-printer-fill"></i>
                 </button>
@@ -161,9 +167,18 @@
           <fieldset [disabled]="!editing">
             <div *ngFor="let flIndi of getFlArray().controls; let i = index;" formArrayName="fl">
               <div class="row p-t-20 col-md-12" formGroupName="{{i}}">
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <label class="form-label"># Cebadero</label>
                   <input class="form-control" formControlName="numberFeedlot">
+                </div>
+
+                <div class="col-md-3">
+                  <label class="form-label">Tipo</label>
+                  <select class="form-select">
+                    <option [value]="'Cebadero'">Cebadero</option>
+                    <option [value]="'Gomosa'">Trampa Gomosa</option>
+                    <option [value]="'UV'">UV</option>
+                  </select>
                 </div>
 
                 <div class="col-md-1">

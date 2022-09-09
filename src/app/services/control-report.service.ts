@@ -21,7 +21,7 @@ export class ControlReportService {
   }
 
   public findControlByWarehouse(warehouse: string, enabled: boolean, pageNo: number, pageSize: number): Observable<any> {
-    return this.http.get<ControlReport>(this.variables.getServiceEndpoint() + '/controlReport/get/' + warehouse + '/' + enabled + '/' + pageNo + '/' + pageSize, {})
+    return this.http.get<ControlReport>(this.variables.getServicingEndpoint() + '/controlReport/get/' + warehouse + '/' + enabled + '/' + pageNo + '/' + pageSize, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -31,7 +31,7 @@ export class ControlReportService {
   }
 
   public findControlByClient(clientId: string | null, enabled: boolean, pageNo: number, pageSize: number): Observable<any> {
-    return this.http.get<ControlReport>(this.variables.getServiceEndpoint() + '/controlReport/get-client/' + clientId + '/' + enabled + '/' + pageNo + '/' + pageSize, {})
+    return this.http.get<ControlReport>(this.variables.getServicingEndpoint() + '/controlReport/get-client/' + clientId + '/' + enabled + '/' + pageNo + '/' + pageSize, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -41,7 +41,7 @@ export class ControlReportService {
   }
 
   public saveControlReport(control: ControlReport): Observable<any> {
-    return this.http.post<ControlReport>(this.variables.getServiceEndpoint() + '/controlReport/save', control, {})
+    return this.http.post<ControlReport>(this.variables.getServicingEndpoint() + '/controlReport/save', control, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -52,7 +52,7 @@ export class ControlReportService {
 
   public editControlReport(control: ControlReport | JsonObject): Observable<any> {
     console.log(control.id, ' este es el service que imprime el id')
-    return this.http.put<ControlReport>(this.variables.getServiceEndpoint() + '/controlReport/' + control.id, control, {})
+    return this.http.put<ControlReport>(this.variables.getServicingEndpoint() + '/controlReport/' + control.id, control, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);

@@ -52,7 +52,7 @@ export class ClientsService {
       );
   }
 
-  findById(id: string | null): Observable<any> {
+  findById(id: number | null): Observable<any> {
     return this.http.get<Clients[]>(this.variables.getServicingEndpoint() + '/clients/' + id, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
@@ -72,7 +72,7 @@ export class ClientsService {
       );
   }
 
-  warehouseFindByBranchId(id: number | undefined | null, page: number,  size: number): Observable<any> {
+  warehouseFindByBranchId(id: number | undefined | null, page: number, size: number): Observable<any> {
     return this.http.get<ClientsWarehouse>(this.variables.getServicingEndpoint() + '/clients/warehouse/branch/' + id + '/' + page + '/' + size, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
@@ -93,7 +93,7 @@ export class ClientsService {
   }
 
   branchFindByClient(clientId: number | undefined | null): Observable<any> {
-    return this.http.get<ClientsBranchOffice>(this.variables.getServicingEndpoint() + '/clients/branches/client/' + clientId, {headers: this.variables.getAuthHeader()})
+    return this.http.get<ClientsBranchOffice>(this.variables.getServicingEndpoint() + '/clients/branches/client/' + clientId + '/' + 1 + '/' + 5000, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
