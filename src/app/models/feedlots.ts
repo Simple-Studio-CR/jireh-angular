@@ -7,8 +7,8 @@ export class Feedlots{
   warehouse:ClientsWarehouse;
   numberFeedlot:number;
   type:string;
-  eats:boolean;
-  status:boolean;
+  eats:string;
+  status:string;
   observations:string;
   createAt:string;
 }

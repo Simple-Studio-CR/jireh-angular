@@ -264,8 +264,8 @@ export class CebaderoFormComponent implements OnInit {
           "warehouse": crForm.warehouse,
           "numberFeedlot": i + 1,
           "type": crForm.type,
-          "eats": false,
-          "status": true,
+          "eats": 'X',
+          "status": 'X',
           "observations": ""
         }
         console.log(feedLotProv, ' feedlot')

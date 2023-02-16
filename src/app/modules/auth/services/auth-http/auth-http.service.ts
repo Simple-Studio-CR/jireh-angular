@@ -45,7 +45,7 @@ export class AuthHTTPService {
 
   // public methods
   login(user: UserModel): Observable<any> {
-    const endPoint = 'https://zuul-server-dit4h.ondigitalocean.app/api/security/oauth/token';
+    const endPoint = 'https://zuul-server-hwtl2.ondigitalocean.app/api/security/oauth/token';
     const credentials = btoa('jirehApp' + ':' + 'muyseguro');
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
