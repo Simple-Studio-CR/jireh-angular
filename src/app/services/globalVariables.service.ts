@@ -11,7 +11,7 @@ export class GlobalVariablesService {
   constructor(private http: HttpClient, private authHttpService: AuthHTTPService) {
   }
   public getServicingEndpoint() {
-    return this.getBaseEndpoint() + '/api/servicing';
+    return this.getBaseEndpoint() + 'api/servicing';
   }
   public getServiceEndpoint() {
     return this.getBaseEndpoint() + '/api/service';
