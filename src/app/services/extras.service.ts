@@ -6,6 +6,7 @@ import {catchError} from "rxjs/operators";
 import {Observable, throwError} from "rxjs";
 import {AuthService} from "../modules/auth";
 import {PestType} from "../models/pest-type";
+import { environment } from "../../environments/environment"
 import {Recommendations} from "../models/recommendations";
 
 @Injectable({

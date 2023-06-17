@@ -23,8 +23,8 @@ export class ServiceProviderService{
     return err.status == 401 || err.status == 403;
   }
 
-  public getServiceProvider(client: string | null, pageNo: number, pageSize: number): Observable<any> {
-    return this.http.get<ServiceProvider[]>(this.variables.getServiceEndpoint() + '/service-provider/get-main-by-client/' + client + '/' + pageNo + '/' + pageSize , {headers: this.variables.getAuthHeader()})
+  public getServiceProvider(client: number | null, pageNo: number, pageSize: number): Observable<any> {
+    return this.http.get<ServiceProvider[]>(this.variables.getServicingEndpoint() + '/service-provider/get-main-by-client/' + client + '/' + pageNo + '/' + pageSize , {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -34,7 +34,7 @@ export class ServiceProviderService{
   }
 
   public getServiceProviderPestTypeDetails(serviceProviderId: string | null): Observable<any> {
-    return this.http.get<ServiceProviderPestTypeDetail[]>(this.variables.getServiceEndpoint() + '/service-provider/get-pest-type-by-service-provider/' + serviceProviderId , {headers: this.variables.getAuthHeader()})
+    return this.http.get<ServiceProviderPestTypeDetail[]>(this.variables.getServicingEndpoint() + '/service-provider/get-pest-type-by-service-provider/' + serviceProviderId , {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -44,7 +44,7 @@ export class ServiceProviderService{
   }
 
   public getServiceRecommendationsDetails(serviceProviderId: string | null): Observable<any> {
-    return this.http.get<ServiceProviderRecommendations[]>(this.variables.getServiceEndpoint() + '/service-provider/get-recommendations-by-service-provider/' + serviceProviderId , {headers: this.variables.getAuthHeader()})
+    return this.http.get<ServiceProviderRecommendations[]>(this.variables.getServicingEndpoint() + '/service-provider/get-recommendations-by-service-provider/' + serviceProviderId , {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -54,7 +54,7 @@ export class ServiceProviderService{
   }
 
   public getServiceDetails(serviceProviderId: string | null): Observable<any> {
-    return this.http.get<ServiceProviderDetails[]>(this.variables.getServiceEndpoint() + '/service-provider/get-details-by-service-provider/' + serviceProviderId , {headers: this.variables.getAuthHeader()})
+    return this.http.get<ServiceProviderDetails[]>(this.variables.getServicingEndpoint() + '/service-provider/get-details-by-service-provider/' + serviceProviderId , {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -64,7 +64,7 @@ export class ServiceProviderService{
   }
 
   public getServiceDetailsV1(serviceProviderId: string | null): Observable<any> {
-    return this.http.get<ServiceProviderDetailsV1[]>(this.variables.getServiceEndpoint() + '/service-provider/get-details-v1-by-service-provider/' + serviceProviderId , {headers: this.variables.getAuthHeader()})
+    return this.http.get<ServiceProviderDetailsV1[]>(this.variables.getServicingEndpoint() + '/service-provider/get-details-v1-by-service-provider/' + serviceProviderId , {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -74,7 +74,7 @@ export class ServiceProviderService{
   }
 
   public saveServiceProvider(monoServicesProvider: ServiceProvider): Observable<any> {
-    return this.http.post<ServiceProvider[]>(this.variables.getServiceEndpoint() + '/service-provider/save-main/', monoServicesProvider , {headers: this.variables.getAuthHeader()})
+    return this.http.post<ServiceProvider[]>(this.variables.getServicingEndpoint() + '/service-provider/save-main/', monoServicesProvider , {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -84,7 +84,7 @@ export class ServiceProviderService{
   }
 
   public saveServiceProviderRecommendations(recommendationsMono: ServiceProviderRecommendations): Observable<any> {
-    return this.http.post<ServiceProviderRecommendations[]>(this.variables.getServiceEndpoint() + '/service-provider/save-recommendations' + recommendationsMono , {headers: this.variables.getAuthHeader()})
+    return this.http.post<ServiceProviderRecommendations[]>(this.variables.getServicingEndpoint() + '/service-provider/save-recommendations' + recommendationsMono , {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -94,7 +94,7 @@ export class ServiceProviderService{
   }
 
   public saveServiceProviderDetails(detailsMono: ServiceProviderDetails): Observable<any> {
-    return this.http.post<ServiceProviderDetails[]>(this.variables.getServiceEndpoint() + '/service-provider/save-details' + detailsMono , {headers: this.variables.getAuthHeader()})
+    return this.http.post<ServiceProviderDetails[]>(this.variables.getServicingEndpoint() + '/service-provider/save-details' + detailsMono , {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -104,7 +104,7 @@ export class ServiceProviderService{
   }
 
   public saveServiceProviderPestTypeDetails(detailsMono: ServiceProviderPestTypeDetail): Observable<any> {
-    return this.http.post<ServiceProviderPestTypeDetail[]>(this.variables.getServiceEndpoint() + '/service-provider/save-pest-type' + detailsMono , {headers: this.variables.getAuthHeader()})
+    return this.http.post<ServiceProviderPestTypeDetail[]>(this.variables.getServicingEndpoint() + '/service-provider/save-pest-type' + detailsMono , {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);
@@ -114,7 +114,7 @@ export class ServiceProviderService{
   }
 
   public saveServiceProviderDetailsV1(detailsMono: ServiceProviderDetailsV1): Observable<any> {
-    return this.http.post<ServiceProviderDetails[]>(this.variables.getServiceEndpoint() + '/service-provider/save-details-v1' , detailsMono , {headers: this.variables.getAuthHeader()})
+    return this.http.post<ServiceProviderDetails[]>(this.variables.getServicingEndpoint() + '/service-provider/save-details-v1' , detailsMono , {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);

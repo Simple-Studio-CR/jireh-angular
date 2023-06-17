@@ -4,6 +4,8 @@
 
 export const environment = {
   production: true,
+  baseUrl: 'https://zuul-server-hwtl2.ondigitalocean.app/',
+  authUrl: 'https://zuul-server-hwtl2.ondigitalocean.app/api/security/oauth/token',
   appVersion: 'v8.0.37',
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,

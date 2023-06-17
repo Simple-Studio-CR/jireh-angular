@@ -9,6 +9,7 @@ import {Products} from "../models/products";
 import {AuthService} from "../modules/auth";
 import {ListProducts} from "../models/list-products";
 import {ActiveIngredient} from "../models/active-ingredient";
+import { environment } from "../../environments/environment"
 
 @Injectable({
   providedIn: 'root'

@@ -6,6 +6,7 @@ import {GlobalVariablesService} from "./globalVariables.service";
 import {Observable, throwError} from "rxjs";
 import {Equipment} from "../models/equipment";
 import {catchError} from "rxjs/operators";
+import { environment } from "../../environments/environment"
 
 @Injectable({
   providedIn: 'root'

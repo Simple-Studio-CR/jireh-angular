@@ -9,6 +9,7 @@ import {GlobalVariablesService} from "./globalVariables.service";
 import {AuthService} from "../modules/auth";
 import {AddressNeighborhood} from "../models/address-neighborhood";
 import {AddressDistrict} from "../models/address-district";
+import { environment } from "../../environments/environment"
 
 @Injectable({
   providedIn: 'root'

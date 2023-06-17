@@ -86,7 +86,7 @@ export class ServiceProviderFormComponent implements OnInit {
     }
 
     generateIdentifier() {
-        let clientId: string | null = sessionStorage.getItem('clientId');
+        let clientId: number | any = sessionStorage.getItem('clientId');
         let splitted: any
         this.serviceControl.getServiceProvider(clientId, this.pageNo + 1, 100)
             .subscribe(listSP => {

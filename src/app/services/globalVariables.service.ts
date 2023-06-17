@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {AuthService} from "../modules/auth";
+import { environment } from "../../environments/environment"
 import {AuthHTTPService} from "../modules/auth/services/auth-http";
 
 @Injectable({
@@ -14,18 +14,16 @@ export class GlobalVariablesService {
     return this.getBaseEndpoint() + 'api/servicing';
   }
   public getServiceEndpoint() {
-    return this.getBaseEndpoint() + '/api/service';
+    return this.getBaseEndpoint() + 'api/service';
   }
 
   public getAuthEndpoint() {
-    return 'https://zuul-server-dit4h.ondigitalocean.app/api/security/oauth/token';
-    // return 'http://localhost:8090/api/security/oauth/token';
+    return environment.authUrl;
 
   }
 
   public getBaseEndpoint() {
-    return 'https://zuul-server-dit4h.ondigitalocean.app';
-    // return 'http://localhost:8090';
+    return environment.baseUrl;
   }
 
   private static getHeaders() {

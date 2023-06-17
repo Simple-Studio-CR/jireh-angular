@@ -8,6 +8,7 @@ import {Feedlots} from "../models/feedlots";
 import {catchError} from "rxjs/operators";
 import {JsonObject} from "@angular/compiler-cli/ngcc/src/utils";
 import {ControlReport} from "../models/control-report";
+import { environment } from "../../environments/environment"
 
 @Injectable({
   providedIn: 'root'

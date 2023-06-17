@@ -43,9 +43,10 @@ export class ServiceProviderComponent implements OnInit {
 
   private rangePage() {
     let clientId: string | null = sessionStorage.getItem('clientId');
-    this.service.getServiceProvider(clientId, this.pageNo + 1, this.pageSize)
+    // @ts-ignore
+    this.service.getServiceProvider(Number.parseInt(clientId), this.pageNo + 1, this.pageSize)
       .subscribe(i => {
-        console.log(i)
+        console.log(i, 'aqui estamos con esto ')
         this.serviceProvider = i as ServiceProvider[];
         this.cd.detectChanges();
       })
