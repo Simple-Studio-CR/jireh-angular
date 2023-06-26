@@ -1,5 +1,4 @@
 # compiled output
-/dist
 /tmp
 /out-tsc
 
@@ -18,4 +17,4 @@
 
 # IDE - VSCode
 .vscode/*
-  
+
