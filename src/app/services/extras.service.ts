@@ -8,6 +8,7 @@ import {AuthService} from "../modules/auth";
 import {PestType} from "../models/pest-type";
 import { environment } from "../../environments/environment"
 import {Recommendations} from "../models/recommendations";
+import {Calificacion} from "../models/calificacion";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,17 @@ export class ExtrasService {
   }
 
   public getPestType(): Observable<any> {
-    return this.http.get<PestType>(this.variables.getServiceEndpoint() + '/extras/get-pest', {})
+    return this.http.get<PestType>(this.variables.getServicingEndpoint() + '/extras/get-pest', {headers:this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
+  public getCalificaciones(plagaId: number): Observable<any> {
+    return this.http.get<Calificacion>(this.variables.getServicingEndpoint() + '/extras/get-calificaciones' + '/' + plagaId, {headers:this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);
             return throwError(err);

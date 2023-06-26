@@ -5,27 +5,20 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {InlineSVGModule} from "ng-inline-svg";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CebaderoComponent} from "./cebaderos/cebadero.component";
 import {DropdownMenusModule, WidgetsModule} from "../../_metronic/partials";
 import {TranslationModule} from "../../modules/i18n";
 import {ReportsComponent} from "./reports.component";
-import {CebaderoFormComponent} from "./cebaderos/form-cebadero/cebadero-form.component";
-import {ServiceProviderComponent} from "./service-provider/service-provider.component";
-import {ServiceProviderFormComponent} from "./service-provider/form-service-provider/service-provider-form.component";
-import {DetailsComponent} from "./service-provider/form-service-provider/details/details.component";
-import {PestComponent} from "./service-provider/form-service-provider/pest/pest.component";
-import {RecommendationsComponent} from "./service-provider/form-service-provider/recommendations/recommendations.component";
+import {IncidenciasPlagasMensualComponent} from "./incidencias-plagas-mensual/incidencias-plagas-mensual.component";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
-    CebaderoComponent,
     ReportsComponent,
-    CebaderoFormComponent,
-    ServiceProviderComponent,
-    ServiceProviderFormComponent,
-    DetailsComponent,
-    PestComponent,
-    RecommendationsComponent
+    IncidenciasPlagasMensualComponent
   ],
   imports: [
     CommonModule,
@@ -35,38 +28,9 @@ import {RecommendationsComponent} from "./service-provider/form-service-provider
         component: ReportsComponent,
       },
       {
-        path: 'cebadero',
-        component: CebaderoComponent,
+        path: 'incidencias-plaga-mensual',
+        component: IncidenciasPlagasMensualComponent,
       },
-      {
-        path: 'cebadero/form',
-        component: CebaderoFormComponent,
-      },
-      {
-        path: 'service-provider',
-        component: ServiceProviderComponent,
-      },
-      {
-        path: 'service-provider/form',
-        component: ServiceProviderFormComponent,
-        children: [
-          {
-            path: 'details',
-            component: DetailsComponent
-          },
-          {
-            path: 'pest',
-            component: PestComponent
-          },
-          {
-            path: 'recommendations',
-            component: RecommendationsComponent
-          },
-          { path: '', redirectTo: 'details', pathMatch: 'full' },
-          { path: '**', redirectTo: 'details', pathMatch: 'full' },
-        ]
-      }
-
     ]),
     WidgetsModule,
     TranslationModule,
@@ -76,6 +40,16 @@ import {RecommendationsComponent} from "./service-provider/form-service-provider
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatInputModule,
+    MatInputModule,
   ],
 })
 export class ReportsModule {

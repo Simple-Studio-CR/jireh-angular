@@ -1,69 +1,130 @@
-<div class="row g-5 g-xl-8">
-
-  <div class="col-xl-3">
+<div class="card">
+  <div class="card-header border-0 pt-6">
+    <div class="card-title">
+      <div class="d-flex align-items-center position-relative my-1">
+        <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
+          <span [inlineSVG]="'./assets/media/icons/duotune/general/gen022.svg'" class="path1"></span>
+        </i>
+        <label class="form-control form-control-solid w-250px ps-13">{{cliente}}</label>
+      </div>
+    </div>
   </div>
-
-  <div class="col-xl-6">
-    <app-stats-widget4
-      class="card card-xl-stretch mb-xl-8"
-      color="danger"
-      title="Reportes para {{cliente}}"
-    ></app-stats-widget4>
+  <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+    <div class="table-responsive">
+      <div class="row g-5 g-xl-8">
+        <div class="col-xl-3">
+          <app-stats-widget5
+            svgIcon="assets/media/icons/duotune/general/gen035.svg"
+            class="card bg-success hoverable card-xl-stretch mb-xl-8"
+            color="success"
+            iconColor="white"
+            description=""
+            routerLink="/reports/incidencias-plaga-mensual"
+            title='Incidencias de Plagas Encontradas'
+          ></app-stats-widget5>
+        </div>
+        <div class="col-xl-3">
+          <app-stats-widget5
+            svgIcon="assets/media/icons/duotune/general/gen035.svg"
+            class="card bg-success hoverable card-xl-stretch mb-xl-8"
+            color="success"
+            iconColor="white"
+            title='Información de Plagas'
+            description=""
+            routerLink="/reports/service-provider"
+          ></app-stats-widget5>
+        </div>
+        <div class="col-xl-3">
+          <app-stats-widget5
+            svgIcon="assets/media/icons/duotune/general/gen035.svg"
+            class="card bg-success hoverable card-xl-stretch mb-xl-8"
+            color="success"
+            iconColor="white"
+            description=""
+            routerLink="/buys/view"
+            title='Observaciones y mejoras'
+          ></app-stats-widget5>
+        </div>
+        <div class="col-xl-3">
+          <app-stats-widget5
+            svgIcon="assets/media/icons/duotune/general/gen035.svg"
+            class="card bg-success hoverable card-xl-stretch mb-xl-8"
+            color="success"
+            iconColor="white"
+            description=""
+            routerLink="/buys/view"
+            title='Lámparas UV. Capturas por mes'
+          ></app-stats-widget5>
+        </div>
+        <div class="col-xl-3">
+          <app-stats-widget5
+            svgIcon="assets/media/icons/duotune/general/gen035.svg"
+            class="card bg-success hoverable card-xl-stretch mb-xl-8"
+            color="success"
+            iconColor="white"
+            description=""
+            routerLink="/buys/view"
+            title='Historial Capturas por Lámparas UV'
+          ></app-stats-widget5>
+        </div>
+        <div class="col-xl-3">
+          <app-stats-widget5
+            svgIcon="assets/media/icons/duotune/general/gen035.svg"
+            class="card bg-success hoverable card-xl-stretch mb-xl-8"
+            color="success"
+            iconColor="white"
+            description=""
+            routerLink="/buys/view"
+            title='Incidencia en Trampas Internas'
+          ></app-stats-widget5>
+        </div>
+        <div class="col-xl-3">
+          <app-stats-widget5
+            svgIcon="assets/media/icons/duotune/general/gen035.svg"
+            class="card bg-success hoverable card-xl-stretch mb-xl-8"
+            color="success"
+            iconColor="white"
+            description=""
+            routerLink="/buys/view"
+            title='Consumo cebaderos mensual'
+          ></app-stats-widget5>
+        </div>
+        <div class="col-xl-3">
+          <app-stats-widget5
+            svgIcon="assets/media/icons/duotune/general/gen035.svg"
+            class="card bg-success hoverable card-xl-stretch mb-xl-8"
+            color="success"
+            iconColor="white"
+            description=""
+            routerLink="/buys/view"
+            title='Insecticidas Aplicados'
+          ></app-stats-widget5>
+        </div>
+        <div class="col-xl-3">
+          <app-stats-widget5
+            svgIcon="assets/media/icons/duotune/general/gen035.svg"
+            class="card bg-success hoverable card-xl-stretch mb-xl-8"
+            color="success"
+            iconColor="white"
+            description=""
+            routerLink="/buys/view"
+            title='Mapeo de Trampas'
+          ></app-stats-widget5>
+        </div>
+        <div class="col-xl-3">
+          <app-stats-widget5
+            svgIcon="assets/media/icons/duotune/arrows/arr079.svg"
+            class="card bg-dark hoverable card-xl-stretch mb-5 mb-xl-8"
+            color="success"
+            iconColor="white"
+            title='{{"BUYS.ICONS.BACK"| translate}}'
+            routerLink="/dashboard"
+            description=""
+          ></app-stats-widget5>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-
-<div class="row g-5 g-xl-8">
-  <div class="col-xl-4">
-    <app-stats-widget5
-      svgIcon="assets/media/icons/duotune/general/gen055.svg"
-      class="card bg-danger hoverable card-xl-stretch mb-xl-8"
-      color="danger"
-      iconColor="white"
-      description=""
-      routerLink="/reports/cebadero"
-      title='{{"BUYS.ICONS.ADD"| translate}}'
-    ></app-stats-widget5>
-  </div>
-
-  <div class="col-xl-4">
-    <app-stats-widget5
-      svgIcon="assets/media/icons/duotune/general/gen028.svg"
-      class="card bg-primary hoverable card-xl-stretch mb-xl-8"
-      color="primary"
-      iconColor="white"
-      title='{{"BUYS.ICONS.ITEMS_PROVIDER_LIST"| translate}}'
-      description=""
-      routerLink="/reports/service-provider"
-    ></app-stats-widget5>
-  </div>
-
-  <div class="col-xl-4">
-    <app-stats-widget5
-      svgIcon="assets/media/icons/duotune/general/gen035.svg"
-      class="card bg-success hoverable card-xl-stretch mb-5 mb-xl-8"
-      color="success"
-      iconColor="white"
-      description=""
-      routerLink="/buys/view"
-      title='{{"BUYS.ICONS.ADD_NEW_BILL"| translate}}'
-    ></app-stats-widget5>
-  </div>
-
-  <div class="col-xl-4">
-  </div>
-
-  <div class="col-xl-4">
-    <app-stats-widget5
-      svgIcon="assets/media/icons/duotune/arrows/arr079.svg"
-      class="card bg-dark hoverable card-xl-stretch mb-5 mb-xl-8"
-      color="success"
-      iconColor="white"
-      title='{{"BUYS.ICONS.BACK"| translate}}'
-      routerLink="/dashboard"
-      description=""
-    ></app-stats-widget5>
-  </div>
-
 </div>
 
 

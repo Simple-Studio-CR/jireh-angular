@@ -1,0 +1,131 @@
+<div class="card">
+  <div class="card-header border-0 pt-5 pb-5">
+    <h1 class="anchor fw-bold mb-5">Ingresar Nueva Incidencias de Plagas Mensual</h1>
+    <form [formGroup]="inicidenciasForm" id="inicidenciasForm">
+      <div class="row p-t-20 col-md-12">
+        <!--Escoger Sucursal-->
+        <div class="col-md-6">
+          <label class="form-label" for="clientBranch">Sucursal</label>
+          <select class="form-select" formControlName="branchOffice" id="clientBranch">
+            <option>Seleccione Sucursal</option>
+            <option *ngFor="let b of branches" [ngValue]="b">{{b.name}}</option>
+          </select>
+        </div>
+        <!--Escoger Bodega-->
+        <div class="col-md-6">
+          <label class="form-label" for="warehouse">Bodega</label>
+          <select class="form-select" formControlName="warehouse" id="warehouse">
+            <option>Seleccione Bodega/Oficina</option>
+            <option *ngFor="let w of warehouse" [ngValue]="w">{{w.name}}</option>
+          </select>
+        </div>
+        <!--      Escoger mes-->
+        <div class="col-md-3 pt-2">
+          <label class="form-label">Fecha</label>
+          <input class="form-control" formControlName="createAt" type="date">
+        </div>
+        <!--      Escoger plaga-->
+        <div class="col-md-3">
+          <label class="form-label">Plaga encontrada</label>
+          <select class="form-select" formControlName="pestType">
+            <option>Seleccione Plaga</option>
+            <option *ngFor="let pt of pestType" [ngValue]="pt">{{pt.name}}</option>
+          </select>
+        </div>
+        <!--      Cuantificacion-->
+        <div class="col-md-3">
+          <label class="form-label" for="cuantificacion">Cuantificacion</label>
+          <select class="form-select" formControlName="cuantificacion" id="cuantificacion">
+            <option>Seleccione Cantidad</option>
+            <option>Nulo</option>
+            <option>Bajo</option>
+            <option>Medio</option>
+            <option>Alto</option>
+          </select>
+        </div>
+        <!--      Calificacion-->
+        <div class="col-md-3">
+          <label class="form-label" for="calificacion">Calificacion</label>
+          <select class="form-select" formControlName="calificacion" id="calificacion">
+            <option>Seleccione Calificacion</option>
+            <option *ngFor="let cal of calificaciones" [ngValue]="cal">{{cal.calificaciones}}</option>
+          </select>
+        </div>
+        <!--      Observaciones -->
+        <div class="col-md-8">
+          <label class="form-label" for="observaciones">Observaciones</label>
+          <textarea class="form-control" formControlName="observaciones" id="observaciones"
+                    placeholder="Ingrese"></textarea>
+        </div>
+        <!--      Boton de guardar-->
+        <div class="col-md-2 pt-6">
+          <button class="btn btn-success margin-left" (click)="guardar()">
+            <i class="fas fa-save" data-placement="top" data-toggle="tooltip"></i> Guardar
+          </button>
+        </div>
+        <!--      boton de volver-->
+        <div class="col-md-2 pt-6">
+          <button class="btn btn-warning margin-left" routerLink="/reports">
+            <i class="fas fa-arrow-left" data-placement="top" data-toggle="tooltip"></i> Volver
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="separator my-10"></div>
+  <div class="card-body py-3">
+    <!-- begin::Table container -->
+    <div class="table-responsive">
+      <div class="card card-flush">
+        <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+          <div class="card-title">
+            <h1 class="anchor fw-bold mb-5">Registro de Incidencias de Plagas Mensual</h1>
+            <div>
+            </div>
+          </div>
+          <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+            <form [formGroup]="range" id="range">
+              <div class="row p-t-20 col-md-12">
+                <div class="col-md-6">
+                  <label class="form-label">De:</label>
+                  <input class="form-control" formControlName="start" type="date">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Para:</label>
+                  <input class="form-control" formControlName="end" type="date">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- begin::Table -->
+        <table
+          class="table table-striped table-rounded border border-gray-300 table-row-bordered table-row-gray-300 gy-7 gs-7">
+          <thead>
+          <tr class="fw-semibold fs-4 text-gray-800">
+            <th class="min-w-200px">Bodega</th>
+            <th class="min-w-200px">Fecha</th>
+            <th class="min-w-200px">Plaga</th>
+            <th class="min-w-200px">Cuantificacion</th>
+            <th class="min-w-200px">Calificacion</th>
+            <th class="min-w-200px">Observaciones</th>
+            <th class="min-w-200px">Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let iM of incidenciasNueva">
+            <td>{{iM.warehouse.name}}</td>
+            <td>{{iM.createAt}}</td>
+            <td>{{iM.pestType.name}}</td>
+            <td>{{iM.cuantificacion}}</td>
+            <td>{{iM.calificacion.calificaciones}}</td>
+            <td>{{iM.observaciones}}</td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
