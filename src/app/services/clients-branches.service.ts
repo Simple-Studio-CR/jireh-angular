@@ -6,8 +6,6 @@ import {GlobalVariablesService} from "./globalVariables.service";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {ClientsBranchOffice} from "../models/clients-branch-office";
-import { environment } from "../../environments/environment"
-import {JsonObject, JsonValue} from "@angular/compiler-cli/ngcc/src/utils";
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +40,7 @@ export class ClientsBranchesService {
       );
   }
 
-  saveBranch(client: ClientsBranchOffice | JsonObject): Observable<any> {
+  saveBranch(client: ClientsBranchOffice | any): Observable<any> {
     return this.http.post<ClientsBranchOffice[]>(this.variables.getServicingEndpoint() + '/clients/branches', client, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.notAllowed(err);

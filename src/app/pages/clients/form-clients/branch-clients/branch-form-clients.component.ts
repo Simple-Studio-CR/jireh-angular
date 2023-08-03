@@ -14,7 +14,6 @@ import {ClientsBranchesService} from "../../../../services/clients-branches.serv
 import {ClientsWarehouseService} from "../../../../services/clients-warehouse.service"
 import Swal from "sweetalert2"
 import {ClientsService} from "../../../../services/clients.service";
-import {JsonArray, JsonObject} from "@angular/compiler-cli/ngcc/src/utils";
 import {Clients} from "../../../../models/clients";
 
 enum ClientTabsEnum {

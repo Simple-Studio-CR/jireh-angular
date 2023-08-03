@@ -1,0 +1,66 @@
+<!--
+  ~ Copyright (c) 2023
+  ~ Creado por Andres Mayorga, si lo mejoran compartir a andres.mayorga07@gmail.com
+  -->
+
+<div class="card-body py-3">
+  <div class="table-responsive">
+    <div class="card card-flush">
+      <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+        <div class="card-title">
+          <h3 class="mb-0">Incidencias de Plagas Mensual</h3>
+        </div>
+        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+          <form [formGroup]="range" id="range">
+            <div class="row p-t-20 col-md-12">
+              <div class="col-md-6">
+                <label class="form-label">Sucursal</label>
+                <input class="form-control" formControlName="branch" type="text">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Bodega</label>
+                <input class="form-control" formControlName="warehouse" type="text">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <table
+        class="table table-striped table-rounded border border-gray-300 table-row-bordered table-row-gray-300 gy-7 gs-7">
+        <thead>
+        <tr class="fw-semibold fs-4 text-gray-800">
+          <th>Enero</th>
+          <th>Febrero</th>
+          <th>Marzo</th>
+          <th>Abril</th>
+          <th>Mayo</th>
+          <th>Junio</th>
+          <th>Julio</th>
+          <th>Agosto</th>
+          <th>Setiembre</th>
+          <th>Octubre</th>
+          <th>Noviembre</th>
+          <th>Diciembre</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let r of reports; let i = index">
+          <td>{{r.branchOffice.name}}</td>
+          <td>{{r.warehouse.name}}</td>
+          <td>{{r.createAt | date:'dd/MM/yyyy'}}</td>
+          <td>{{r.trampa}}</td>
+          <td>{{r.moscas}}</td>
+          <td>{{r.palomillas}}</td>
+          <td>{{r.otros}}</td>
+          <td>{{r.total}}</td>
+          <td>
+            <button class="btn btn-danger" (click)="eliminar(r.id)">
+              <i class="fas fa-trash" data-placement="top" data-toggle="tooltip"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

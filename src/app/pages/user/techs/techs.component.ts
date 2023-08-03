@@ -4,8 +4,6 @@ import {UserAuthRegister} from "../../../models/user-auth-register";
 import {AuthHTTPService} from "../../../modules/auth/services/auth-http";
 import {Router} from "@angular/router";
 import {userAuthRegisterService} from "../../../services/user-auth-register.service";
-import {JsonArray, JsonObject, JsonValue} from "@angular/compiler-cli/ngcc/src/utils";
-import {Products} from "../../../models/products";
 import {PageEvent} from "@angular/material/paginator";
 
 @Component({

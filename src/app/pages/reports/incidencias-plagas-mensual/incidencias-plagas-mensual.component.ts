@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
 import {IncidenciaPlagaMensualService} from "../../../services/incidencia-plaga-mensual.service";
-import {ClientsService} from "../../../services/clients.service";
 import {ClientsBranchesService} from "../../../services/clients-branches.service";
 import {ClientsWarehouseService} from "../../../services/clients-warehouse.service";
 import {ClientsBranchOffice} from "../../../models/clients-branch-office";
@@ -9,7 +8,6 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {IncidenciasPlagasMensual} from "../../../models/incidencias-plagas-mensual";
 import {PestType} from "../../../models/pest-type";
 import {ExtrasService} from "../../../services/extras.service";
-import {MatInputModule} from "@angular/material/input";
 import {Calificacion} from "../../../models/calificacion";
 
 @Component({
@@ -33,11 +31,9 @@ export class IncidenciasPlagasMensualComponent implements OnInit {
 
   constructor(
     private service: IncidenciaPlagaMensualService,
-    private clientService: ClientsService,
     private pestTypeService: ExtrasService,
     private branchService: ClientsBranchesService,
     private wareHouseService: ClientsWarehouseService,
-    private matInput: MatInputModule,
     private cd: ChangeDetectorRef) {
   }
 
@@ -48,10 +44,6 @@ export class IncidenciasPlagasMensualComponent implements OnInit {
   }
 
   guardar() {
-    // let date:Date = this.inicidenciasForm.controls.createAt.value
-    // console.log(date.toISOString().toString().substring(0,10))
-    // console.log(this.inicidenciasForm.controls.createAt.value)
-    // console.log(this.inicidenciasForm.value)
     this.service.save(this.inicidenciasForm.value).subscribe(iF => {
       console.log(iF)
     })
@@ -79,7 +71,6 @@ export class IncidenciasPlagasMensualComponent implements OnInit {
     // @ts-ignore
     this.service.findByDate(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')), todayString).subscribe(all => {
       this.incidenciasNueva = all as IncidenciasPlagasMensual[];
-      console.log(all)
       this.cd.detectChanges();
     })
 

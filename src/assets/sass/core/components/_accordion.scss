@@ -20,12 +20,9 @@
 			align-items: center;
 			justify-content: center;
 
-			i {
-	    		color: $primary;
-	    	}
-
-	    	.svg-icon {
-	    		@include svg-icon-color($primary);
+			i,
+			.svg-icon {
+	    		color: var(--#{$prefix}primary);
 	    	}
 		}
 
@@ -35,12 +32,9 @@
 				transition: $transition-base;
 				transform: rotate(0);
 
-				i {
-		    		color: $text-muted;
-		    	}
-
+				i,
 				.svg-icon {
-		    		@include svg-icon-color($text-muted);
+		    		color: var(--#{$prefix}text-muted);
 		    	}
 			}
 		}

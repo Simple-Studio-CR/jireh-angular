@@ -8,7 +8,12 @@ $root-font-size-lg:                             	13px; // Root font size for tab
 $root-font-size-md:                             	12px; // Root font size for mobile mode
 
 // Page  background Color
-$page-bg: 											if(isDarkMode(), #151521, $gray-100) !default;
+$page-bg: 											$gray-100 !default;
+$page-bg-dark: 										#151521 !default;
+
+// App blank bg color
+$app-blank-bg-color: 								$white;
+$app-blank-bg-color-dark: 							#151521;
 
 // Page background image height
 $page-bg-image-height: (
@@ -34,7 +39,8 @@ $header-config: (
 		// Default Mode
 		default: (
 			height: 80px,
-			border: if(isDarkMode(), 1px solid rgba(255, 255, 255, 0.08), 1px solid rgba($white, 0.1)), 
+			border: 1px solid rgba($white, 0.1), 
+			border-dark: 1px solid rgba(255, 255, 255, 0.08), 
 		),
 
 		// Fixed Mode
@@ -42,7 +48,9 @@ $header-config: (
 			height: 65px,
 			z-index: 97,
 			bg-color: $body-bg,
-			box-shadow: if(isDarkMode(), none, 0px 10px 30px 0px rgba(82,63,105,0.08)),
+			bg-color-dark: $body-bg-dark,
+			box-shadow: 0px 10px 30px 0px rgba(82,63,105,0.08),
+			box-shadow-shadow: none,
 			border: 0
 		)
 	),
@@ -52,7 +60,8 @@ $header-config: (
 		// Default Mode
 		default: (
 			height: 65px,
-			border: if(isDarkMode(), 1px solid rgba(255, 255, 255, 0.08), 1px solid rgba($white, 0.1)), 
+			border: 1px solid rgba($white, 0.1), 
+			border-dark: 1px solid rgba(255, 255, 255, 0.08) 
 		),
 
 		// Fixed Mode
@@ -60,8 +69,11 @@ $header-config: (
 			z-index: 97,
 			height: 65px,
 			bg-color: $body-bg,
-			box-shadow: if(isDarkMode(), none, 0px 10px 30px 0px rgba(82,63,105,0.08)),
-			border: 0
+			bg-color-dark: $body-bg-dark,
+			box-shadow: 0px 10px 30px 0px rgba(82,63,105,0.08),
+			box-shadow-dark: none,
+			border: 0,
+			border-dark: 1px solid rgba($white, 0.1), 
 		)
 	)
 ) !default;

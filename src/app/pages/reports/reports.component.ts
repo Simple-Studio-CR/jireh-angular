@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import swal from "sweetalert2";
 import Swal from "sweetalert2";
-import {AuthHTTPService} from "../../modules/auth/services/auth-http";
 import {Router} from "@angular/router";
+import {AuthHTTPService} from "../../modules/auth/services/auth-http";
 
 @Component({
   selector: 'app-buy',

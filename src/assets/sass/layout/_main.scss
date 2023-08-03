@@ -4,7 +4,7 @@
 
 // Body
 body {
-	background-color: $page-bg;
+	background-color: var(--#{$prefix}page-bg);
 	background-repeat: no-repeat;
 	background-position: center top;
 	background-size: 100% get($page-bg-image-height, desktop);
@@ -14,9 +14,29 @@ body {
 	}
 }
 
+@include color-mode(light) {
+	body:not(.app-blank) {
+		background-image: url('../../media/patterns/header-bg.jpg');
+	}
+}
+
+@include color-mode(dark) {
+	body:not(.app-blank) {
+		background-image: url('../../media/patterns/header-bg-dark.png');
+	}
+}
+
 // Font color from Content background color
 .text-page-bg {
 	color: $page-bg;
+}
+
+.page-bg {
+	background-color: var(--#{$prefix}page-bg) !important;
+}
+
+.app-blank {
+	background-color: var(--#{$prefix}app-blank-bg) !important;
 }
 
 // Nav custom
@@ -33,7 +53,7 @@ body {
 		&:hover {
             opacity: 1;
             border-bottom-color: transparent !important;
-        }        
+        }
     }
 }
 

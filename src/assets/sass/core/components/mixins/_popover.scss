@@ -2,7 +2,7 @@
 // Popover Mixin
 //
 
-@mixin popover-theme($bg-color, $border-color, $header-bg-color, $header-color, $body-color, $arrow-outer-color, $arrow-color) {
+@mixin popover-theme($bg-color, $header-bg-color, $header-border-color, $header-color, $body-color, $arrow-outer-color, $arrow-color) {
     background-color: $bg-color;
     border: 0;
 
@@ -10,7 +10,7 @@
     .popover-header {
         background-color: $header-bg-color;
         color: $header-color;
-        border-bottom-color: $border-color;
+        border-bottom-color: $header-border-color;
     }
 
     // Body

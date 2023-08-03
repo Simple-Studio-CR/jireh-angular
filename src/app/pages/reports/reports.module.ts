@@ -14,11 +14,21 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
+import {InfoPlagasComponent} from "./info-plaga/info-plagas.component";
+import {PuntosMejoraComponent} from "./observaciones-mejoras/puntos-mejora.component";
+import {LamparasCapturasMesComponent} from "./lamparas-capturas-mes/lamparas-capturas-mes.component";
+import { LamparasChartComponent} from "./lamparas-capturas-mes/chart/lamparas-chart.component";
+import {HistorialCapturasLamparasComponent} from "./historial-capturas-lamparas/historial-capturas-lamparas.component";
 
 @NgModule({
   declarations: [
     ReportsComponent,
-    IncidenciasPlagasMensualComponent
+    IncidenciasPlagasMensualComponent,
+    InfoPlagasComponent,
+    PuntosMejoraComponent,
+    LamparasCapturasMesComponent,
+    LamparasChartComponent,
+    HistorialCapturasLamparasComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +41,28 @@ import {MatInputModule} from "@angular/material/input";
         path: 'incidencias-plaga-mensual',
         component: IncidenciasPlagasMensualComponent,
       },
+      {
+        path: 'info-plagas',
+        component: InfoPlagasComponent,
+      },
+      {
+        path: 'puntos-mejora',
+        component: PuntosMejoraComponent,
+      },
+      {
+        path: 'lamparas-capturas-mes',
+        component: LamparasCapturasMesComponent,
+        children: [
+          {
+            path: 'chart',
+            component: LamparasChartComponent,
+          }
+        ]
+      },
+      {
+        path: 'historial-capturas-lamparas',
+        component: HistorialCapturasLamparasComponent,
+      }
     ]),
     WidgetsModule,
     TranslationModule,
@@ -44,11 +76,6 @@ import {MatInputModule} from "@angular/material/input";
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatInputModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatInputModule,
     MatInputModule,
   ],
 })

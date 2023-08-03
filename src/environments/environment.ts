@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   baseUrl: 'http://localhost:8090/',
   authUrl: 'http://localhost:8090/api/security/oauth/token',
+  servicingUrl: 'http://localhost:8080',
   appVersion: 'v8.0.37',
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,

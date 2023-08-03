@@ -6,6 +6,7 @@ import {environment} from '../../../../../environments/environment';
 
 const API_USERS_URL = `${environment.baseUrl}/auth`;
 const API_ZUUL = `${environment.baseUrl}`;
+const API_SERVICING = `${environment.servicingUrl}`;
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +57,9 @@ export class AuthHTTPService {
     params.set('grant_type', 'password');
     params.set('username', user.userName);
     params.set('password', user.password);
+    console.log(params.toString());
+    console.log(httpHeaders);
+    console.log(endPoint);
     return this.http.post<any>(endPoint, params.toString(), {headers: httpHeaders});
   }
 
@@ -76,7 +80,7 @@ export class AuthHTTPService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<UserModel>(`${API_ZUUL}api/servicing/v1/search/findUserName?username=andres`, {
+    return this.http.get<UserModel>(`${API_SERVICING}/v1/search/findUserName?username=andres`, {
       headers: httpHeaders,
     });
   }

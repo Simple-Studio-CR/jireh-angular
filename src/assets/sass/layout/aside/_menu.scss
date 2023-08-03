@@ -3,15 +3,7 @@
 //
 
 // Aside menu
-.aside-menu {
-    .menu {
-        // Link padding x
-        @include menu-link-padding-x(get($aside-config, padding-x));
-
-        // Menu indention
-        @include menu-link-indention(get($aside-config, menu-indention), get($aside-config, padding-x));
-    }
-
+.aside-menu- {
     // Item
     .menu-item {
         padding: 0;
