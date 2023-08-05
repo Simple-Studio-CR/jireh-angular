@@ -20,14 +20,10 @@ export class ClientsService {
               private variables: GlobalVariablesService) {
   }
 
-  private notAllowed(err: { status: number; }): boolean {
-    return err.status == 401 || err.status == 403;
-  }
-
   listAll(page: number, size: number): Observable<any> {
     return this.http.get<Clients[]>(this.variables.getServicingEndpoint() + '/clients/all/' + page + '/' + size, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -37,7 +33,7 @@ export class ClientsService {
   save(client: Clients): Observable<any> {
     return this.http.post<Clients>(this.variables.getServicingEndpoint() + '/clients', client, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -47,7 +43,7 @@ export class ClientsService {
   updateClient(client: Clients, clientId: any): Observable<any> {
     return this.http.put<Clients>(this.variables.getServicingEndpoint() + '/clients/' + clientId, client, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -57,7 +53,7 @@ export class ClientsService {
   findById(id: number | null): Observable<any> {
     return this.http.get<Clients[]>(this.variables.getServicingEndpoint() + '/clients/' + id, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -67,7 +63,7 @@ export class ClientsService {
   warehouseFindById(id: string | undefined | null): Observable<any> {
     return this.http.get<ClientsWarehouse>(this.variables.getServicingEndpoint() + '/clients/warehouse/id/' + id, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -77,7 +73,7 @@ export class ClientsService {
   warehouseFindByBranchId(id: number | undefined | null, page: number, size: number): Observable<any> {
     return this.http.get<ClientsWarehouse>(this.variables.getServicingEndpoint() + '/clients/warehouse/branch/' + id + '/' + page + '/' + size, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -87,7 +83,7 @@ export class ClientsService {
   branchFindById(id: number | undefined | null): Observable<any> {
     return this.http.get<ClientsBranchOffice>(this.variables.getServicingEndpoint() + '/clients/branches/id/' + id, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -97,7 +93,7 @@ export class ClientsService {
   branchFindByClient(clientId: number | undefined | null): Observable<any> {
     return this.http.get<ClientsBranchOffice>(this.variables.getServicingEndpoint() + '/clients/branches/client/' + clientId + '/' + 1 + '/' + 5000, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -107,7 +103,7 @@ export class ClientsService {
   saveWarehouse(warehouse: ClientsWarehouse): Observable<any> {
     return this.http.post<ClientsWarehouse[]>(this.variables.getServicingEndpoint() + '/clients/warehouse', warehouse, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -117,7 +113,7 @@ export class ClientsService {
   editWarehouse(warehouse: ClientsWarehouse, id: number | null): Observable<any> {
     return this.http.put<ClientsWarehouse[]>(this.variables.getServicingEndpoint() + '/clients/edit-warehouse/' + id, warehouse, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )

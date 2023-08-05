@@ -86,6 +86,22 @@
     }
 }
 
+// Parent active
+.parent-active {
+    @each $name, $color in $theme-text-colors {
+        .parent-active-#{$name} {
+            transition: $transition-link;
+        }
+
+        &.active {
+            .parent-active-#{$name} {
+                transition: $transition-link;
+                color: var(--#{$prefix}text-#{$name}) !important;
+            }
+        }    
+    }
+}
+
 // Text transparent
 .text-transparent {
     color: transparent;

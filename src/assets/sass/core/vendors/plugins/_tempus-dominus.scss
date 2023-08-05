@@ -24,7 +24,7 @@ $td-dow-color: var(--#{$prefix}gray-700);
     background-color: var(--#{$prefix}body-bg) !important;
     @include border-radius($dropdown-border-radius);
 
-	i {
+	i:not(.ki-outline):not(.ki-solid):not(.ki-duotone) {
 		font-size: 0.9rem !important;	
 	}
 
@@ -72,7 +72,7 @@ $td-dow-color: var(--#{$prefix}gray-700);
 	.toolbar div {
 		@include border-radius($btn-border-radius);
 
-		i {
+		i:not(.ki-outline):not(.ki-solid):not(.ki-duotone) {
 			font-size: 1.1rem !important;	
 		}
 	}

@@ -5,7 +5,7 @@
 
 // Base
 .popover {
-    --#{$prefix}popover-header-border-color: $popover-header-border-color;
+    --#{$prefix}popover-header-border-color: #{$popover-header-border-color};
 
     .popover-header {
         font-size: $popover-header-font-size;
@@ -33,26 +33,26 @@
     }
 }
 
+// Inverse
+.popover-inverse {
+    --#{$prefix}popover-bg: var(--#{$prefix}gray-900);
+    --#{$prefix}popover-border-color: var(--#{$prefix}gray-900);
+    --#{$prefix}popover-box-shadow: #{$popover-box-shadow-dark};
+    --#{$prefix}popover-header-color: var(--#{$prefix}gray-200);
+    --#{$prefix}popover-header-bg: var(--#{$prefix}gray-900);
+    --#{$prefix}popover-body-color: var(--#{$prefix}gray-400);
+    --#{$prefix}popover-arrow-border: transparent;
+    --#{$prefix}popover-header-border-color: var(--#{$prefix}gray-800);
+}
+
 @if $enable-dark-mode {
     @include color-mode(dark) {
-        .popover {
+        .popover:not(.popover-inverse) {
             --#{$prefix}popover-bg: #{$popover-bg-dark};
+            --#{$prefix}popover-border-color: #{$popover-border-color-dark};
             --#{$prefix}popover-header-bg: #{$popover-bg-dark};
             --#{$prefix}popover-box-shadow: #{$popover-box-shadow-dark};
             --#{$prefix}popover-header-border-color: #{$popover-header-border-color-dark};
         }
     }
-}
-
-// Inverse
-.popover-inverse {
-    @include popover-theme(
-        $bg-color: var(--#{$prefix}gray-900), 
-        $header-bg-color: var(--#{$prefix}gray-900), 
-        $header-border-color: var(--#{$prefix}gray-800), 
-        $header-color: var(--#{$prefix}gray-200), 
-        $body-color: var(--#{$prefix}gray-400), 
-        $arrow-outer-color: var(--#{$prefix}gray-100), 
-        $arrow-color: var(--#{$prefix}gray-900)
-    );
 }

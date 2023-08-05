@@ -9,6 +9,7 @@ import {ClientsWarehouseService} from "../../../services/clients-warehouse.servi
 import {PuntosMejora} from "../../../models/puntos-mejora";
 import {PuntosMejoraService} from "../../../services/puntos-mejora.service";
 import {FunctionsService} from "../../common/functions.service";
+import {IncidenciasPlagasMensual} from "../../../models/incidencias-plagas-mensual";
 
 @Component({
   selector: 'app-puntos-mejora',
@@ -28,7 +29,7 @@ export class PuntosMejoraComponent implements OnInit{
   puntosMejora: FormGroup;
   range: FormGroup;
 
-  function: FunctionsService = new FunctionsService();
+  functions: FunctionsService = new FunctionsService();
 
 
   constructor(private service: PuntosMejoraService,
@@ -41,6 +42,7 @@ export class PuntosMejoraComponent implements OnInit{
     this.findBranches();
     this.iniciarForms();
     this.cargarDatos();
+    this.setFechaHoy();
   }
 
   guardar() {
@@ -65,7 +67,7 @@ export class PuntosMejoraComponent implements OnInit{
 
     // @ts-ignore
     this.service.findByDate(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')),
-      this.function.fechaActual()).subscribe(all => {
+      this.functions.fechaActual()).subscribe(all => {
       this.puntoMejoraNuevo = all as PuntosMejora[];
       this.cd.detectChanges();
     })
@@ -107,6 +109,21 @@ export class PuntosMejoraComponent implements OnInit{
           })
         })
       })
+  }
+
+  private setFechaHoy() {
+    this.puntosMejora.get('createAt')?.setValue(this.functions.fechaActual());
+    this.range.get('start')?.setValue(this.functions.primerDiaMes());
+    this.range.get('end')?.setValue(this.functions.ultimoDiaMes());
+
+    // @ts-ignore
+    this.service.findByDateRange(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')),
+      this.functions.primerDiaMes(),
+      this.functions.ultimoDiaMes()).subscribe(all => {
+      this.puntoMejoraNuevo = all as PuntosMejora[];
+      console.log(this.puntoMejoraNuevo)
+      this.cd.detectChanges();
+    })
   }
 
 }

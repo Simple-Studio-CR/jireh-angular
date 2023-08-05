@@ -16,14 +16,10 @@ export class ClientsBranchesService {
               private variables: GlobalVariablesService) {
   }
 
-  private notAllowed(err: { status: number; }): boolean {
-    return err.status == 401 || err.status == 403;
-  }
-
   findByClientId(clientId: any,page: number, size: number): Observable<any> {
     return this.http.get<ClientsBranchOffice[]>(this.variables.getServicingEndpoint() + '/clients/branches/client/' + clientId + '/' + page + '/' + size, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -33,7 +29,7 @@ export class ClientsBranchesService {
   findById(id: any): Observable<any> {
     return this.http.get<ClientsBranchOffice[]>(this.variables.getServicingEndpoint() + '/clients/branches/id/' + id, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -43,7 +39,7 @@ export class ClientsBranchesService {
   saveBranch(client: ClientsBranchOffice | any): Observable<any> {
     return this.http.post<ClientsBranchOffice[]>(this.variables.getServicingEndpoint() + '/clients/branches', client, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -53,7 +49,7 @@ export class ClientsBranchesService {
   editBranch(branch: any, id: string | null): Observable<any> {
     return this.http.put<ClientsBranchOffice[]>(this.variables.getServicingEndpoint() + '/clients/branches/' + id, branch, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )

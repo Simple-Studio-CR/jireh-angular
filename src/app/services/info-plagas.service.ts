@@ -15,14 +15,11 @@ export class InfoPlagasService{
               private variables: GlobalVariablesService) {
   }
 
-  private notAllowed(err: { status: number; }): boolean {
-    return err.status == 401 || err.status == 403;
-  }
 
   save(infoPlagas: InfoPlagas): Observable<any>{
     return this.http.post<InfoPlagas>(this.variables.getServicingEndpoint() + '/info-plagas/save', infoPlagas, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -31,7 +28,7 @@ export class InfoPlagasService{
   findByDateRange(id:number, date: string, date2: string): Observable<any>{
     return this.http.get<InfoPlagas>(this.variables.getServicingEndpoint() + '/info-plagas/get-by-date-range' + '/' + id + '/' + date + '/' + date2, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -41,7 +38,7 @@ export class InfoPlagasService{
   findByDate(id:number, date: string): Observable<any>{
     return this.http.get<InfoPlagas>(this.variables.getServicingEndpoint() + '/info-plagas/get-by-date/'  + id + '/' + date + '/', {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -50,7 +47,7 @@ export class InfoPlagasService{
   findAll(): Observable<any>{
     return this.http.get<InfoPlagas>(this.variables.getServicingEndpoint() + '/info-plagas/get-all', {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )

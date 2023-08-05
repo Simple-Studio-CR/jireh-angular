@@ -16,14 +16,11 @@ export class EquipmentService{
               private variables: GlobalVariablesService) {
   }
 
-  private notAllowed(err: { status: number; }): boolean {
-    return err.status == 401 || err.status == 403;
-  }
 
   listAll(): Observable<any>{
     return this.http.get<Equipment[]>(this.variables.getServicingEndpoint() + '/equipment/all', {headers:this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )

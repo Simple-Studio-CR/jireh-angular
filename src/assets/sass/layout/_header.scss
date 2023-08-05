@@ -150,7 +150,6 @@
 		// Header menu
 		.header-menu {
 			display: none;
-			z-index: get($header-config, tablet-and-mobile, fixed, z-index) - 1;
 		}
 	}
 }

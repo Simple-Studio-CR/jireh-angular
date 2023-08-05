@@ -9,6 +9,8 @@ import {IncidenciasPlagasMensual} from "../../../models/incidencias-plagas-mensu
 import {PestType} from "../../../models/pest-type";
 import {ExtrasService} from "../../../services/extras.service";
 import {Calificacion} from "../../../models/calificacion";
+import {LamparasCapturasMes} from "../../../models/lamparas-capturas-mes";
+import {FunctionsService} from "../../common/functions.service";
 
 @Component({
   selector: 'incidencias-plagas-mensuales-component',
@@ -28,6 +30,7 @@ export class IncidenciasPlagasMensualComponent implements OnInit {
   form: FormGroup;
   inicidenciasForm: FormGroup;
   range: FormGroup;
+  functions: FunctionsService = new FunctionsService();
 
   constructor(
     private service: IncidenciaPlagaMensualService,
@@ -41,6 +44,7 @@ export class IncidenciasPlagasMensualComponent implements OnInit {
     this.findBranches();
     this.iniciarForms();
     this.cargarDatos();
+    this.setFechaHoy();
   }
 
   guardar() {
@@ -98,6 +102,21 @@ export class IncidenciasPlagasMensualComponent implements OnInit {
     })
 
 
+  }
+
+  private setFechaHoy() {
+    this.inicidenciasForm.get('createAt')?.setValue(this.functions.fechaActual());
+    this.range.get('start')?.setValue(this.functions.primerDiaMes());
+    this.range.get('end')?.setValue(this.functions.ultimoDiaMes());
+
+    // @ts-ignore
+    this.service.findByDateRange(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')),
+      this.functions.primerDiaMes(),
+      this.functions.ultimoDiaMes()).subscribe(all => {
+      this.incidenciasNueva = all as IncidenciasPlagasMensual[];
+      console.log(this.incidenciasNueva)
+      this.cd.detectChanges();
+    })
   }
 
   findBranches() {

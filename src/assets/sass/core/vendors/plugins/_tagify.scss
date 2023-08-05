@@ -37,6 +37,7 @@ $tagify-input-padding-y-lg: $input-padding-y-lg - $tagify-tag-padding-y-lg;
     --placeholder-color         : var(--#{$prefix}gray-400);
     --placeholder-color-focus   : var(--#{$prefix}gray-500);
     --loader-size               : .8rem;
+    --tagify-dd-item--hidden-duration : 0.3s;
     
     .tagify__tag {
         background-color: var(--tag-bg);

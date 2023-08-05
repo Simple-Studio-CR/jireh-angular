@@ -52,4 +52,14 @@ export class FunctionsService {
       return today.getFullYear() + '-' + mm + '-' + '30';
     }
   }
+
+  mesActual(): number {
+    let today = new Date();
+    return today.getMonth() + 1;
+  }
+
+  anioActual(): number {
+    let today = new Date();
+    return today.getFullYear();
+  }
 }

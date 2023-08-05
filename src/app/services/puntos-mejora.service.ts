@@ -22,14 +22,10 @@ export class PuntosMejoraService {
               private variables: GlobalVariablesService) {
   }
 
-  private notAllowed(err: { status: number; }): boolean {
-    return err.status == 401 || err.status == 403;
-  }
-
   save(puntosMejora: PuntosMejora): Observable<any>{
     return this.http.post<PuntosMejora>(this.variables.getServicingEndpoint() + '/puntos-de-mejora/save', puntosMejora, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -38,7 +34,7 @@ export class PuntosMejoraService {
   findByDateRange(id:number, date: string, date2: string): Observable<any>{
     return this.http.get<PuntosMejora>(this.variables.getServicingEndpoint() + '/puntos-de-mejora/get-by-date-range' + '/' + id + '/' + date + '/' + date2, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -48,7 +44,7 @@ export class PuntosMejoraService {
   findByDate(id:number, date: string): Observable<any>{
     return this.http.get<PuntosMejora>(this.variables.getServicingEndpoint() + '/puntos-de-mejora/get-by-date/'  + id + '/' + date + '/', {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -57,7 +53,7 @@ export class PuntosMejoraService {
   findAll(): Observable<any>{
     return this.http.get<PuntosMejora>(this.variables.getServicingEndpoint() + '/puntos-de-mejora/get-all', {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )

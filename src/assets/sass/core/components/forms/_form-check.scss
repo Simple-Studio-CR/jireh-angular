@@ -42,6 +42,10 @@
             &:not(:checked) {
                 background-color: $form-check-input-bg-solid;
             }            
+
+            &[type=checkbox]:indeterminate {
+                background-color: $form-check-input-checked-bg-color;
+            }
         }
     }
 
@@ -165,21 +169,21 @@
         margin-left: 0.5rem;
     }
 
-    &.active {
+    &.active:not(.form-check-success):not(.form-check-danger) {
         .form-check-wrapper {
-            border-color: var(--#{$prefix}primary);
+            border-color: var(--#{$prefix}primary) !important;
         }    
     }
 
     &.form-check-success.active {
         .form-check-wrapper {
-            border-color: var(--#{$prefix}success);
+            border-color: var(--#{$prefix}success) !important;
         } 
     }
 
     &.form-check-danger.active {
         .form-check-wrapper {
-            border-color: var(--#{$prefix}danger);
+            border-color: var(--#{$prefix}danger) !important;
         } 
     }
 

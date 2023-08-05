@@ -15,7 +15,6 @@ import {ClientsBranchesService} from "../../../services/clients-branches.service
 import {ClientsWarehouseService} from "../../../services/clients-warehouse.service";
 import {MatInputModule} from "@angular/material/input";
 import {FunctionsService} from "../../common/functions.service";
-import * as am5 from "@amcharts/amcharts5";
 
 
 @Component({
@@ -48,18 +47,15 @@ export class LamparasCapturasMesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.sessionStorage();
     this._iniciarForms();
-    this.nuevoConteoForm.controls['warehouse'].disable();
     this.setFechaHoy();
-    this.clientId = sessionStorage.getItem('clientId');
-    this.branchId = sessionStorage.getItem('branchId');
     this._getBranches();
   }
 
   _iniciarForms() {
     this.range = new FormGroup({
       start: new FormControl<Date | null>(null),
-      end: new FormControl<Date | null>(null),
     });
 
     this.nuevoConteoForm = new FormGroup({
@@ -72,6 +68,14 @@ export class LamparasCapturasMesComponent implements OnInit {
       otros: new FormControl(''),
       total: new FormControl(''),
     })
+
+    this.nuevoConteoForm.controls['warehouse'].disable();
+    this.nuevoConteoForm.controls['createAt'].disable();
+    this.nuevoConteoForm.controls['trampa'].disable();
+    this.nuevoConteoForm.controls['moscas'].disable();
+    this.nuevoConteoForm.controls['palomillas'].disable();
+    this.nuevoConteoForm.controls['otros'].disable();
+    this.nuevoConteoForm.controls['total'].disable();
   }
 
   calcular(): any {
@@ -96,50 +100,84 @@ export class LamparasCapturasMesComponent implements OnInit {
 
   private setFechaHoy() {
     this.nuevoConteoForm.get('createAt')?.setValue(this.functions.fechaActual());
-    this.range.get('start')?.setValue(this.functions.primerDiaMes());
-    this.range.get('end')?.setValue(this.functions.ultimoDiaMes());
 
     // @ts-ignore
-    this.service.findByDateRange(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')),
-      this.functions.primerDiaMes(),
-      this.functions.ultimoDiaMes()).subscribe(all => {
+    this.service.findByDate(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')),
+      this.functions.mesActual()).subscribe(all => {
       this.reports = all as LamparasCapturasMes[];
-      console.log(this.reports)
       this.cd.detectChanges();
     })
   }
 
   save() {
-    this.service.save(this.nuevoConteoForm.value).subscribe(
-      response => {
-        this.nuevoConteoForm.controls['trampa'].setValue('');
-        this.nuevoConteoForm.controls['moscas'].setValue('');
-        this.nuevoConteoForm.controls['palomillas'].setValue('');
-        this.nuevoConteoForm.controls['otros'].setValue('');
-        this.nuevoConteoForm.controls['total'].setValue('');
+    const formData = this.nuevoConteoForm.value;
+
+    // Guardar el nuevoConteoForm
+    console.log(formData, 'form');
+    this.service.save(formData).subscribe(response => {
+      this.resetForm();
+
+      console.log(response);
+
+      const totalMonths = this.functions.mesActual();
+
+      // Iterar sobre los meses anteriores
+      for (let i = 1; i < totalMonths; i++) {
+        console.log('Entramos al for con i:', i);
+
+        // Buscar datos por mes y sucursal
+        this.service.findByDate(response.branchOffice.clientId.id, i).subscribe(data => {
+          console.log('Buscamos todos los datos por meses en el mes:', i);
+
+          if (data.length === 0) {
+            // Crear nuevo objeto si no existe en el mes
+            const nuevo = {
+              branchOffice: response.branchOffice,
+              createAt: `${this.functions.anioActual()}-${i}-01`,
+              warehouse: response.warehouse,
+              trampa: response.trampa,
+              moscas: 0,
+              palomillas: 0,
+              otros: 0,
+              total: 0,
+            };
+
+            console.log(nuevo, 'nuevo');
+            this.service.save(nuevo).subscribe(newObject => {
+              console.log(newObject, 'aquí se crea en el mes', i);
+              this.cd.detectChanges();
+            });
+          }
+        });
       }
-    );
+    });
+
     this.setFechaHoy();
+  }
+
+  resetForm() {
+    // Restablecer valores del formulario
+    const controls = this.nuevoConteoForm.controls;
+    controls.trampa.setValue('');
+    controls.moscas.setValue('');
+    controls.palomillas.setValue('');
+    controls.otros.setValue('');
+    controls.total.setValue('');
   }
 
   private _getBranches() {
 
     this.range.valueChanges.subscribe(date => {
       this.nuevoConteo = [];
-      if (date.end == null) {
-        // @ts-ignore
-        this.service.findByDate(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')), date.start).subscribe(all => {
-          this.nuevoConteo = all as LamparasCapturasMes[];
-          this.cd.detectChanges();
-        })
-      }
-      if (date.end != null && date.start != null) {
-        // @ts-ignore
-        this.service.findByDateRange(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')), date.start, date.end).subscribe(all => {
-          this.nuevoConteo = all as LamparasCapturasMes[];
-          this.cd.detectChanges();
-        })
-      }
+      // @ts-ignore
+      this.service.findByDate(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')),
+        date.start).subscribe(all => {
+        this.reports = all as LamparasCapturasMes[];
+
+        sessionStorage.setItem('reports', JSON.stringify(this.reports));
+
+        this.cd.detectChanges();
+      });
     })
 
     this.branchService.findByClientId(this.clientId, 1, 100).subscribe(
@@ -152,6 +190,12 @@ export class LamparasCapturasMesComponent implements OnInit {
       value => {
         this.cd.detectChanges();
         this.nuevoConteoForm.controls['warehouse'].enable();
+        this.nuevoConteoForm.controls['createAt'].enable();
+        this.nuevoConteoForm.controls['trampa'].enable();
+        this.nuevoConteoForm.controls['moscas'].enable();
+        this.nuevoConteoForm.controls['palomillas'].enable();
+        this.nuevoConteoForm.controls['otros'].enable();
+        this.nuevoConteoForm.controls['total'].enable();
         this._getWarehouses(value.id);
       });
   }
@@ -168,5 +212,11 @@ export class LamparasCapturasMesComponent implements OnInit {
 
   eliminar(id: any) {
 
+  }
+
+  private sessionStorage() {
+    this.clientId = sessionStorage.getItem('clientId');
+    this.branchId = sessionStorage.getItem('branchId');
+    sessionStorage.removeItem('reports');
   }
 }

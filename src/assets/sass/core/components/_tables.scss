@@ -158,8 +158,8 @@
 	left: 50%;
 	@include border-radius($border-radius);
 	box-shadow: var(--#{$prefix}table-loading-message-box-shadow);
-	background-color: var(--#{$prefix}table-loading-message-bg);
-	color: var(--#{$prefix}table-loading-message-color);
+	background-color: $table-loading-message-bg;
+	color: $table-loading-message-color;
 	font-weight: $font-weight-bold;
 	margin: 0 !important;
 	width: auto;

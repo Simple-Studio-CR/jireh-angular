@@ -28,7 +28,11 @@
               "object-path",
               "apexcharts",
               "clipboard.js",
-              "prismjs"
+              "prismjs",
+              "core-js",
+              "raf",
+              "xlsx",
+              "@babel/runtime"
             ],
             "index": "src/index.html",
             "main": "src/main.ts",

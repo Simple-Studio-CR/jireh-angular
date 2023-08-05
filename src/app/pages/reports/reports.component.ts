@@ -15,6 +15,7 @@ export class ReportsComponent implements OnInit {
   constructor(public authHttpService: AuthHTTPService, private router: Router) { }
 
   ngOnInit(): void {
+    sessionStorage.removeItem('fecha');
     if(!(sessionStorage.getItem('clientName'))){
       Swal.fire({
         text: "Se debe seleccionar primero un cliente",

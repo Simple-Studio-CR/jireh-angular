@@ -12,6 +12,10 @@
     --#{$prefix}scrollbar-size: #{$scrollbar-size};
     --#{$prefix}scrollbar-overlay-size: #{$scrollbar-overlay-size};
     --#{$prefix}scrollbar-overlay-space: #{$scrollbar-overlay-space};
+
+    // Bootstrap general    
+    --#{$prefix}white-bg-rgb: #{to-rgb($white)};
+    --#{$prefix}black-bg-rgb: #{to-rgb($black)};
 }
 
 @include color-mode(light) {
@@ -71,14 +75,21 @@
     --#{$prefix}box-shadow: #{$box-shadow};
     --#{$prefix}box-shadow-lg: #{$box-shadow-lg};
 
+    // Forms
+    --#{$prefix}input-bg: #{$input-bg};
+    --#{$prefix}input-color: #{$input-color};
+    --#{$prefix}input-solid-color: #{$input-solid-color};
+    --#{$prefix}input-solid-bg: #{$input-solid-bg};
+    --#{$prefix}input-solid-bg-focus: #{$input-solid-bg-focus};
+    --#{$prefix}input-solid-placeholder-color: #{$input-solid-placeholder-color};
+
+
     // Tooltip
     --#{$prefix}tooltip-box-shadow: #{$tooltip-box-shadow-dark};
 
-    // Card
-    --#{$prefix}card-box-shadow: #{$card-box-shadow};
-
     // Table
     --#{$prefix}table-striped-bg: #{$table-striped-bg};
+    --#{$prefix}table-loading-message-box-shadow: #{$table-loading-message-box-shadow};
 
     // Dropdowns
     --#{$prefix}dropdown-bg: #{$dropdown-bg};
@@ -128,9 +139,6 @@
     // Keenthemes scrollbar component 
     --#{$prefix}scrollbar-color: #{$scrollbar-color};
     --#{$prefix}scrollbar-hover-color: #{$scrollbar-hover-color};
-    --#{$prefix}scrollbar-size: #{$scrollbar-size};
-    --#{$prefix}scrollbar-overlay-size: #{$scrollbar-overlay-size};
-    --#{$prefix}scrollbar-overlay-space: #{$scrollbar-overlay-space};
 
     // Keenthemes overlay component 
     --#{$prefix}overlay-bg: #{$overlay-bg};
@@ -214,6 +222,14 @@
     --#{$prefix}box-shadow: #{$box-shadow-dark};
     --#{$prefix}box-shadow-lg: #{$box-shadow-lg-dark};
 
+    // Forms
+    --#{$prefix}input-color: #{$input-color};
+    --#{$prefix}input-bg: #{$input-bg};
+    --#{$prefix}input-solid-color: #{$input-solid-color};
+    --#{$prefix}input-solid-bg: #{$input-solid-bg};
+    --#{$prefix}input-solid-bg-focus: #{$input-solid-bg-focus};
+    --#{$prefix}input-solid-placeholder-color: #{$input-solid-placeholder-color};
+
     // Tooltip
     --#{$prefix}tooltip-box-shadow: #{$tooltip-box-shadow-dark};
 
@@ -222,6 +238,7 @@
 
     // Table
     --#{$prefix}table-striped-bg: #{$table-striped-bg-dark};
+    --#{$prefix}table-loading-message-box-shadow: #{$table-loading-message-box-shadow-dark};
 
     // Dropdowns
     --#{$prefix}dropdown-bg: #{$dropdown-bg-dark};

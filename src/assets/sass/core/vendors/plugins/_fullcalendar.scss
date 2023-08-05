@@ -182,7 +182,7 @@ body {
     // Popover
     .fc-popover {
         border: 0 !important;
-        background-color: var(--#{$prefix}tooltip-bg);
+        background-color: $tooltip-bg;
         box-shadow: var(--#{$prefix}dropdown-box-shadow);
         @include border-radius($dropdown-border-radius);
 

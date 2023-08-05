@@ -18,15 +18,10 @@ export class ExtrasService {
   constructor(private http: HttpClient, private authService: AuthService, private router: Router,
               private variables: GlobalVariablesService) {
   }
-
-  private notAllowed(err: { status: number; }): boolean {
-    return err.status == 401 || err.status == 403;
-  }
-
   public getPestType(): Observable<any> {
     return this.http.get<PestType>(this.variables.getServicingEndpoint() + '/extras/get-pest', {headers:this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -36,7 +31,7 @@ export class ExtrasService {
   public getCalificaciones(plagaId: number): Observable<any> {
     return this.http.get<Calificacion>(this.variables.getServicingEndpoint() + '/extras/get-calificaciones' + '/' + plagaId, {headers:this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -46,7 +41,7 @@ export class ExtrasService {
   public getRecommendations(): Observable<any> {
     return this.http.get<Recommendations>(this.variables.getServiceEndpoint() + '/extras/get-recommendation', {})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -56,7 +51,7 @@ export class ExtrasService {
   public findRecommendationsByType(type: string): Observable<any> {
     return this.http.get<Recommendations>(this.variables.getServiceEndpoint() + '/extras/get-recommendation-type/' + type, {})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -65,7 +60,7 @@ export class ExtrasService {
   public findRecommendationsById(id: string): Observable<any> {
     return this.http.get<Recommendations>(this.variables.getServiceEndpoint() + '/extras/get-recommendation/' + id, {})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -74,7 +69,7 @@ export class ExtrasService {
   public saveRecommendations(recommendations: Recommendations):Observable<any>{
     return this.http.post<Recommendations>(this.variables.getServiceEndpoint() + '/extras/save-recommendations', recommendations, {})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -84,7 +79,7 @@ export class ExtrasService {
   public savePestType(pestTypeMono: PestType):Observable<any>{
     return this.http.post<PestType>(this.variables.getServiceEndpoint() + '/extras/save-pest', pestTypeMono, {})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )

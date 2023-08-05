@@ -150,7 +150,7 @@ $border-dashed-color-dark:      $gray-300-dark !default;
 
 // Keenthemes hover states
 $component-hover-color-dark: 	$primary !default;
-$component-hover-bg-dark: 		$gray-200-dark !default;
+$component-hover-bg-dark: 		$gray-100-dark !default;
 
 // Keenthemes active states
 $component-active-color-dark:   $primary-inverse !default;
@@ -160,7 +160,7 @@ $component-active-bg-dark:      $primary !default;
 $component-checked-color-dark:   $primary-inverse !default;
 $component-checked-bg-dark:      $primary !default;
 
-$headings-color-dark: 			$gray-900-dark !default;
+$headings-color-dark: 			 $gray-900-dark !default;
 $blockquote-footer-color-dark:   $gray-600-dark !default;
 
 
@@ -178,7 +178,7 @@ $card-box-shadow-dark:                   			null !default;
 
 // Tables
 $table-striped-bg-dark:         					rgba($gray-100-dark, 0.75) !default;
-
+$table-loading-message-box-shadow-dark:        		0px 0px 30px rgba(0, 0, 0, 0.3) !default;
 	
 // Forms
 $form-select-indicator-color-dark:                  $gray-600-dark !default;
@@ -202,6 +202,7 @@ $dropdown-box-shadow-dark:							0px 0px 30px rgba(0, 0, 0, 0.3) !default;
 
 // Popover
 $popover-bg-dark:                            		$gray-200-dark !default;
+$popover-border-color-dark:                         $gray-200-dark !default;
 $popover-box-shadow-dark:    						$dropdown-box-shadow-dark !default;
 $popover-header-border-color-dark:           		$gray-300-dark !default;
 
@@ -259,7 +260,7 @@ $menu-heading-color-dark: $text-muted-dark !default;
 	
 // Keenthemes scrollbar component 
 $scrollbar-color-dark: $gray-200-dark !default;
-$scrollbar-hover-color-dark: darken($gray-200-dark, 2%) !default;
+$scrollbar-hover-color-dark: $gray-300-dark !default;
 
 // Keenthemes overlay component 
 $overlay-bg-dark: rgba($white, 0.05) !default;

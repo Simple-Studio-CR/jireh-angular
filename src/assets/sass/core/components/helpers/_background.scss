@@ -5,7 +5,7 @@
 // Background white color
 .bg-white {
 	--#{$prefix}bg-rgb-color: var(--#{$prefix}white-bg-rgb);
-	background-color: $black !important;
+	background-color: $white !important;
 }
 
 // Background black color
@@ -24,7 +24,7 @@
 	cursor: pointer;
 
 	&:hover {
-			background-color: var(--#{$prefix}body-bg) !important;
+		background-color: var(--#{$prefix}body-bg) !important;
 	}
 }
 
@@ -40,6 +40,32 @@
 	&.active,
 	&:hover {				
 		background-color: var(--#{$prefix}body-bg) !important;
+	}
+}
+
+.bg-hover-white {
+	cursor: pointer;
+
+	&:hover {
+		--#{$prefix}bg-rgb-color: var(--#{$prefix}white-bg-rgb);
+		background-color: $white !important;
+	}
+}
+
+.bg-active-white {
+	&.active {
+		--#{$prefix}bg-rgb-color: var(--#{$prefix}white-bg-rgb);
+		background-color: $white !important;
+	}
+}
+
+.bg-state-white {
+	cursor: pointer;
+
+	&.active,
+	&:hover {				
+		--#{$prefix}bg-rgb-color: var(--#{$prefix}white-bg-rgb);
+		background-color: $white !important;
 	}
 }
 

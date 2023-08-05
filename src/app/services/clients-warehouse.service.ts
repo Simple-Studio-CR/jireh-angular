@@ -16,14 +16,10 @@ export class ClientsWarehouseService {
               private variables: GlobalVariablesService) {
   }
 
-  private notAllowed(err: { status: number; }): boolean {
-    return err.status == 401 || err.status == 403;
-  }
-
   findByBranchId(branchId: any, page: number, size: number): Observable<any> {
     return this.http.get<ClientsWarehouse[]>(this.variables.getServicingEndpoint() + '/clients/warehouse/branch/' + branchId + '/' + page + '/' + size, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -33,7 +29,7 @@ export class ClientsWarehouseService {
   save(warehouse: ClientsWarehouse): Observable<any> {
     return this.http.post<ClientsWarehouse[]>(this.variables.getServicingEndpoint() + '/clients/warehouse/', warehouse, {})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -43,7 +39,7 @@ export class ClientsWarehouseService {
   edit(warehouse: ClientsWarehouse, id: number | null): Observable<any> {
     return this.http.put<ClientsWarehouse[]>(this.variables.getServicingEndpoint() + '/clients/edit-warehouse/' + id, warehouse, {})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )

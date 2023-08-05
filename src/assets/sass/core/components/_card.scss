@@ -138,21 +138,21 @@
     // Dashed style
     &.card-dashed {
         box-shadow: none;
-        border: $card-border-width dashed var(--#{$prefix}card-border-dashed-color);
+        border: $card-border-width dashed $card-border-dashed-color;
 
         > .card-header {
-            border-bottom: 1px dashed var(--#{$prefix}card-border-dashed-color);
+            border-bottom: 1px dashed $card-border-dashed-color;
         }
 
         > .card-footer {
-            border-top: 1px dashed var(--#{$prefix}card-border-dashed-color);
+            border-top: 1px dashed $card-border-dashed-color;
         }
     }
 
     // Bordered style
     &.card-bordered {
         box-shadow: none;
-        border: $card-border-width $card-border-style var(--#{$prefix}card-border-color);
+        border: $card-border-width $card-border-style $card-border-color;
     }
 
     // Flush header and footer borders
@@ -185,6 +185,24 @@
         > .card-footer {
             border-top: 0 !important;
         }
+    }
+
+    // Reset borders
+    &.card-borderless {
+        border: 0 !important;
+
+        > .card-header {
+            border-bottom: 0 !important;
+        }
+
+        > .card-footer {
+            border-top: 0 !important;
+        }
+    }
+
+    // Reset borders
+    &.card-border-0 {
+        border: 0 !important;
     }
 }
 

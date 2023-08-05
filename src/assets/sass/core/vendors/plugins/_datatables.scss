@@ -212,17 +212,22 @@ table.dataTable > tbody > tr.selected > * {
 // Scroll
 div.dataTables_scrollBody {
     border-left: 0 !important;
+
+    .sorting_disabled.sorting_asc,
+    .sorting_disabled.sorting_desc {
+        &:after {
+            display: none !important;
+        }
+    }
 }
 
-.dataTables_scroll .dataTables_scrollBody .table {
-    thead {
-        line-height: 0;    
-
-        .sorting {
-            &:after,
-            &:before {
-                display: none !important;
-            }
+.dataTables_scroll > .dataTables_scrollBody > .table > thead {
+    line-height: 0;
+    
+    .sorting {
+        &:after,
+        &:before {
+            display: none !important;
         }
     }
 }
@@ -241,4 +246,27 @@ table.dataTable thead tr > .dtfc-fixed-right {
 table.dataTable tbody tr > .dtfc-fixed-left, 
 table.dataTable tbody tr > .dtfc-fixed-right {
     background-color: var(--#{$prefix}body-bg);
+}
+
+// Fixed header
+.dtfh-floatingparent {
+    box-shadow: var(--#{$prefix}box-shadow-sm);
+
+    .table {
+        background-color: var(--#{$prefix}body-bg) !important;
+    }
+    
+    &,
+    .table,
+    .table th {
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+    }
+}
+
+// Child details
+.dtr-details {
+    li {
+        display: flex;    
+    }    
 }

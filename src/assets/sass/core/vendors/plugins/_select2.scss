@@ -39,7 +39,7 @@ $select2-input-padding-y-lg: $input-padding-y-lg - $select2-tag-padding-y-lg * 2
 .select2-container--bootstrap5 {
 	// Selection 
 	.select2-selection {
-		box-shadow: none !important;
+		box-shadow: none;
 		height: auto;
 		outline: none !important;
 	}
@@ -48,7 +48,7 @@ $select2-input-padding-y-lg: $input-padding-y-lg - $select2-tag-padding-y-lg * 2
 	&.select2-container--focus:not(.select2-container--disabled),
 	&.select2-container--open:not(.select2-container--disabled) {
 		.form-select-solid {
-			background-color: var(--#{$prefix}input-solid-bg-focus);
+			background-color: $input-solid-bg-focus;
 		}
 
 		.form-select:not(.form-select-solid):not(.form-select-transparent) {
@@ -58,12 +58,12 @@ $select2-input-padding-y-lg: $input-padding-y-lg - $select2-tag-padding-y-lg * 2
 
 	&.select2-container--disabled {
 		.form-select {
-			background-color: var(--#{$prefix}form-select-disabled-bg);	
+			background-color: $form-select-disabled-bg;	
 			border-color: $form-select-disabled-border-color;
 
 			.select2-selection__rendered,
 			.select2-selection__placeholder {
-				color: var(--#{$prefix}form-select-disabled-color) !important;
+				color: $form-select-disabled-color !important;
 			}
 
 			&.form-select-transparent {
@@ -75,8 +75,10 @@ $select2-input-padding-y-lg: $input-padding-y-lg - $select2-tag-padding-y-lg * 2
 
 	// Search
 	.select2-search.select2-search--inline {
+		flex-grow: 1;
+
 		.select2-search__field {
-			color: var(--#{$prefix}input-color);	
+			color: $input-color;	
 			@include placeholder($input-placeholder-color);
 			font-weight: $input-font-weight;			
 			font-family: inherit !important;
@@ -92,9 +94,9 @@ $select2-input-padding-y-lg: $input-padding-y-lg - $select2-tag-padding-y-lg * 2
 
 	.form-select-solid .select2-search.select2-search--inline {
 		.select2-search__field {			
-			color: var(--#{$prefix}input-solid-color);
+			color: $input-solid-color;
 			font-family: inherit !important;
-			@include placeholder(var(--#{$prefix}input-solid-placeholder-color));
+			@include placeholder($input-solid-placeholder-color);
 		}
 	}
 
@@ -116,19 +118,19 @@ $select2-input-padding-y-lg: $input-padding-y-lg - $select2-tag-padding-y-lg * 2
 
 		// Placeholder
 		.select2-selection__placeholder {
-			color: var(--#{$prefix}input-placeholder-color);
+			color: $input-solid-placeholder-color;
 		}
 
 		// Form select solid
 		&.form-select-solid {
 			// Selected
 			.select2-selection__rendered {
-				color: var(--#{$prefix}input-solid-color);
+				color: $input-solid-color;
 			}
 
 			// Placeholder
 			.select2-selection__placeholder {
-				color: var(--#{$prefix}input-solid-placeholder-color);
+				color: $input-solid-placeholder-color;
 			}
 		}
 
@@ -303,7 +305,7 @@ $select2-input-padding-y-lg: $input-padding-y-lg - $select2-tag-padding-y-lg * 2
 			.select2-search__field {
 				background-color: var(--#{$prefix}body-bg);
 				padding: $input-padding-y-sm $input-padding-x-sm;
-				color: var(--#{$prefix}input-color);
+				color: $input-color;
 				font-size: $input-font-size-sm;
 				border: 1px solid $input-border-color;
 				border-radius: $input-border-radius-sm;
@@ -317,7 +319,7 @@ $select2-input-padding-y-lg: $input-padding-y-lg - $select2-tag-padding-y-lg * 2
 		}
 
 		// Options
-		.select2-results__options {
+		.select2-results > .select2-results__options {
 			max-height: 250px;
 			overflow-y: auto;
 		}

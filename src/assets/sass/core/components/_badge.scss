@@ -3,8 +3,6 @@
 //
 
 .badge {
-    --#{$prefix}badge-color: var(--#{$prefix}badge-color);
-
     display: inline-flex;
     align-items: center;
     

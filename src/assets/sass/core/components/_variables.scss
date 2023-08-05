@@ -4,7 +4,7 @@
 //
 
 // Prefix for :root CSS variables
-$prefix:                      bs- !default; // Deprecated in v5.2.0 for the shorter `$prefix`
+$prefix: bs- !default; // Deprecated in v5.2.0 for the shorter `$prefix`
 
 
 // Bootstrap color system
@@ -13,15 +13,15 @@ $black:#000000 !default;
 
 // Bootstrap grey colors
 $gray-100: #F9F9F9 !default;
-$gray-200: #F4F4F4 !default;
-$gray-300: #E1E3EA !default;
+$gray-200: #F1F1F2 !default;
+$gray-300: #DBDFE9 !default;
 $gray-400: #B5B5C3 !default;
-$gray-500: #A1A5B7 !default;
-$gray-600: #7E8299 !default;
-$gray-700: #5E6278 !default;
-$gray-800: #3F4254 !default;
-$gray-900: #181C32 !default;
-
+$gray-500: #99A1B7 !default;
+$gray-600: #78829D !default;
+$gray-700: #4B5675 !default;
+$gray-800: #252F4A !default;
+$gray-900: #071437 !default;
+ 
 // Bootstrap muted color
 $text-muted: $gray-500 !default;
 
@@ -49,13 +49,14 @@ $primary-inverse: 				$white !default;
 $secondary: 					$gray-300 !default;
 $secondary-active: 				$gray-400 !default;
 $secondary-light: 				$gray-100 !default;
-$secondary-inverse:				$gray-800 !default;
+$secondary-inverse:				$gray-700 !default; 
 
 // Light colors
 $light: 						$gray-100 !default;
 $light-active: 					$gray-200 !default;
 $light-light: 					gba($gray-100, 0.75) !default;
 $light-inverse:					$gray-600 !default;
+
 
 // Success colors
 $success: 						#1BC5BD !default; 
@@ -89,7 +90,6 @@ $dark-inverse: 					$white !default;
 
 // Contextual colors
 $theme-colors: (
-	"white": $white,  // custom color type
 	"light": $light,
 	"primary": $primary,
 	"secondary": $secondary,
@@ -289,7 +289,7 @@ $border-radius-pill:            50rem !default;
 
 // Keenthemes hover states
 $component-hover-color: 		$primary !default;
-$component-hover-bg: 			#F4F6FA !default;
+$component-hover-bg: 			$gray-100 !default;
 
 // Keenthemes active states
 $component-active-color:        $primary-inverse !default;
@@ -377,7 +377,10 @@ $font-sizes: (
 	9: $font-size-base * 0.75,  // 9.75px
 	10: $font-size-base * 0.5,  // 6.50px
 
+	sm: $font-size-sm,
 	base: $font-size-base, // 13px
+	lg: $font-size-lg,
+	
 	fluid: 100%, // 100%
 
 	2x: $font-size-base * 2,  // 26px
@@ -398,7 +401,17 @@ $font-sizes: (
 	5x: $font-size-base * 5,  // 65px
 	5qx: $font-size-base * 5.25, // 68.25px
 	5hx: $font-size-base * 5.5,  // 71.5px
-	5tx: $font-size-base * 5.75  // 74.75px
+	5tx: $font-size-base * 5.75,  // 74.75px
+
+	6x: $font-size-base * 6,  // 75px
+	6qx: $font-size-base * 6.25, // 78.25px
+	6hx: $font-size-base * 6.5,  // 81.5px
+	6tx: $font-size-base * 6.75,  // 84.75px
+
+	7x: $font-size-base * 7,  // 85px
+	7qx: $font-size-base * 7.25, // 88.25px
+	7hx: $font-size-base * 7.5,  // 91.5px
+	7tx: $font-size-base * 7.75  // 94.75px
 ) !default;
 
 $headings-font-weight: 			600 !default;
@@ -553,11 +566,14 @@ $input-disabled-border-color:               $input-border-color !default;
 $input-placeholder-color:                   var(--#{$prefix}gray-500) !default;
 $input-plaintext-color:                     var(--#{$prefix}gray-700) !default;
 
+$inpur-autifill-bg-color:					var(--#{$prefix}gray-100) !default;
+
 // Keenthemes solid input style
+$input-solid-color:         	            var(--#{$prefix}gray-700) !default;
 $input-solid-bg:                            var(--#{$prefix}gray-100) !default;
 $input-solid-bg-focus:                      var(--#{$prefix}gray-200) !default;
-$input-solid-placeholder-color:             $input-placeholder-color !default; 
-$input-solid-color:         	            var(--#{$prefix}gray-700) !default;
+$input-solid-placeholder-color:             var(--#{$prefix}gray-500) !default; 
+
 
 // Form checks
 $form-check-input-width:                    1.75rem !default;
@@ -593,9 +609,9 @@ $form-check-radio-checked-bg-image:                 url("data:image/svg+xml,<svg
 $form-check-input-checked-bg-color-solid:           $component-checked-bg !default;
 $form-check-input-focus-bg-color-solid:           	$component-checked-bg !default;
 
-$form-check-input-indeterminate-color:              var(--#{$prefix}component-checked-color) !default;
-$form-check-input-indeterminate-bg-color:           var(--#{$prefix}component-checked-bg) !default;
-$form-check-input-indeterminate-border-color:       var(--#{$prefix}component-checked-bg) !default;
+$form-check-input-indeterminate-color:              $component-checked-color  !default;
+$form-check-input-indeterminate-bg-color:           $component-checked-bg !default;
+$form-check-input-indeterminate-border-color:       $component-checked-bg !default;
 $form-check-input-indeterminate-bg-image:           url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$form-check-input-indeterminate-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/></svg>") !default;
 
 $form-check-input-disabled-opacity:                 .5 !default;
@@ -640,7 +656,7 @@ $form-select-disabled-border-color:                 $input-disabled-border-color
 $form-select-indicator-color:                       $gray-600 !default;
 $form-select-indicator:                             url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$form-select-indicator-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>") !default;
 $form-select-border-color:                          $input-border-color !default;
-$form-select-box-shadow:                            var(--#{$prefix}box-shadow-inset) !default;
+$form-select-box-shadow:                            false !default;
 $form-select-focus-border-color:                    $input-focus-border-color !default;
 $form-select-focus-width:         					$input-focus-width !default;
 $form-select-focus-box-shadow:                      0 0 0 $form-select-focus-width $input-btn-focus-color !default;
@@ -732,6 +748,7 @@ $pagination-disabled-border-color:                  transparent !default;
 // Card
 $card-box-shadow:                   				0px 0px 20px 0px rgba(76,87,125,0.02) !default;
 $card-border-color:     							var(--#{$prefix}border-color) !default;
+$card-border-width:                 				1px !default;
 $card-border-style:                 				solid !default;
 $card-border-dashed-color:     						var(--#{$prefix}border-dashed-color) !default;
 $card-color:										null !default;
@@ -769,7 +786,7 @@ $accordion-button-active-icon:                  url("data:image/svg+xml,<svg xml
 $tooltip-font-size:     				1rem !default;
 $tooltip-max-width:     				200px !default;
 $tooltip-color:      				    var(--#{$prefix}gray-800) !default;
-$tooltip-bg:      				        $body-bg !default;
+$tooltip-bg:      				        var(--#{$prefix}body-bg) !default;
 $tooltip-border-radius:    				$btn-border-radius !default;
 $tooltip-opacity:       				1 !default;
 $tooltip-box-shadow:    				0px 0px 50px 0px rgba(82,63,105, 0.075) !default;
@@ -781,8 +798,9 @@ $tooltip-margin:     				    0 !default;
 // Popovers
 $popover-bg:                            $body-bg !default;
 $popover-font-size:     				$font-size-base !default;
-$popover-border-color:     				transparent !default;
+$popover-border-color:     				$popover-bg !default;
 $popover-border-radius:    				$border-radius !default;
+$popover-inner-border-radius:			$border-radius !default;
 $popover-box-shadow:    				$dropdown-box-shadow !default;
 $popover-header-bg:     				$popover-bg !default;
 $popover-header-color:     				var(--#{$prefix}gray-800) !default;
@@ -790,7 +808,7 @@ $popover-header-font-weight:     		500 !default;
 $popover-header-font-size:    			1rem !default; 
 $popover-header-padding-y:    			1rem !default;
 $popover-header-padding-x:    			1.25rem !default;
-$popover-header-border-color:           var(--#{$prefix}border-color) !default; 
+$popover-header-border-color:           $border-color !default; 
 $popover-body-color:    				var(--#{$prefix}gray-800) !default;
 $popover-body-padding-y:                1.25rem !default;
 $popover-body-padding-x:                1.25rem !default;
@@ -814,7 +832,7 @@ $badge-font-size:               0.85rem !default;
 $badge-font-size-sm:            0.8rem !default;
 $badge-font-size-lg:            1rem !default;
 $badge-font-weight:             $font-weight-bold !default;
-$badge-color:                   var(--#{$prefix}body-bg) !default;
+$badge-color:                   var(--#{$prefix}body-color) !default;
 $badge-padding-y:               .325rem !default;
 $badge-padding-x:               .5rem !default;
 $badge-border-radius:           $border-radius-sm !default;
@@ -1138,7 +1156,7 @@ $scrollbar-size: 5px !default;
 $scrollbar-overlay-size: 19px !default;
 $scrollbar-overlay-space: 7px !default;
 $scrollbar-color: $gray-200 !default;
-$scrollbar-hover-color: darken($gray-200, 2%) !default;
+$scrollbar-hover-color: $gray-300 !default;
 
 // Keenthemes overlay component 
 $overlay-bg: rgba($black, 0.05)  !default;
@@ -1168,6 +1186,7 @@ $engage-btn-border-color: #E8E8E8;
 $engage-btn-color: $gray-800;
 $engage-btn-icon-color: $gray-600;
 $engage-btn-color-active: $gray-800;
+$engage-z-index: 5;
 
 // Social Network Colors Used With Boostrap Buttons(see: https://brandcolors.net)
 $social-colors: (

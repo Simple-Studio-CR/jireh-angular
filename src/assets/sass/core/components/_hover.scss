@@ -8,6 +8,7 @@
 	&:hover {
 		transform: translateY(-2.5%);
 		transition: transform 0.3s ease;
+		will-change: transform;
 	}
 }
 
@@ -17,6 +18,7 @@
 	&:hover {
 		transform: translateY(2.5%);
 		transition: transform 0.3s ease;
+		will-change: transform;
 	}
 }
 
@@ -26,6 +28,7 @@
 	&:hover {
 		transform: scale(1.1);
 		transition: transform 0.3s ease;
+		will-change: transform;
 	}
 }
 
@@ -35,6 +38,7 @@
 	&:hover {
 		transform: rotate(4deg);
 		transition: transform 0.3s ease;
+		will-change: transform;
 	}
 }
 
@@ -44,5 +48,6 @@
 	&:hover {
 		transform: rotate(-4deg);
 		transition: transform 0.3s ease;
+		will-change: transform;
 	}
 }

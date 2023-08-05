@@ -21,14 +21,11 @@ export class AddressProvinceService {
               private variables: GlobalVariablesService) {
   }
 
-  private notAllowed(err: { status: number; }): boolean {
-    return err.status == 401 || err.status == 403;
-  }
 
   public listAll(): Observable<any> {
     return this.http.get<AddressProvince[]>(this.variables.getServicingEndpoint() + "/address/province/", {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -38,7 +35,7 @@ export class AddressProvinceService {
   public findProvinceById(id: number): Observable<any> {
     return this.http.get<AddressProvince>(this.variables.getServicingEndpoint() + "/address/province/id/" + id, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -48,7 +45,7 @@ export class AddressProvinceService {
   public listCanton(province: any): Observable<any> {
     return this.http.get<AddressCanton[]>(this.variables.getServicingEndpoint() + "/address/canton/" + province, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -58,7 +55,7 @@ export class AddressProvinceService {
   public findCantonById(id: number): Observable<any> {
     return this.http.get<AddressCanton>(this.variables.getServicingEndpoint() + "/address/canton/id/" + id, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -68,7 +65,7 @@ export class AddressProvinceService {
   public listDistrict(canton: any): Observable<any> {
     return this.http.get<AddressDistrict[]>(this.variables.getServicingEndpoint() + "/address/distrito/" + canton, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -78,7 +75,7 @@ export class AddressProvinceService {
   public findDistrictById(id: number): Observable<any> {
     return this.http.get<AddressDistrict>(this.variables.getServicingEndpoint() + "/address/distrito/id/" + id, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -88,7 +85,7 @@ export class AddressProvinceService {
   public listNeigh(district: any): Observable<any> {
     return this.http.get<AddressNeighborhood[]>(this.variables.getServicingEndpoint() + "/address/neigh/" + district, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -98,7 +95,7 @@ export class AddressProvinceService {
   public findNeightById(id: number): Observable<any> {
     return this.http.get<AddressNeighborhood>(this.variables.getServicingEndpoint() + "/address/neigh/id/" + id, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )

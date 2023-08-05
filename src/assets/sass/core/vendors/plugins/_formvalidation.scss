@@ -3,6 +3,7 @@
 //
 
 .fv-plugins-message-container {
+    --input-invalid-color: var(--#{$prefix}danger);
     margin-top: 0.3rem;
 
     .fv-help-block {

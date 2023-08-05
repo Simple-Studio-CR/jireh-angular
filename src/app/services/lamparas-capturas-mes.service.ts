@@ -20,22 +20,19 @@ export class LamparasCapturasMesService{
     private variables: GlobalVariablesService
   ) {
   }
-  private notAllowed(err: { status: number; }): boolean {
-    return err.status == 401 || err.status == 403;
-  }
   findByDateRange(id:number, date: string, date2: string): Observable<any>{
     return this.http.get<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/get-by-date-range' + '/' + id + '/' + date + '/' + date2, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
       );
   }
-  findByDate(id:number, date: string): Observable<any>{
+  findByDate(id:number, date: number): Observable<any>{
     return this.http.get<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/get-by-date/'  + id + '/' + date + '/', {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -45,7 +42,7 @@ export class LamparasCapturasMesService{
   findAll(): Observable<any>{
     return this.http.get<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/get-all', {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
@@ -55,7 +52,16 @@ export class LamparasCapturasMesService{
   save(lamparasCapturasMes: any): Observable<any>{
     return this.http.post<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/save', lamparasCapturasMes, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            this.notAllowed(err);
+            this.variables.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+  findReporteAnual(year: any): Observable<any>{
+    return this.http.get<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/get-reporte-por-mes/' + year, {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.variables.notAllowed(err);
             return throwError(err);
           }
         )
