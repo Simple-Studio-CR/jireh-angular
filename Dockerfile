@@ -1,10 +1,10 @@
 # Fase de construcción
 FROM node:latest as build
-WORKDIR /app
+WORKDIR /src/app
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
-RUN yarn run build
+RUN yarn start
 
 # Fase de despliegue
 FROM nginx:alpine
