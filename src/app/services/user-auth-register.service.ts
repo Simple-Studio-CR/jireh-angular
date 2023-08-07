@@ -3,11 +3,9 @@ import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../modules/auth";
 import {Router} from "@angular/router";
 import {GlobalVariablesService} from "./globalVariables.service";
-import {Users} from "../models/users";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {UserAuthRegister} from "../models/user-auth-register";
-import { environment } from "../../environments/environment"
 
 @Injectable({
   providedIn: 'root'

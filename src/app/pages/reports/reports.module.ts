@@ -19,6 +19,7 @@ import {PuntosMejoraComponent} from "./observaciones-mejoras/puntos-mejora.compo
 import {LamparasCapturasMesComponent} from "./lamparas-capturas-mes/lamparas-capturas-mes.component";
 import { LamparasChartComponent} from "./lamparas-capturas-mes/chart/lamparas-chart.component";
 import {HistorialCapturasLamparasComponent} from "./historial-capturas-lamparas/historial-capturas-lamparas.component";
+import {TrampasGomosasComponent} from "./trampas-gomosas/trampas-gomosas.component";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {HistorialCapturasLamparasComponent} from "./historial-capturas-lamparas/
     LamparasCapturasMesComponent,
     LamparasChartComponent,
     HistorialCapturasLamparasComponent,
+    TrampasGomosasComponent
   ],
   imports: [
     CommonModule,
@@ -62,6 +64,10 @@ import {HistorialCapturasLamparasComponent} from "./historial-capturas-lamparas/
       {
         path: 'historial-capturas-lamparas',
         component: HistorialCapturasLamparasComponent,
+      },
+      {
+        path: 'trampas-gomosas',
+        component: TrampasGomosasComponent,
       }
     ]),
     WidgetsModule,

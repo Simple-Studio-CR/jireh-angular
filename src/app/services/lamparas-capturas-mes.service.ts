@@ -67,4 +67,16 @@ export class LamparasCapturasMesService{
         )
       );
   }
+  findVerificandoExistencia(createAt1: number, createAt2: number, clientId: number, trap:number): Observable<any>{
+    return this.http.get<any>(this.variables.getServicingEndpoint() +
+      '/lamparas-capturas-x-mes/get-reporte-verificando-existencia/' +
+      createAt1 + '/' + createAt2 + '/' + clientId + '/' + trap + '/',
+      {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.variables.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
 }

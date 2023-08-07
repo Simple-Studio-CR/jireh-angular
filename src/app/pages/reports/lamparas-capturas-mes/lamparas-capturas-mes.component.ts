@@ -3,7 +3,7 @@
  * Creado por Andres Mayorga, si lo mejoran compartir a andres.mayorga07@gmail.com
  */
 
-import {ChangeDetectorRef, Component, Inject, NgZone, OnInit, PLATFORM_ID} from "@angular/core";
+import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
 import {LamparasCapturasMes} from "../../../models/lamparas-capturas-mes";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ClientsBranchOffice} from "../../../models/clients-branch-office";
@@ -24,15 +24,35 @@ import {FunctionsService} from "../../common/functions.service";
 })
 export class LamparasCapturasMesComponent implements OnInit {
 
+  // Declaraciones de variables
+
+// Variable para almacenar el ID del cliente
   clientId: any;
+
+// Variable para almacenar el ID de la sucursal
   branchId: any;
+
+// Arreglo para almacenar información sobre las sucursales del cliente
   branches: ClientsBranchOffice[];
+
+// Arreglo para almacenar información sobre los almacenes del cliente
   warehouse: ClientsWarehouse[];
+
+// Arreglo para almacenar información sobre un nuevo conteo de lámparas capturadas por mes
   nuevoConteo: LamparasCapturasMes[];
+
+// FormGroup para manejar los controles del formulario de nuevo conteo
   nuevoConteoForm: FormGroup;
+
+// FormGroup para manejar los controles de un rango de fechas
   range: FormGroup;
+
+// Instancia del servicio 'FunctionsService' para funciones auxiliares
   functions: FunctionsService = new FunctionsService();
+
+// Arreglo para almacenar información sobre los reportes de lámparas capturadas por mes
   reports: LamparasCapturasMes[];
+
 
   constructor(
     private service: LamparasCapturasMesService,
@@ -46,114 +66,183 @@ export class LamparasCapturasMesComponent implements OnInit {
   }
 
 
+  // Método del ciclo de vida que se ejecuta cuando el componente se inicializa
   ngOnInit(): void {
-    this.sessionStorage();
-    this._iniciarForms();
-    this.setFechaHoy();
+    // Gestionar el almacenamiento en sessionStorage
+    this.manageSessionStorage();
+
+    // Inicializar los formularios y controles
+    this.initializeForms();
+
+    // Obtener y configurar la información de las sucursales y almacenes
     this._getBranches();
   }
 
-  _iniciarForms() {
+
+  // Función para inicializar los formularios y sus controles
+  private initializeForms(): void {
+    // Crear un FormGroup llamado 'range' para manejar un rango de fechas
     this.range = new FormGroup({
-      start: new FormControl<Date | null>(null),
+      start: new FormControl<Date | null>(null), // Control para la fecha de inicio (puede ser nulo)
     });
 
+    // Crear un FormGroup llamado 'nuevoConteoForm' para manejar el formulario de conteo de plagas
     this.nuevoConteoForm = new FormGroup({
-      branchOffice: new FormControl(''),
-      createAt: new FormControl(''),
-      warehouse: new FormControl(''),
-      trampa: new FormControl(''),
-      moscas: new FormControl(''),
-      palomillas: new FormControl(''),
-      otros: new FormControl(''),
-      total: new FormControl(''),
-    })
+      branchOffice: new FormControl(''), // Control para la sucursal (inicializado con cadena vacía)
+      createAt: new FormControl(''),     // Control para la fecha de creación (inicializado con cadena vacía)
+      warehouse: new FormControl(''),    // Control para el almacén (inicializado con cadena vacía)
+      trampa: new FormControl(''),       // Control para el número de trampas (inicializado con cadena vacía)
+      moscas: new FormControl(''),       // Control para el número de moscas (inicializado con cadena vacía)
+      palomillas: new FormControl(''),   // Control para el número de polillas (inicializado con cadena vacía)
+      otros: new FormControl(''),        // Control para otras plagas (inicializado con cadena vacía)
+      total: new FormControl(''),        // Control para el total de plagas (inicializado con cadena vacía)
+    });
 
-    this.nuevoConteoForm.controls['warehouse'].disable();
-    this.nuevoConteoForm.controls['createAt'].disable();
-    this.nuevoConteoForm.controls['trampa'].disable();
-    this.nuevoConteoForm.controls['moscas'].disable();
-    this.nuevoConteoForm.controls['palomillas'].disable();
-    this.nuevoConteoForm.controls['otros'].disable();
-    this.nuevoConteoForm.controls['total'].disable();
+    // Lista de nombres de controles que se deshabilitarán
+    const controlsToDisable = [
+      'warehouse',
+      'createAt',
+      'trampa',
+      'moscas',
+      'palomillas',
+      'otros',
+      'total',
+    ];
+
+    // Deshabilitar cada uno de los controles enumerados en 'controlsToDisable'
+    controlsToDisable.forEach(controlName => {
+      this.nuevoConteoForm.controls[controlName].disable();
+    });
   }
 
-  calcular(): any {
-    this.nuevoConteoForm.controls['moscas'].valueChanges.subscribe(
-      value => {
-        value = value + this.nuevoConteoForm.controls['palomillas'].value + this.nuevoConteoForm.controls['otros'].value;
-        this.nuevoConteoForm.controls['total'].setValue(value);
-      });
 
-    this.nuevoConteoForm.controls['palomillas'].valueChanges.subscribe(
-      value => {
-        value = value + this.nuevoConteoForm.controls['moscas'].value + this.nuevoConteoForm.controls['otros'].value;
-        this.nuevoConteoForm.controls['total'].setValue(value);
-      });
+  // Función para realizar cálculos basados en cambios en los valores de los controles
+  calcular(): void {
+    // Definir una función para actualizar el valor del control 'total'
+    const updateTotal = () => {
+      // Obtener los valores de los controles 'moscas', 'palomillas' y 'otros'
+      const moscasValue = this.nuevoConteoForm.controls['moscas'].value || 0;
+      const palomillasValue = this.nuevoConteoForm.controls['palomillas'].value || 0;
+      const otrosValue = this.nuevoConteoForm.controls['otros'].value || 0;
 
-    this.nuevoConteoForm.controls['otros'].valueChanges.subscribe(
-      value => {
-        value = value + this.nuevoConteoForm.controls['moscas'].value + this.nuevoConteoForm.controls['palomillas'].value;
-        this.nuevoConteoForm.controls['total'].setValue(value);
-      });
+      // Calcular la suma de los valores obtenidos
+      const totalValue = moscasValue + palomillasValue + otrosValue;
+
+      // Establecer el valor calculado en el control 'total'
+      this.nuevoConteoForm.controls['total'].setValue(totalValue);
+    };
+
+    // Suscribirse a cambios en el control 'moscas' y llamar a la función 'updateTotal'
+    this.nuevoConteoForm.controls['moscas'].valueChanges.subscribe(updateTotal);
+
+    // Suscribirse a cambios en el control 'palomillas' y llamar a la función 'updateTotal'
+    this.nuevoConteoForm.controls['palomillas'].valueChanges.subscribe(updateTotal);
+
+    // Suscribirse a cambios en el control 'otros' y llamar a la función 'updateTotal'
+    this.nuevoConteoForm.controls['otros'].valueChanges.subscribe(updateTotal);
   }
 
-  private setFechaHoy() {
+
+  private setFechaHoy(): void {
+    // Set the current date for the 'createAt' control
     this.nuevoConteoForm.get('createAt')?.setValue(this.functions.fechaActual());
 
-    // @ts-ignore
-    this.service.findByDate(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')),
-      this.functions.mesActual()).subscribe(all => {
-      this.reports = all as LamparasCapturasMes[];
+    // Retrieve the clientId from sessionStorage
+    const clientId = Number.parseInt(sessionStorage.getItem('clientId') || '0');
+
+    // Get the current month using 'functions.mesActual()'
+    const currentMonth = this.functions.mesActual();
+
+    // Call the service to retrieve reports for the given clientId and current month
+    this.service.findByDate(clientId, currentMonth).subscribe((all: LamparasCapturasMes[]) => {
+      this.reports = all;
       this.cd.detectChanges();
-    })
+    });
   }
 
+
+  // Función para guardar el formulario y analizar meses pasados
   save() {
     const formData = this.nuevoConteoForm.value;
+    const totalMonths = this.functions.mesActual();
+    const clientId = Number.parseInt(sessionStorage.getItem('clientId') || '0');
+
+    // Obtener datos de trampas por mes
+    this.analyzeAndSaveTrapsByMonth(1, totalMonths - 1, clientId, formData.trampa, formData.branchOffice, formData.warehouse);
 
     // Guardar el nuevoConteoForm
-    console.log(formData, 'form');
     this.service.save(formData).subscribe(response => {
       this.resetForm();
-
-      console.log(response);
-
-      const totalMonths = this.functions.mesActual();
-
-      // Iterar sobre los meses anteriores
-      for (let i = 1; i < totalMonths; i++) {
-        console.log('Entramos al for con i:', i);
-
-        // Buscar datos por mes y sucursal
-        this.service.findByDate(response.branchOffice.clientId.id, i).subscribe(data => {
-          console.log('Buscamos todos los datos por meses en el mes:', i);
-
-          if (data.length === 0) {
-            // Crear nuevo objeto si no existe en el mes
-            const nuevo = {
-              branchOffice: response.branchOffice,
-              createAt: `${this.functions.anioActual()}-${i}-01`,
-              warehouse: response.warehouse,
-              trampa: response.trampa,
-              moscas: 0,
-              palomillas: 0,
-              otros: 0,
-              total: 0,
-            };
-
-            console.log(nuevo, 'nuevo');
-            this.service.save(nuevo).subscribe(newObject => {
-              console.log(newObject, 'aquí se crea en el mes', i);
-              this.cd.detectChanges();
-            });
-          }
-        });
-      }
     });
 
     this.setFechaHoy();
   }
+
+// Función para analizar y guardar trampas por mes
+  analyzeAndSaveTrapsByMonth(createAt1: number, createAt2: number, clientId: number, trap: number,
+                             branch: ClientsBranchOffice, warehouse: ClientsWarehouse) {
+    this.service.findVerificandoExistencia(createAt1, createAt2, clientId, trap).subscribe(response => {
+      let nuevoObjeto: any[] = [];
+      let mesAnalizado = 0;
+
+      if (response == null) {
+        // Crear objetos con parámetros en 0 para los meses sin registros
+        for (let i = 0; i < createAt2; i++) {
+          nuevoObjeto = [{
+            createAt: this.functions.anioActual() + '-' + (i + 1) + '-01',
+            branchOffice: branch,
+            warehouse: warehouse,
+            trampa: trap,
+            moscas: 0,
+            palomillas: 0,
+            otros: 0,
+            total: 0,
+          }];
+
+          // Guardar el objeto en la base de datos
+          this.service.save(nuevoObjeto[0]).subscribe(() => {
+            this.cd.detectChanges();
+          });
+        }
+      }
+
+      if (response != null) {
+        // Analizar meses con registros y crear objetos para meses faltantes
+        for (let i = 0; i < response.length; i++) {
+          let mes = response[i].createAt.split('-');
+          if (Number.parseInt(mes[1]) == i + 1) {
+            mesAnalizado++;
+          } else {
+            mesAnalizado++;
+          }
+
+          if (i == response.length - 1 && mesAnalizado < createAt2) {
+            // Crear objetos para los meses restantes sin registros
+            for (let j = mesAnalizado; j < createAt2; j++) {
+              nuevoObjeto = [{
+                createAt: this.functions.anioActual() + '-' + (mesAnalizado + 1) + '-01',
+                branchOffice: branch,
+                warehouse: warehouse,
+                trampa: trap,
+                moscas: 0,
+                palomillas: 0,
+                otros: 0,
+                total: 0,
+              }];
+
+              // Guardar el objeto en la base de datos
+              this.service.save(nuevoObjeto[0]).subscribe(() => {
+                this.cd.detectChanges();
+              });
+
+              mesAnalizado++;
+            }
+          }
+        }
+      }
+    });
+  }
+
 
   resetForm() {
     // Restablecer valores del formulario
@@ -165,40 +254,53 @@ export class LamparasCapturasMesComponent implements OnInit {
     controls.total.setValue('');
   }
 
-  private _getBranches() {
-
+  private _getBranches(): void {
+    // Subscribe to changes in the 'start' date of the range
     this.range.valueChanges.subscribe(date => {
+      // Clear the 'nuevoConteo' array
       this.nuevoConteo = [];
-      // @ts-ignore
-      this.service.findByDate(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')),
-        date.start).subscribe(all => {
-        this.reports = all as LamparasCapturasMes[];
 
+      // Retrieve the clientId from sessionStorage or set it to 0
+      const clientId = Number.parseInt(sessionStorage.getItem('clientId') || '0');
+
+      // Fetch reports based on the clientId and selected date
+      this.service.findByDate(clientId, date.start).subscribe((all: LamparasCapturasMes[]) => {
+        // Store fetched reports in 'reports' variable
+        this.reports = all;
+
+        // Store 'reports' in sessionStorage
         sessionStorage.setItem('reports', JSON.stringify(this.reports));
 
+        // Detect changes in the Angular component
         this.cd.detectChanges();
       });
-    })
+    });
 
-    this.branchService.findByClientId(this.clientId, 1, 100).subscribe(
-      response => {
-        this.branches = response.content as ClientsBranchOffice[];
-        this.cd.detectChanges();
-      }
-    );
-    this.nuevoConteoForm.get('branchOffice')?.valueChanges.subscribe(
-      value => {
-        this.cd.detectChanges();
-        this.nuevoConteoForm.controls['warehouse'].enable();
-        this.nuevoConteoForm.controls['createAt'].enable();
-        this.nuevoConteoForm.controls['trampa'].enable();
-        this.nuevoConteoForm.controls['moscas'].enable();
-        this.nuevoConteoForm.controls['palomillas'].enable();
-        this.nuevoConteoForm.controls['otros'].enable();
-        this.nuevoConteoForm.controls['total'].enable();
-        this._getWarehouses(value.id);
+    // Fetch branches for the given clientId
+    this.branchService.findByClientId(this.clientId, 1, 100).subscribe((response: any) => {
+      // Store fetched branches in 'branches' variable
+      this.branches = response.content as ClientsBranchOffice[];
+
+      // Detect changes in the Angular component
+      this.cd.detectChanges();
+    });
+
+    // Subscribe to changes in the 'branchOffice' control
+    this.nuevoConteoForm.get('branchOffice')?.valueChanges.subscribe((value: any) => {
+      // Detect changes in the Angular component
+      this.cd.detectChanges();
+
+      // Enable form controls related to pest counting
+      const controlsToEnable = ['warehouse', 'createAt', 'trampa', 'moscas', 'palomillas', 'otros', 'total'];
+      controlsToEnable.forEach(controlName => {
+        this.nuevoConteoForm.controls[controlName].enable();
       });
+
+      // Fetch warehouses for the selected branch office
+      this._getWarehouses(value.id);
+    });
   }
+
 
   private _getWarehouses(id: any = null) {
     this.wareHouseService.findByBranchId(id, 1, 100).subscribe(
@@ -214,9 +316,16 @@ export class LamparasCapturasMesComponent implements OnInit {
 
   }
 
-  private sessionStorage() {
+  // Función para gestionar el almacenamiento en sessionStorage
+  private manageSessionStorage(): void {
+    // Obtener el 'clientId' almacenado en sessionStorage
     this.clientId = sessionStorage.getItem('clientId');
+
+    // Obtener el 'branchId' almacenado en sessionStorage
     this.branchId = sessionStorage.getItem('branchId');
+
+    // Eliminar el elemento 'reports' de sessionStorage si existe
     sessionStorage.removeItem('reports');
   }
+
 }
