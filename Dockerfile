@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
-RUN yarn run build --prod
+RUN yarn run build
 
 # Fase de despliegue
 FROM nginx:alpine
