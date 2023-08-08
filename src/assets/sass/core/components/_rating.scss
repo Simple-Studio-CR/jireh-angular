@@ -20,10 +20,14 @@
     padding: 0;
     margin: 0;
 
-    & > i,
+    & > i {
+        line-height: 1;
+        color: get($rating, color, default);
+    }
+
     & > .svg-icon {
         line-height: 1;
-        color: var(--#{$prefix}rating-color-default);
+        @include svg-icon-color(get($rating, color, default));
     }
 }
 
@@ -33,30 +37,35 @@ label.rating-label {
 
 div.rating-label.checked,
 label.rating-label {
-    & > i,
+    & > i {
+        color: get($rating, color, active);
+    }
+
     & > .svg-icon {
-        color: var(--#{$prefix}rating-color-active);
+        @include svg-icon-color(get($rating, color, active));
     }
 }
 
-.rating-input:checked ~ .rating-label {
-    & > i,
-    & > .svg-icon {
-        color: var(--#{$prefix}rating-color-default);
-    }
+.rating-input:checked ~ .rating-label > i {
+    color: get($rating, color, default);
 }
 
-.rating:hover label.rating-label {
-    & > i,
-    & > .svg-icon {
-        color: var(--#{$prefix}rating-color-active);
-    }
+.rating-input:checked ~ .rating-label > .svg-icon {
+    @include svg-icon-color(get($rating, color, default));
 }
 
-label.rating-label:hover ~ .rating-label {
-    & > i,
-    & > .svg-icon {
-        color: var(--#{$prefix}rating-color-default);
-    }
-    color: var(--#{$prefix}rating-color-default);
+.rating:hover label.rating-label > i {
+    color: get($rating, color, active);
+}
+
+.rating:hover label.rating-label > .svg-icon {
+    @include svg-icon-color(get($rating, color, active));
+}
+
+label.rating-label:hover ~ .rating-label > i {
+    color: get($rating, color, default);
+}
+
+label.rating-label:hover ~ .rating-label > .svg-icon {
+    @include svg-icon-color(get($rating, color, default));
 }

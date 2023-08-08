@@ -16,9 +16,12 @@
             color: $white;
             background-color: rgba($white, 0.1) !important;
 
-            i,
-            .svg-icon {
+            i {
                 color: $white;
+            }
+
+            .svg-icon {
+                @include svg-icon-color($white);
             }
         }   
     }

@@ -8,9 +8,11 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: stretch;
+		position: relative;
+		z-index: 2;
 		height: get($header-config, desktop, default, height);
 		transition: left get($aside-config, transition-speed) ease;
-		border-bottom: var(--#{$prefix}header-desktop-default-border);
+		border-bottom: get($header-config, desktop, default, border);
 
 		// Header Logo
 		.header-logo {
@@ -31,19 +33,6 @@
 		// Header menu
 		.header-menu {
 			display: flex;
-
-			.menu {
-				& > .menu-item {
-					@include menu-link-here-state( 
-						$title-color: var(--#{$prefix}primary), 
-						$icon-color: var(--#{$prefix}primary), 
-						$bullet-color: var(--#{$prefix}primary), 
-						$arrow-color: var(--#{$prefix}primary), 
-						$bg-color: var(--#{$prefix}menu-link-bg-color-active),
-						$all-links: false
-					);
-				}	
-			}
 		}		
 
 		// Fixed header & sticky header modes
@@ -53,10 +42,10 @@
 			right: 0;
 			left: 0;
 			z-index: get($header-config, desktop, fixed, z-index);
-			background-color: var(--#{$prefix}header-desktop-fixed-bg-color);
-			box-shadow: var(--#{$prefix}header-desktop-fixed-box-shadow);
+			background-color: get($header-config, desktop, fixed, bg-color);
+			box-shadow: get($header-config, desktop, fixed, box-shadow);
 			height: get($header-config, desktop, fixed, height);
-			border-bottom: var(--#{$prefix}header-desktop-fixed-border);
+			border-bottom: get($header-config, desktop, fixed, border);
 			padding: 0;
 
 			// Header Logo
@@ -107,7 +96,9 @@
 		justify-content: space-between;
 		align-items: stretch;
 		height: get($header-config, tablet-and-mobile, default, height);
-		border-bottom: var(--#{$prefix}header-tablet-and-mobile-default-border);
+		position: relative;
+		z-index: 3;
+		border-bottom: get($header-config, tablet-and-mobile, default, border);
 
 		// Header Logo
 		.header-logo {
@@ -130,9 +121,9 @@
 			z-index: get($header-config, tablet-and-mobile, fixed, z-index);
 			height: get($header-config, tablet-and-mobile, fixed, height);
 			min-height: get($header-config, tablet-and-mobile, fixed, height);
-			background-color: var(--#{$prefix}header-tablet-and-mobile-fixed-bg-color);
-			box-shadow: var(--#{$prefix}header-tablet-and-mobile-fixed-box-shadow);
-			border-bottom: var(--#{$prefix}header-tablet-and-mobile-fixed-border);
+			background-color: get($header-config, tablet-and-mobile, fixed, bg-color);
+			box-shadow: get($header-config, tablet-and-mobile, fixed, box-shadow);
+			border-bottom: get($header-config, tablet-and-mobile, fixed, border);
 
 			// Header Logo
 			.header-logo {
@@ -150,6 +141,7 @@
 		// Header menu
 		.header-menu {
 			display: none;
+			z-index: get($header-config, tablet-and-mobile, fixed, z-index) - 1;
 		}
 	}
 }
