@@ -58,8 +58,11 @@ export class LamparasCapturasMesService{
         )
       );
   }
-  findReporteAnual(year: any): Observable<any>{
-    return this.http.get<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/get-reporte-por-mes/' + year, {headers: this.variables.getAuthHeader()})
+  findReporteAnual(year: any, clientId: any): Observable<any>{
+    return this.http.get<any>(this.variables.getServicingEndpoint() +
+      '/lamparas-capturas-x-mes/get-reporte-por-mes/'
+      + year + '/' + clientId + '/',
+      {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.variables.notAllowed(err);
             return throwError(err);

@@ -80,7 +80,7 @@ export class HistorialCapturasLamparasComponent implements OnInit {
       'diciembre': diciembre,
     }]
 
-    this.service.findReporteAnual(date.getFullYear()).subscribe(data => {
+    this.service.findReporteAnual(date.getFullYear(), sessionStorage.getItem('clientId')).subscribe(data => {
         console.log(data, 'data');
 
         for (let i = 0; i < data.length; i++) {
