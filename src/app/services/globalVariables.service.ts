@@ -4,26 +4,23 @@ import { environment } from "../../environments/environment"
 import {AuthHTTPService} from "../modules/auth/services/auth-http";
 import {Router} from "@angular/router";
 import swal from "sweetalert2";
+import {AuthService} from "../modules/auth";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalVariablesService {
 
-  constructor(private http: HttpClient, private authHttpService: AuthHTTPService, private router: Router) {
+  constructor(private http: HttpClient,
+              private authHttpService: AuthHTTPService,
+              private authService: AuthService,
+              private router: Router) {
   }
 
   public notAllowed(err: { status: number; }): boolean {
-    if(err.status== 404){
-      swal.fire({
-        title: 'Error',
-        text: 'No se encontró el recurso',
-        icon: 'error',
-      })
-      this.router.navigate(['/reports']);
-      return true;
-    }
     if(err.status == 401){
+      this.authHttpService.logout();
+      this.authService.logout();
       swal.fire({
         title: 'Error',
         text: 'No tiene permisos para acceder a este recurso',

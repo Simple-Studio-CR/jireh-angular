@@ -94,7 +94,6 @@ export class BranchFormClientsComponent implements OnInit {
 
   private loadBranch() {
     this.branchService.findById(sessionStorage.getItem('branchId')).subscribe(branch => {
-      console.log(branch)
       this.clientForm.patchValue({
         name: branch.name,
         province: branch.province.id,
@@ -145,11 +144,9 @@ export class BranchFormClientsComponent implements OnInit {
               district: d,
               neighborhood: n,
             }
-            console.log(branchForm)
             this.cd.detectChanges()
 
             if (!this.isNew) {
-              console.log('vamos a editar')
               this.branchService.editBranch(branchForm, id).subscribe(editBranch => {
                 Swal.fire('La Sucursal ' + editBranch.name + ' fue editada con exito!', editBranch.name, 'success')
                 this.newWarehouse = false
@@ -160,7 +157,6 @@ export class BranchFormClientsComponent implements OnInit {
               })
             }
             if (this.isNew) {
-              console.log('vamos a crear')
               this.branchService.saveBranch(branchForm).subscribe(branch => {
                 Swal.fire('Nueva Sucursal ' + branch.name + ' creada con éxito', branch.name, 'success')
                 sessionStorage.setItem('branchId', branch.id)
@@ -256,9 +252,7 @@ export class BranchFormClientsComponent implements OnInit {
   onCreateWarehouse() {
     //todo hacer le metodo de crear la bodega
     if (this.newWarehouse) {
-      console.log(this.warehouseForm.value)
       this.serviceWareHouse.saveWarehouse(this.warehouseForm.value).subscribe(warehouse => {
-        console.log(warehouse, ' new')
         Swal.fire('Nueva Bodega ' + warehouse.name + ' creada con éxito', warehouse.name, 'success')
         this.rangePage()
         this.cd.detectChanges()
@@ -266,12 +260,9 @@ export class BranchFormClientsComponent implements OnInit {
       })
     }
     if (this.isUpdateWarehouse) {
-      console.log('aqui vamos bien')
       let id: string | null = sessionStorage.getItem('warehouseId')
-      console.log(this.warehouseForm.value)
       // @ts-ignore
       this.serviceWareHouse.editWarehouse(this.warehouseForm.value, Number.parseInt(id)).subscribe(warehouse => {
-        console.log(warehouse, ' edit')
         Swal.fire('La Bodega ' + warehouse.name + ' fue editada con éxito', warehouse.name, 'success')
         this.rangePage()
         this.cd.detectChanges()

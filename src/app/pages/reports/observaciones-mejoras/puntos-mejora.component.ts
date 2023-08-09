@@ -47,7 +47,6 @@ export class PuntosMejoraComponent implements OnInit{
 
   guardar() {
     this.service.save(this.puntosMejora.value).subscribe(iF => {
-      console.log(iF)
     })
   }
 
@@ -82,7 +81,6 @@ export class PuntosMejoraComponent implements OnInit{
         // @ts-ignore
         this.service.findByDate(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')), date.start).subscribe(all => {
           this.puntoMejoraNuevo = all as PuntosMejora[];
-          console.log(date, 'fecha')
           this.cd.detectChanges();
         })
       }
@@ -121,7 +119,6 @@ export class PuntosMejoraComponent implements OnInit{
       this.functions.primerDiaMes(),
       this.functions.ultimoDiaMes()).subscribe(all => {
       this.puntoMejoraNuevo = all as PuntosMejora[];
-      console.log(this.puntoMejoraNuevo)
       this.cd.detectChanges();
     })
   }

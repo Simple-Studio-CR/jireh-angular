@@ -91,10 +91,8 @@ export class FormItemsComponent implements OnInit {
   onProductUpdate() {
     if (this.isEditing && !this.isNew) {
       this.isUpdating = true;
-      console.log(this.productForm.value, 'el valor del form')
       this.service.updateClient(this.productForm.value).subscribe(
         product => {
-          console.log('lo que response al guardar', product)
           this.editedProduct = product;
           this.isUpdating = false;
           swal.fire('Correcto', `Se guardó el producto ${this.editedProduct.name}`, 'success');
@@ -236,6 +234,5 @@ export class FormItemsComponent implements OnInit {
     const add2 = this.getArray()
     add.removeAt(index);
     add2.removeAt(index);
-    console.log(index)
   }
 }

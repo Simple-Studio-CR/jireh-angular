@@ -20,6 +20,8 @@ import {LamparasCapturasMesComponent} from "./lamparas-capturas-mes/lamparas-cap
 import { LamparasChartComponent} from "./lamparas-capturas-mes/chart/lamparas-chart.component";
 import {HistorialCapturasLamparasComponent} from "./historial-capturas-lamparas/historial-capturas-lamparas.component";
 import {TrampasGomosasComponent} from "./trampas-gomosas/trampas-gomosas.component";
+import {MatSortModule} from "@angular/material/sort";
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -81,6 +83,8 @@ import {TrampasGomosasComponent} from "./trampas-gomosas/trampas-gomosas.compone
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSortModule,
+    MatTableModule,
     MatSelectModule,
     MatInputModule,
   ],

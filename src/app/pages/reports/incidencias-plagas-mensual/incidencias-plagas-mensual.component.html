@@ -84,47 +84,67 @@
             </div>
           </div>
           <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-            <form [formGroup]="range" id="range">
-              <div class="row p-t-20 col-md-12">
-                <div class="col-md-6">
-                  <label class="form-label">De:</label>
-                  <input class="form-control" formControlName="start" type="date">
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label">Para:</label>
-                  <input class="form-control" formControlName="end" type="date">
-                </div>
-              </div>
-            </form>
+
           </div>
         </div>
 
         <!-- begin::Table -->
-        <table
-          class="table table-striped table-rounded border border-gray-300 table-row-bordered table-row-gray-300 gy-7 gs-7">
-          <thead>
-          <tr class="fw-semibold fs-4 text-gray-800">
-            <th class="min-w-200px">Bodega</th>
-            <th class="min-w-200px">Fecha</th>
-            <th class="min-w-200px">Plaga</th>
-            <th class="min-w-200px">Cuantificacion</th>
-            <th class="min-w-200px">Calificacion</th>
-            <th class="min-w-200px">Observaciones</th>
-            <th class="min-w-200px">Acciones</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let iM of incidenciasNueva">
-            <td>{{iM.warehouse.name}}</td>
-            <td>{{iM.createAt}}</td>
-            <td>{{iM.pestType.name}}</td>
-            <td>{{iM.cuantificacion}}</td>
-            <td>{{iM.calificacion.calificaciones}}</td>
-            <td>{{iM.observaciones}}</td>
-            <td></td>
-          </tr>
-          </tbody>
-        </table>
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+               class="mat-elevation-z8">
+          <!-- Bodega Column -->
+          <ng-container matColumnDef="warehouse">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="fw-semibold fs-4 text-gray-800 min-w-200px">Bodega</mat-header-cell>
+            <mat-cell *matCellDef="let iM">{{iM.warehouse.name}}</mat-cell>
+          </ng-container>
+
+          <!-- ... Repite para las demás columnas ... -->
+
+          <!-- Para tu referencia, aquí tienes otra columna de ejemplo (Fecha) -->
+          <ng-container matColumnDef="createAt">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="fw-semibold fs-4 text-gray-800 min-w-200px">Fecha</mat-header-cell>
+            <mat-cell *matCellDef="let iM">{{iM.createAt}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="pestType">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="fw-semibold fs-4 text-gray-800 min-w-200px">Plaga</mat-header-cell>
+            <mat-cell *matCellDef="let iM">{{iM.pestType.name}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="cuantificacion">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="fw-semibold fs-4 text-gray-800 min-w-200px">Cuantificacion</mat-header-cell>
+            <mat-cell *matCellDef="let iM">{{iM.cuantificacion}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="calificacion">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="fw-semibold fs-4 text-gray-800 min-w-200px">Calificacion</mat-header-cell>
+            <mat-cell *matCellDef="let iM">{{iM.calificacion.calificaciones}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="observaciones">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="fw-semibold fs-4 text-gray-800 min-w-200px">Observaciones</mat-header-cell>
+            <mat-cell *matCellDef="let iM">{{iM.observaciones}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <mat-header-cell *matHeaderCellDef class="fw-semibold fs-4 text-gray-800 min-w-200px">Acciones</mat-header-cell>
+            <mat-cell *matCellDef="let iM">
+              <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="openDialog(iM)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" (click)="delete(iM)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <!-- ... Y así sucesivamente ... -->
+
+          <!-- Definición de filas -->
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        </table>>
+
       </div>
     </div>
   </div>

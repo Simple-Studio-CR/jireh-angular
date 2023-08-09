@@ -144,7 +144,6 @@ export class FormClientsComponent implements OnInit {
               );
             }
             if (this.isEditing && this.isNew) {
-              console.log(clientForm)
               this.service.save(clientForm).subscribe(client => {
                 this.editedClient = client;
                 this.isUpdating = false;
@@ -165,7 +164,6 @@ export class FormClientsComponent implements OnInit {
   public loadProvince() {
     this.serviceProvince.listAll().subscribe(province => {
       this.province = province as AddressProvince[]
-      console.log(this.province)
       this.cd.detectChanges()
     })
     this.clientForm.controls.province.valueChanges.subscribe(f => {
@@ -175,7 +173,6 @@ export class FormClientsComponent implements OnInit {
   }
 
   public loadCanton(province: any) {
-    console.log(province, 'lo que llega a canton')
     this.serviceProvince.listCanton(province).subscribe(cantons => {
       this.canton = cantons as AddressCanton[]
       this.cd.detectChanges()
@@ -241,7 +238,6 @@ export class FormClientsComponent implements OnInit {
     let clientId = sessionStorage.getItem('clientId');
     // @ts-ignore
     this.service.findById(Number.parseInt(clientId)).subscribe(clients => {
-      console.log(clients)
       this.clientForm.patchValue({
         identification: clients.identification,
         typeOfId: clients.typeOfId,

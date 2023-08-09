@@ -44,9 +44,7 @@ export class ItemsComponent implements OnInit {
   private rangePage() {
     this.service.listAll(this.pageNo + 1, this.pageSize)
       .subscribe(i => {
-        console.log(i)
         this.products = i.content as Products[];
-        console.log(i.content)
         this.totalRegister = i.totalElements
         this.cd.detectChanges();
       });

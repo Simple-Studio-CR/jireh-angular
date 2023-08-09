@@ -3,214 +3,215 @@
  * Creado por Andres Mayorga, si lo mejoran compartir a andres.mayorga07@gmail.com
  */
 
-import {ChangeDetectorRef, Component, OnInit} from "@angular/core";
+import {ChangeDetectorRef, Component, OnInit, AfterViewInit, ViewChild} from "@angular/core";
 import {FormControl, FormGroup} from "@angular/forms";
 import {LamparasCapturasMesService} from "../../../services/lamparas-capturas-mes.service";
-import {HitorialAnualModel} from "./hitorial-anual.model";
-import {empty} from "object-path";
+import {LiveAnnouncer} from '@angular/cdk/a11y';
+import {MatSort, Sort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {ClientsBranchOffice} from "../../../models/clients-branch-office";
+import {ClientsBranchesService} from "../../../services/clients-branches.service";
+
+interface Reporte {
+  trampa: any;
+  enero: number;
+  febrero: number;
+  marzo: number;
+  abril: number;
+  mayo: number;
+  junio: number;
+  julio: number;
+  agosto: number;
+  setiembre: number;
+  octubre: number;
+  noviembre: number;
+  diciembre: number;
+}
+
+const REPORTE_DATA: Reporte[] = [];
 
 @Component({
   selector: 'app-historial-capturas-lamparas',
   templateUrl: './historial-capturas-lamparas.component.html',
   styleUrls: ['./historial-capturas-lamparas.component.scss']
 })
-export class HistorialCapturasLamparasComponent implements OnInit {
+
+export class HistorialCapturasLamparasComponent implements OnInit, AfterViewInit {
+
+  displayedColumns: string[] = ['trampa', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio',
+    'agosto', 'setiembre', 'octubre', 'noviembre', 'diciembre'];
+  dataSource = new MatTableDataSource(REPORTE_DATA);
 
   range: FormGroup;
-  historial: HitorialAnualModel[];
-  hitorialAnual: any;
 
-  totalBichosEnero: number = 0;
-  totalBichosFebrero: number = 0;
-  totalBichosMarzo: number = 0;
-  totalBichosAbril: number = 0;
-  totalBichosMayo: number = 0;
-  totalBichosJunio: number = 0;
-  totalBichosJulio: number = 0;
-  totalBichosAgosto: number = 0;
-  totalBichosSetiembre: number = 0;
-  totalBichosOctubre: number = 0;
-  totalBichosNoviembre: number = 0;
-  totalBichosDiciembre: number = 0;
+  // Arreglo para almacenar información sobre las sucursales del cliente
+  branches: ClientsBranchOffice[];
+
+  clientId: any;
+
+  totales: Reporte = {
+    trampa: 0,
+    enero: 0,
+    febrero: 0,
+    marzo: 0,
+    abril: 0,
+    mayo: 0,
+    junio: 0,
+    julio: 0,
+    agosto: 0,
+    setiembre: 0,
+    octubre: 0,
+    noviembre: 0,
+    diciembre: 0,
+  };
 
   constructor(private service: LamparasCapturasMesService,
-              private cd: ChangeDetectorRef) {
+              private cd: ChangeDetectorRef,
+              private branchService: ClientsBranchesService,
+              private _liveAnnouncer: LiveAnnouncer) {
+  }
+
+  @ViewChild(MatSort) sort: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
   }
 
   ngOnInit() {
-    this.cargarDatos();
     this._initForm();
   }
 
   _initForm() {
     this.range = new FormGroup({
       branch: new FormControl(),
-      warehouse: new FormControl()
     });
+    this.findBranches();
   }
 
-  cargarDatos() {
-    let date = new Date();
-
-    let enero: any = [];
-    let febrero: any = [];
-    let marzo: any = [];
-    let abril: any = [];
-    let mayo: any = [];
-    let junio: any = [];
-    let julio: any = [];
-    let agosto: any = [];
-    let setiembre: any = [];
-    let octubre: any = [];
-    let noviembre: any = [];
-    let diciembre: any = [];
-
-    this.hitorialAnual = [{
-      'enero': enero,
-      'febrero': febrero,
-      'marzo': marzo,
-      'abril': abril,
-      'mayo': mayo,
-      'junio': junio,
-      'julio': julio,
-      'agosto': agosto,
-      'setiembre': setiembre,
-      'octubre': octubre,
-      'noviembre': noviembre,
-      'diciembre': diciembre,
-    }]
-
-    this.service.findReporteAnual(date.getFullYear(), sessionStorage.getItem('clientId')).subscribe(data => {
-        console.log(data, 'data');
-
-        for (let i = 0; i < data.length; i++) {
-
-          if (data[i][3] == 1) {
-            this.totalBichosEnero = this.totalBichosEnero + data[i][0];
-            this.cargarTabla(enero, data[i][0], data[i][2]);
-          }
-          if (data[i][3] == 2) {
-            this.totalBichosFebrero = this.totalBichosFebrero + data[i][0];
-            this.cargarTabla(febrero, data[i][0], data[i][2]);
-          }
-          if (data[i][3] == 3) {
-            this.totalBichosMarzo = this.totalBichosMarzo + data[i][0];
-            this.cargarTabla(marzo, data[i][0], data[i][2]);
-          }
-          if (data[i][3] == 4) {
-            this.totalBichosAbril = this.totalBichosAbril + data[i][0];
-            this.cargarTabla(abril, data[i][0], data[i][2]);
-          }
-          if (data[i][3] == 5) {
-            this.totalBichosMayo = this.totalBichosMayo + data[i][0];
-            this.cargarTabla(mayo, data[i][0], data[i][2]);
-          }
-          if (data[i][3] == 6) {
-            this.totalBichosJunio = this.totalBichosJunio + data[i][0];
-            this.cargarTabla(junio, data[i][0], data[i][2]);
-          }
-          if (data[i][3] == 7) {
-            this.totalBichosJulio = this.totalBichosJulio + data[i][0];
-            this.cargarTabla(julio, data[i][0], data[i][2]);
-          }
-          if (data[i][3] == 8) {
-            this.totalBichosAgosto = this.totalBichosAgosto + data[i][0];
-            this.cargarTabla(agosto, data[i][0], data[i][2]);
-          }
-          if (data[i][3] == 9) {
-            this.totalBichosSetiembre = this.totalBichosSetiembre + data[i][0];
-            this.cargarTabla(setiembre, data[i][0], data[i][2]);
-          }
-          if (data[i][3] == 10) {
-            this.totalBichosOctubre = this.totalBichosOctubre + data[i][0];
-            this.cargarTabla(octubre, data[i][0], data[i][2]);
-          }
-          if (data[i][3] == 11) {
-            this.totalBichosNoviembre = this.totalBichosNoviembre + data[i][0];
-            this.cargarTabla(noviembre, data[i][0], data[i][2]);
-          }
-          if (data[i][3] == 12) {
-            this.totalBichosDiciembre = this.totalBichosDiciembre + data[i][0];
-            this.cargarTabla(diciembre, data[i][0], data[i][2]);
-          }
-        }
-
-        console.log(this.hitorialAnual, 'historial anual');
-      let size = 0;
-      let trampa = 0;
-        for (let i = 1; i <= 12; i++) {
-          if(this.hitorialAnual[0][this._getMesString('',i)].length > 0) {
-            if(size < this.hitorialAnual[0][this._getMesString('',i)].length) {
-              size = this.hitorialAnual[0][this._getMesString('', i)].length;
-              console.log(size, 'size en el if', i);
-            }
-          }
-        }
-        console.log(size, 'size final');
-        for(let i = 1; i <= 12; i++) {
-          if(this.hitorialAnual[0][this._getMesString('',i)].length < size) {
-            let diff = size - this.hitorialAnual[0][this._getMesString('',i)].length;
-            for(let j = 0; j < diff; j++){
-              this.hitorialAnual[0][this._getMesString('',i)].splice(j, 0, {
-                'numeroCapturas': 0,
-                'trampa': 0,
-              })
-            }
-          }
-        }
+  findBranches() {
+    this.clientId = sessionStorage.getItem('clientId');
+    this.branchService.findByClientId(Number.parseInt(this.clientId), 1, 200).subscribe(
+      c => {
+        this.branches = c.content;
         this.cd.detectChanges();
+        this.range.controls.branch.valueChanges.subscribe(b => {
+          this.cargarDatosV2(b.id);
+          this.cd.detectChanges();
+        })
       });
   }
 
-  cargarTabla(mes: any, total: any, trampa: any): any {
-    return mes.splice(0, 0, {
-      'numeroCapturas': total,
-      'trampa': trampa,
-    })
+  cargarDatosV2(branchId: any) {
+    let date = new Date();
+
+    // Primero, adaptamos tu servicio para obtener los datos en el formato deseado:
+    this.service.findReporteAnual(date.getFullYear(), branchId).subscribe(data => {
+      let reportes: Reporte[] = [];
+      // @ts-ignore
+      data.forEach(item => {
+        let reporte = reportes.find(r => r.trampa === item[2]);
+        if (!reporte) {
+          reporte = {
+            trampa: item[2],
+            enero: 0,
+            febrero: 0,
+            marzo: 0,
+            abril: 0,
+            mayo: 0,
+            junio: 0,
+            julio: 0,
+            agosto: 0,
+            setiembre: 0,
+            octubre: 0,
+            noviembre: 0,
+            diciembre: 0,
+          };
+          reportes.push(reporte);
+        }
+        switch (item[3]) {
+          case 1:
+            reporte.enero = item[0];
+            break;
+
+          case 2:
+            reporte.febrero = item[0];
+            break;
+
+          case 3:
+            reporte.marzo = item[0];
+            break;
+
+          case 4:
+            reporte.abril = item[0];
+            break;
+
+          case 5:
+            reporte.mayo = item[0];
+            break;
+
+          case 6:
+            reporte.junio = item[0];
+            break;
+
+          case 7:
+            reporte.julio = item[0];
+            break;
+
+          case 8:
+            reporte.agosto = item[0];
+            break;
+
+          case 9:
+            reporte.setiembre = item[0];
+            break;
+
+          case 10:
+            reporte.octubre = item[0];
+            break;
+
+          case 11:
+            reporte.noviembre = item[0];
+            break;
+
+          case 12:
+            reporte.diciembre = item[0];
+            break;
+        }
+      });
+      this.dataSource.data = reportes;
+      reportes.forEach(reporte => {
+        this.totales.enero += reporte.enero;
+        this.totales.febrero += reporte.febrero;
+        this.totales.marzo += reporte.marzo;
+        this.totales.abril += reporte.abril;
+        this.totales.mayo += reporte.mayo;
+        this.totales.junio += reporte.junio;
+        this.totales.julio += reporte.julio;
+        this.totales.agosto += reporte.agosto;
+        this.totales.setiembre += reporte.setiembre;
+        this.totales.octubre += reporte.octubre;
+        this.totales.noviembre += reporte.noviembre;
+        this.totales.diciembre += reporte.diciembre;
+      });
+      this.cd.detectChanges();
+    });
   }
 
-  eliminar(id: any) {}
-
-  _getMesString(mesString: string, mes: number):
-    string {
-    switch (mes) {
-      case 1:
-        mesString = 'enero';
-        break;
-      case 2:
-        mesString = 'febrero';
-        break;
-      case 3:
-        mesString = 'marzo';
-        break;
-      case 4:
-        mesString = 'abril';
-        break;
-      case 5:
-        mesString = 'mayo';
-        break;
-      case 6:
-        mesString = 'junio';
-        break;
-      case 7:
-        mesString = 'julio';
-        break;
-      case 8:
-        mesString = 'agosto';
-        break;
-      case 9:
-        mesString = 'setiembre';
-        break;
-      case 10:
-        mesString = 'octubre';
-        break;
-      case 11:
-        mesString = 'noviembre';
-        break;
-      case 12:
-        mesString = 'diciembre';
-        break;
+  /** Announce the change in sort state for assistive technology. */
+  announceSortChange(sortState: Sort) {
+    // This example uses English messages. If your application supports
+    // multiple language, you would internationalize these strings.
+    // Furthermore, you can customize the message to add additional
+    // details about the values being sorted.
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+      this.cd.detectChanges();
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
     }
-    return mesString;
   }
+
+  eliminar(id: any) {
+  }
+
 }

@@ -13,13 +13,16 @@
         <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
           <form [formGroup]="range" id="range">
             <div class="row p-t-20 col-md-12">
-              <div class="col-md-6">
-                <label class="form-label">Sucursal</label>
-                <input class="form-control" formControlName="branch" type="text">
+              <div class="col-md-9">
+                <label class="form-label" for="clientBranch">Sucursal</label>
+                <select class="form-select" formControlName="branch" id="clientBranch">
+                  <option>Seleccione Sucursal</option>
+                  <option *ngFor="let b of branches" [ngValue]="b">{{b.name}}</option>
+                </select>
               </div>
-              <div class="col-md-6">
-                <label class="form-label">Bodega</label>
-                <input class="form-control" formControlName="warehouse" type="text">
+              <div class="col-md-3">
+                <br>
+                <input type="button" class="btn btn-warning" value="Atras" routerLink="/reports">
               </div>
             </div>
           </form>
@@ -28,66 +31,98 @@
       <div class="fv-plugins-message-container">
         <div class="row">
           <div class="col-sm">
-          <table
-            class="table table-rounded table-flush">
-            <thead>
-            <tr class="fw-semibold fs-7 text-danger border-bottom border-gray-200 py-4">
-              <th># Trampa</th>
-              <th>Enero</th>
-              <th>Febrero</th>
-              <th>Marzo</th>
-              <th>Abril</th>
-              <th>Mayo</th>
-              <th>Junio</th>
-              <th>Julio</th>
-              <th>Agosto</th>
-              <th>Setiembre</th>
-              <th>Octubre</th>
-              <th>Noviembre</th>
-              <th>Diciembre</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6"
-              *ngFor="let r of hitorialAnual[0]['enero']; let i = index ">
-              <td>{{r.trampa}}</td>
-              <td>{{hitorialAnual[0]['enero'][i].numeroCapturas}}</td>
-              <td>{{hitorialAnual[0]['febrero'][i].numeroCapturas}}</td>
-              <td>{{hitorialAnual[0]['marzo'][i].numeroCapturas}}</td>
-              <td>{{hitorialAnual[0]['abril'][i].numeroCapturas}}</td>
-              <td>{{hitorialAnual[0]['mayo'][i].numeroCapturas}}</td>
-              <td>{{hitorialAnual[0]['junio'][i].numeroCapturas}}</td>
-              <td>{{hitorialAnual[0]['julio'][i].numeroCapturas}}</td>
-              <td>{{hitorialAnual[0]['agosto'][i].numeroCapturas}}</td>
-              <td>{{hitorialAnual[0]['setiembre'][i].numeroCapturas}}</td>
-              <td>{{hitorialAnual[0]['octubre'][i].numeroCapturas}}</td>
-              <td>{{hitorialAnual[0]['noviembre'][i].numeroCapturas}}</td>
-              <td>{{hitorialAnual[0]['diciembre'][i].numeroCapturas}}</td>
+            <div class="table-responsive">
+              <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+                     class="mat-elevation-z8">
+                <ng-container matColumnDef="trampa">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Trampa</th>
+                  <td mat-cell *matCellDef="let element"> {{element.trampa}} </td>
+                  <td mat-footer-cell *matFooterCellDef>Totales</td>
+                </ng-container>
 
+                <ng-container matColumnDef="enero">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Enero</th>
+                  <td mat-cell *matCellDef="let element"> {{element.enero}} </td>
+                  <td mat-footer-cell *matFooterCellDef> {{totales.enero}} </td>
+                </ng-container>
 
-            </tr>
-            <hr>
-            <tr>
-              <td>Total</td>
-              <td>{{totalBichosEnero}}</td>
-              <td>{{totalBichosFebrero}}</td>
-              <td>{{totalBichosMarzo}}</td>
-              <td>{{totalBichosAbril}}</td>
-              <td>{{totalBichosMayo}}</td>
-              <td>{{totalBichosJunio}}</td>
-              <td>{{totalBichosJulio}}</td>
-              <td>{{totalBichosAgosto}}</td>
-              <td>{{totalBichosSetiembre}}</td>
-              <td>{{totalBichosOctubre}}</td>
-              <td>{{totalBichosNoviembre}}</td>
-              <td>{{totalBichosDiciembre}}</td>
-            </tr>
+                <ng-container matColumnDef="febrero">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Febrero</th>
+                  <td mat-cell *matCellDef="let element"> {{element.febrero}} </td>
+                  <td mat-footer-cell *matFooterCellDef> {{totales.febrero}} </td>
+                </ng-container>
 
-            </tbody>
-          </table>
+                <ng-container matColumnDef="marzo">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Marzo</th>
+                  <td mat-cell *matCellDef="let element"> {{element.marzo}} </td>
+                  <td mat-footer-cell *matFooterCellDef> {{totales.marzo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="abril">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Abril</th>
+                  <td mat-cell *matCellDef="let element"> {{element.abril}} </td>
+                  <td mat-footer-cell *matFooterCellDef> {{totales.abril}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="mayo">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Mayo</th>
+                  <td mat-cell *matCellDef="let element"> {{element.mayo}} </td>
+                  <td mat-footer-cell *matFooterCellDef> {{totales.mayo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="junio">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Junio</th>
+                  <td mat-cell *matCellDef="let element"> {{element.junio}} </td>
+                  <td mat-footer-cell *matFooterCellDef> {{totales.junio}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="julio">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Julio</th>
+                  <td mat-cell *matCellDef="let element"> {{element.julio}} </td>
+                  <td mat-footer-cell *matFooterCellDef> {{totales.julio}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="agosto">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Agosto</th>
+                  <td mat-cell *matCellDef="let element"> {{element.agosto}} </td>
+                  <td mat-footer-cell *matFooterCellDef> {{totales.agosto}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="setiembre">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Setiembre</th>
+                  <td mat-cell *matCellDef="let element"> {{element.setiembre}} </td>
+                  <td mat-footer-cell *matFooterCellDef> {{totales.setiembre}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="octubre">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Octubre</th>
+                  <td mat-cell *matCellDef="let element"> {{element.octubre}} </td>
+                  <td mat-footer-cell *matFooterCellDef> {{totales.octubre}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="noviembre">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Noviembre</th>
+                  <td mat-cell *matCellDef="let element"> {{element.noviembre}} </td>
+                  <td mat-footer-cell *matFooterCellDef> {{totales.noviembre}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="diciembre">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Diciembre</th>
+                  <td mat-cell *matCellDef="let element"> {{element.diciembre}} </td>
+                  <td mat-footer-cell *matFooterCellDef> {{totales.diciembre}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+

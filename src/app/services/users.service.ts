@@ -21,7 +21,6 @@ export class UsersService {
     return this.http.post<Users>(this.variables.getServicingEndpoint() + '/user/save', user,
       {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            console.log('el error status es : ', err.status)
             this.variables.notAllowed(err);
             return throwError(err);
           }
@@ -31,7 +30,6 @@ export class UsersService {
   public findUserByUserName(userName: String): Observable<any>{
     return this.http.get<Users>(this.variables.getBaseEndpoint()+'/api/servicing/v1/search/findUserName?username='+userName, {headers:this.variables.getAuthHeader()})
       .pipe(catchError(err => {
-            console.log('el error status es : ', err.status)
             this.variables.notAllowed(err);
             return throwError(err);
           }

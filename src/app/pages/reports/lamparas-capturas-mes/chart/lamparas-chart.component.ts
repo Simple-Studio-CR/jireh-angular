@@ -58,7 +58,6 @@ export class LamparasChartComponent {
       // @ts-ignore
       chart.data = JSON.parse(sessionStorage.getItem('reports'));
       this.cd.detectChanges();
-      console.log('chart', chart);
 
       // Create axes
       let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());

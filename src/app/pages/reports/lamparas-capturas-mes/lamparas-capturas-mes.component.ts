@@ -306,7 +306,6 @@ export class LamparasCapturasMesComponent implements OnInit {
     this.wareHouseService.findByBranchId(id, 1, 100).subscribe(
       response => {
         this.warehouse = response.content as ClientsWarehouse[];
-        console.log(this.warehouse);
         this.cd.detectChanges();
       }
     )

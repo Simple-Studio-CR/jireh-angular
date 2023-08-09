@@ -33,7 +33,6 @@ export class DashboardComponent implements OnInit {
       .subscribe(i => {
         this.clients = i.content as Clients[];
         this.totalRegister = i.totalElements
-        console.log(i)
         this.cd.detectChanges();
       })
   }

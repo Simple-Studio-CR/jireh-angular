@@ -46,7 +46,6 @@ import {FunctionsService} from "../../common/functions.service";
 
   guardar() {
     this.service.save(this.infoPlagas.value).subscribe(iF => {
-      console.log(iF)
     })
   }
 
@@ -85,7 +84,6 @@ import {FunctionsService} from "../../common/functions.service";
         // @ts-ignore
         this.service.findByDate(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')), date.start).subscribe(all => {
           this.infoNueva = all as InfoPlagas[];
-          console.log(date, 'fecha')
           this.cd.detectChanges();
         })
       }
@@ -130,7 +128,6 @@ import {FunctionsService} from "../../common/functions.service";
     this.pestTypeService.getPestType().subscribe(pt => {
       this.pestType = pt
       this.cd.detectChanges();
-      console.log(pt)
       this.infoPlagas.controls.pestType.valueChanges.subscribe(value => {
         this.pestTypeService.getCalificaciones(value.id).subscribe(calif => {
           this.calificaciones = calif
