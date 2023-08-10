@@ -13,6 +13,7 @@ import {FunctionsService} from "../../common/functions.service";
 import {MatSort, Sort} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {LiveAnnouncer} from "@angular/cdk/a11y";
+import swal from "sweetalert2";
 
 
 @Component({
@@ -59,12 +60,29 @@ export class IncidenciasPlagasMensualComponent implements OnInit, AfterViewInit 
     this.findBranches();
     this.iniciarForms();
     this.cargarDatos();
+    this.findPestType();
   }
 
   guardar() {
     this.service.save(this.inicidenciasForm.value).subscribe(iF => {
+      swal.fire({
+        title: 'Incidencia guardada ' + ` ${iF.pestType.name}`,
+        text: 'La incidencia se ha guardado correctamente',
+        icon: 'success',
+      })
+      this.resetForm();
+      this.cargarDatos();
+      this.cd.detectChanges();
     })
 
+  }
+
+  resetForm() {
+    const control = this.inicidenciasForm.controls;
+    control.pestType.setValue('');
+    control.cuantificacion.setValue('');
+    control.calificacion.setValue('');
+    control.observaciones.setValue('');
   }
 
   iniciarForms() {
@@ -106,7 +124,8 @@ export class IncidenciasPlagasMensualComponent implements OnInit, AfterViewInit 
           })
         })
       })
-
+  }
+  findPestType() {
     this.pestTypeService.getPestType().subscribe(pt => {
       this.pestType = pt
       this.cd.detectChanges();

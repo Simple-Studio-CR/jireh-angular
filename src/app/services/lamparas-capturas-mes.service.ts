@@ -14,13 +14,14 @@ import {AuthHTTPService} from "../modules/auth/services/auth-http";
 @Injectable({
   providedIn: 'root'
 })
-export class LamparasCapturasMesService{
+export class LamparasCapturasMesService {
   constructor(
     private http: HttpClient, private authService: AuthHTTPService, private router: Router,
     private variables: GlobalVariablesService
   ) {
   }
-  findByDateRange(id:number, date: string, date2: string): Observable<any>{
+
+  findByDateRange(id: number, date: string, date2: string): Observable<any> {
     return this.http.get<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/get-by-date-range' + '/' + id + '/' + date + '/' + date2, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.variables.notAllowed(err);
@@ -29,8 +30,9 @@ export class LamparasCapturasMesService{
         )
       );
   }
-  findByDate(id:number, date: number): Observable<any>{
-    return this.http.get<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/get-by-date/'  + id + '/' + date + '/', {headers: this.variables.getAuthHeader()})
+
+  findByDate(id: number, date: number): Observable<any> {
+    return this.http.get<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/get-by-date/' + id + '/' + date + '/', {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.variables.notAllowed(err);
             return throwError(err);
@@ -39,7 +41,7 @@ export class LamparasCapturasMesService{
       );
   }
 
-  findAll(): Observable<any>{
+  findAll(): Observable<any> {
     return this.http.get<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/get-all', {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.variables.notAllowed(err);
@@ -49,7 +51,7 @@ export class LamparasCapturasMesService{
       );
   }
 
-  save(lamparasCapturasMes: any): Observable<any>{
+  save(lamparasCapturasMes: any): Observable<any> {
     return this.http.post<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/save', lamparasCapturasMes, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.variables.notAllowed(err);
@@ -58,7 +60,8 @@ export class LamparasCapturasMesService{
         )
       );
   }
-  findReporteAnual(year: any, branchId: any): Observable<any>{
+
+  findReporteAnual(year: any, branchId: any): Observable<any> {
     return this.http.get<any>(this.variables.getServicingEndpoint() +
       '/lamparas-capturas-x-mes/get-reporte-por-mes/'
       + year + '/' + branchId + '/',
@@ -70,7 +73,8 @@ export class LamparasCapturasMesService{
         )
       );
   }
-  findVerificandoExistencia(createAt1: number, createAt2: number, clientId: number, trap:number): Observable<any>{
+
+  findVerificandoExistencia(createAt1: number, createAt2: number, clientId: number, trap: number): Observable<any> {
     return this.http.get<any>(this.variables.getServicingEndpoint() +
       '/lamparas-capturas-x-mes/get-reporte-verificando-existencia/' +
       createAt1 + '/' + createAt2 + '/' + clientId + '/' + trap + '/',
@@ -82,4 +86,18 @@ export class LamparasCapturasMesService{
         )
       );
   }
+
+  findReporteAnualPorNumeroTrampa(branchId: any, trampa: any): Observable<any> {
+    return this.http.get<any>(this.variables.getServicingEndpoint() +
+      '/lamparas-capturas-x-mes/get-reporte-verificando-existencia/' +
+      branchId + '/' + trampa + '/',
+      {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.variables.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
 }

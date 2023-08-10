@@ -51,10 +51,6 @@ export class LamparasChartComponent {
 
       chart.paddingRight = 20;
 
-      let clientId = sessionStorage.getItem('clientId');
-      let date = sessionStorage.getItem('fecha');
-
-
       // @ts-ignore
       chart.data = JSON.parse(sessionStorage.getItem('reports'));
       this.cd.detectChanges();

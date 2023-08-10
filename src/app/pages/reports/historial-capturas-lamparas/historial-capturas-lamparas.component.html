@@ -8,7 +8,7 @@
     <div class="card card-flush">
       <div class="card-header align-items-center py-5 gap-2 gap-md-5">
         <div class="card-title">
-          <h3 class="mb-0">Incidencias de Plagas Mensual</h3>
+          <h3 class="mb-0">Historial de Capturas Lamparas UV Año: {{currentYear}}</h3>
         </div>
         <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
           <form [formGroup]="range" id="range">
@@ -124,5 +124,42 @@
     </div>
   </div>
 </div>
+
+
+<div class="card-body py-3">
+  <div class="card card-flush">
+    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+      <div class="card-title">
+        <h3 class="mb-0">Grafico consumo de trampas mensual</h3>
+      </div>
+      <form [formGroup]="range" id="range">
+        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+          <label class="form-label" for="clientBranch">Trampa Numero</label>
+          <select class="form-select" formControlName="trampa" id="trampa">
+            <option>Seleccione Trampa</option>
+            <option *ngFor="let t of trampas" [ngValue]="t">{{t}}</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div id="trampaChartdiv" style="height: 400px;"></div>
+  </div>
+</div>
+
+<div class="card-body py-3">
+  <div class="card card-flush">
+    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+      <div class="card-title">
+        <h3 class="mb-0">Grafico consumo anual total</h3>
+      </div>
+      <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+      </div>
+    </div>
+    <div id="totalChartdiv" style="height: 400px;"></div>
+  </div>
+</div>
+
+
+
 
 
