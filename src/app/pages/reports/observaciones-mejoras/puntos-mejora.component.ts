@@ -25,6 +25,7 @@ export class PuntosMejoraComponent implements OnInit{
   calificaciones: Calificacion[];
   pestType: PestType[];
   puntoMejoraNuevo: PuntosMejora[];
+  puntoMejoraLista: PuntosMejora[];
   form: FormGroup;
   puntosMejora: FormGroup;
   range: FormGroup;
@@ -41,7 +42,6 @@ export class PuntosMejoraComponent implements OnInit{
   ngOnInit(): void {
     this.findBranches();
     this.iniciarForms();
-    this.cargarDatos();
     this.setFechaHoy();
   }
 
@@ -51,7 +51,10 @@ export class PuntosMejoraComponent implements OnInit{
   }
 
   iniciarForms() {
-    this.form = new FormGroup({})
+    this.range = new FormGroup({
+      month: new FormControl(''),
+      branch: new FormControl(''),
+    });
     this.puntosMejora = new FormGroup({
       branchOffice: new FormControl(''),
       createAt: new FormControl(''),
@@ -63,35 +66,21 @@ export class PuntosMejoraComponent implements OnInit{
   }
 
   cargarDatos() {
-
-    // @ts-ignore
-    this.service.findByDate(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')),
-      this.functions.fechaActual()).subscribe(all => {
-      this.puntoMejoraNuevo = all as PuntosMejora[];
-      this.cd.detectChanges();
-    })
-
-    this.range = new FormGroup({
-      start: new FormControl<Date | null>(null),
-      end: new FormControl<Date | null>(null),
-    });
-
-    this.range.valueChanges.subscribe(date => {
-      if (date.end == null) {
-        // @ts-ignore
-        this.service.findByDate(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')), date.start).subscribe(all => {
-          this.puntoMejoraNuevo = all as PuntosMejora[];
-          this.cd.detectChanges();
-        })
-      }
-      if (date.end != null && date.start != null) {
-        // @ts-ignore
-        this.service.findByDateRange(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')), date.start, date.end).subscribe(all => {
-          this.puntoMejoraNuevo = all as PuntosMejora[];
-          this.cd.detectChanges();
-        })
-      }
-    })
+    let month = this.range.get('month')?.value;
+    let branchId = this.range.get('branch')?.value;
+    this.puntoMejoraLista = [];
+    if(month == 0){
+      this.service.findByYear(branchId.id, this.functions.anioActual()).subscribe(all => {
+        this.puntoMejoraLista = all as PuntosMejora[];
+        this.cd.detectChanges();
+      })
+    }
+    if(month != 0){
+      this.service.findByDate(branchId.id, month).subscribe(all => {
+        this.puntoMejoraLista = all as PuntosMejora[];
+        this.cd.detectChanges();
+      })
+    }
   }
 
   findBranches() {

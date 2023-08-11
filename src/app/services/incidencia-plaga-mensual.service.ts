@@ -45,8 +45,18 @@ export class IncidenciaPlagaMensualService {
       );
   }
 
-  findByDate(id:number, date: string): Observable<any>{
+  findByDate(id:number, date: number): Observable<any>{
     return this.http.get<IncidenciasPlagasMensual>(this.variables.getServicingEndpoint() + '/incidencia-mensual/get-by-date' + '/' + id + '/' + date + '/', {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.variables.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
+  findByYear(id:number, year: number): Observable<any>{
+    return this.http.get<IncidenciasPlagasMensual>(this.variables.getServicingEndpoint() + '/incidencia-mensual/get-by-year' + '/' + id + '/' + year + '/', {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.variables.notAllowed(err);
             return throwError(err);

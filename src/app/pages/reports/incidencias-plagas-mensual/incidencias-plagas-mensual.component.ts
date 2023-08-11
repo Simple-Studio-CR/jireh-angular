@@ -33,7 +33,6 @@ export class IncidenciasPlagasMensualComponent implements OnInit, AfterViewInit 
   incidenciasNueva: IncidenciasPlagasMensual[];
   form: FormGroup;
   inicidenciasForm: FormGroup;
-  range: FormGroup;
   functions: FunctionsService = new FunctionsService();
   displayedColumns: string[] = ['warehouse', 'createAt', 'pestType', 'cuantificacion', 'calificacion', 'observaciones', 'acciones'];
   dataSource: MatTableDataSource<IncidenciasPlagasMensual>;
@@ -59,7 +58,6 @@ export class IncidenciasPlagasMensualComponent implements OnInit, AfterViewInit 
   ngOnInit(): void {
     this.findBranches();
     this.iniciarForms();
-    this.cargarDatos();
     this.findPestType();
   }
 
@@ -71,7 +69,6 @@ export class IncidenciasPlagasMensualComponent implements OnInit, AfterViewInit 
         icon: 'success',
       })
       this.resetForm();
-      this.cargarDatos();
       this.cd.detectChanges();
     })
 
@@ -86,7 +83,10 @@ export class IncidenciasPlagasMensualComponent implements OnInit, AfterViewInit 
   }
 
   iniciarForms() {
-    this.form = new FormGroup({})
+    this.form = new FormGroup({
+      branch: new FormControl(''),
+      month: new FormControl(''),
+    })
     this.inicidenciasForm = new FormGroup({
       branchOffice: new FormControl(''),
       createAt: new FormControl(''),
@@ -99,16 +99,27 @@ export class IncidenciasPlagasMensualComponent implements OnInit, AfterViewInit 
   }
 
   cargarDatos() {
+    //todo aplicar filtro por ano y por mes, ir al servicing y revisar los metodos
 
-    // @ts-ignore
-    this.service.findByDate(Number.parseInt(this.clientId = sessionStorage.getItem('clientId')), this.functions.anioActual()).subscribe(all => {
-      this.incidenciasNueva = all as IncidenciasPlagasMensual[];
-      this.dataSource = new MatTableDataSource(this.incidenciasNueva);
-      this.dataSource.sort = this.sort;
-      this.cd.detectChanges();
-    })
-
-
+    let month = this.form.get('month')?.value;
+    let branchId = this.form.get('branch')?.value;
+    this.incidenciasNueva = [];
+    if(month == 0) {
+      this.service.findByYear(branchId.id, this.functions.anioActual()).subscribe(all => {
+          this.incidenciasNueva = all as IncidenciasPlagasMensual[];
+          this.dataSource = new MatTableDataSource(this.incidenciasNueva);
+          this.dataSource.sort = this.sort;
+          this.cd.detectChanges();
+      })
+    }
+    if(month != 0) {
+      this.service.findByDate(branchId.id, month).subscribe(all => {
+        this.incidenciasNueva = all as IncidenciasPlagasMensual[];
+        this.dataSource = new MatTableDataSource(this.incidenciasNueva);
+        this.dataSource.sort = this.sort;
+        this.cd.detectChanges();
+      })
+    }
   }
 
   findBranches() {

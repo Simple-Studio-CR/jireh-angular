@@ -45,7 +45,7 @@ export class LamparasCapturasMesComponent implements OnInit {
   nuevoConteoForm: FormGroup;
 
 // FormGroup para manejar los controles de un rango de fechas
-  range: FormGroup;
+  form: FormGroup;
 
 // Instancia del servicio 'FunctionsService' para funciones auxiliares
   functions: FunctionsService = new FunctionsService();
@@ -82,8 +82,9 @@ export class LamparasCapturasMesComponent implements OnInit {
   // Función para inicializar los formularios y sus controles
   private initializeForms(): void {
     // Crear un FormGroup llamado 'range' para manejar un rango de fechas
-    this.range = new FormGroup({
-      start: new FormControl<Date | null>(null), // Control para la fecha de inicio (puede ser nulo)
+    this.form = new FormGroup({
+      branch: new FormControl<Date | null>(null), // Control para la fecha de inicio (puede ser nulo)
+      month: new FormControl<Date | null>(null), // Control para la fecha de inicio (puede ser nulo)
     });
 
     // Crear un FormGroup llamado 'nuevoConteoForm' para manejar el formulario de conteo de plagas
@@ -256,7 +257,7 @@ export class LamparasCapturasMesComponent implements OnInit {
 
   private _getBranches(): void {
     // Subscribe to changes in the 'start' date of the range
-    this.range.valueChanges.subscribe(date => {
+    this.form.valueChanges.subscribe(date => {
       // Clear the 'nuevoConteo' array
       this.nuevoConteo = [];
 
@@ -327,4 +328,7 @@ export class LamparasCapturasMesComponent implements OnInit {
     sessionStorage.removeItem('reports');
   }
 
+  cargarDatos() {
+
+  }
 }

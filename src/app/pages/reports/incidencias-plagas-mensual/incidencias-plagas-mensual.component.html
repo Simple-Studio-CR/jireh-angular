@@ -84,7 +84,40 @@
             </div>
           </div>
           <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-
+            <form [formGroup]="form" id="range">
+              <div class="row p-t-20 col-md-12">
+                <div class="col-md-4">
+                  <label class="form-label">Mes</label>
+                  <select class="form-select" formControlName="month" id="month">
+                    <option>Seleccione Mes</option>
+                    <option [value]="0" class="bold">Todos</option>
+                    <option [value]="1">Enero</option>
+                    <option [value]="2">Febrero</option>
+                    <option [value]="3">Marzo</option>
+                    <option [value]="4">Abril</option>
+                    <option [value]="5">Mayo</option>
+                    <option [value]="6">Junio</option>
+                    <option [value]="7">Julio</option>
+                    <option [value]="8">Agosto</option>
+                    <option [value]="9">Setiembre</option>
+                    <option [value]="10">Octubre</option>
+                    <option [value]="11">Noviembre</option>
+                    <option [value]="12">Diciembre</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Seleccione Sucursal</label>
+                  <select class="form-select" formControlName="branch" id="branch">
+                    <option>Seleccione Sucursal</option>
+                    <option *ngFor="let b of branches" [ngValue]="b">{{b.name}}</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <br>
+                  <input class="button btn btn-info" type="submit" value="Buscar" (click)="cargarDatos()">
+                </div>
+              </div>
+            </form>
           </div>
         </div>
 
@@ -143,7 +176,7 @@
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-        </table>>
+        </table>
 
       </div>
     </div>

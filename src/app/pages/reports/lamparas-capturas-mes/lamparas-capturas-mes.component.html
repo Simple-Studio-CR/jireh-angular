@@ -5,7 +5,7 @@
 
 <div class="card">
   <div class="card-header border-0 pt-5 pb-5">
-    <h1 class="anchor fw-bold mb-5">Ingresar Nueva Incidencias de Plagas Mensual</h1>
+    <h1 class="anchor fw-bold mb-5">Lamparas UV Nuevo Registro</h1>
     <form [formGroup]="nuevoConteoForm" id="nuevoConteoForm">
       <div class="row p-t-20 col-md-12">
         <!--Escoger Sucursal-->
@@ -86,15 +86,16 @@
     <div class="card card-flush">
       <div class="card-header align-items-center py-5 gap-2 gap-md-5">
         <div class="card-title">
-          <h3 class="mb-0">Incidencias de Plagas Mensual</h3>
+          <h3 class="mb-0">Registro</h3>
         </div>
         <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-          <form [formGroup]="range" id="range">
+          <form [formGroup]="form" id="range">
             <div class="row p-t-20 col-md-12">
-              <div class="col-md-6">
-                <label class="form-label">De:</label>
-                <select class="form-select" formControlName="start" id="start">
-                  <option>Seleccione</option>
+              <div class="col-md-4">
+                <label class="form-label">Mes</label>
+                <select class="form-select" formControlName="month" id="month">
+                  <option>Seleccione Mes</option>
+                  <option [value]="0" class="bold">Todos</option>
                   <option [value]="1">Enero</option>
                   <option [value]="2">Febrero</option>
                   <option [value]="3">Marzo</option>
@@ -109,7 +110,16 @@
                   <option [value]="12">Diciembre</option>
                 </select>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
+                <label class="form-label">Seleccione Sucursal</label>
+                <select class="form-select" formControlName="branch" id="branch">
+                  <option>Seleccione Sucursal</option>
+                  <option *ngFor="let b of branches" [ngValue]="b">{{b.name}}</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <br>
+                <input class="button btn btn-info" type="submit" value="Buscar" (click)="cargarDatos()">
               </div>
             </div>
           </form>
