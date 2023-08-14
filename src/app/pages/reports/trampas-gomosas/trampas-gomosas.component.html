@@ -1,1 +1,181 @@
-<p>works</p>
+<div class="card">
+  <div class="card-header border-0 pt-5 pb-5">
+    <h1 class="anchor fw-bold mb-5">Historial de Cambio de Trampas Gomosas</h1>
+    <form [formGroup]="nuevoConteoForm" id="nuevoConteoForm">
+      <div class="row p-t-20 col-md-12">
+        <!--Escoger Sucursal-->
+        <div class="col-md-5">
+          <label class="form-label" for="clientBranch">Sucursal</label>
+          <select class="form-select" formControlName="branchOffice" id="clientBranch">
+            <option>Seleccione Sucursal</option>
+            <option *ngFor="let b of branches" [ngValue]="b">{{b.name}}</option>
+          </select>
+        </div>
+        <!--Escoger Bodega-->
+        <div class="col-md-5">
+          <label class="form-label" for="warehouse">Bodega</label>
+          <select class="form-select" formControlName="warehouse" id="warehouse">
+            <option>Seleccione Bodega/Oficina</option>
+            <option *ngFor="let w of warehouse" [ngValue]="w">{{w.name}}</option>
+          </select>
+        </div>
+        <!--      Escoger mes-->
+        <div class="col-md-2 pt-2">
+          <label class="form-label">Fecha</label>
+          <input class="form-control" formControlName="createAt" type="date">
+        </div>
+
+        <!--    Trampa-->
+        <div class="col-md-2 pt-2">
+          <label class="form-label">Trampa</label>
+          <input class="form-control" formControlName="trampa" type="number">
+        </div>
+
+        <!--    Roedores-->
+        <div class="col-md-2 pt-2">
+          <label class="form-label">Roedores</label>
+          <select class="form-select" formControlName="roedor">
+            <option>Hubo Consumo?</option>
+            <option [value]="true">Si</option>
+            <option [value]="false">No</option>
+          </select>
+        </div>
+
+        <!--    Insectos-->
+        <div class="col-md-2 pt-2">
+          <label class="form-label">Insectos</label>
+          <select class="form-select" formControlName="insectos">
+            <option>Hay Insectos?</option>
+            <option [value]="true">Si</option>
+            <option [value]="false">No</option>
+          </select>
+        </div>
+
+        <!--    Sucia-->
+        <div class="col-md-2 pt-2">
+          <label class="form-label">Sucia</label>
+          <select class="form-select" formControlName="sucia">
+            <option>Está sucia?</option>
+            <option [value]="true">Si</option>
+            <option [value]="false">No</option>
+          </select>
+        </div>
+
+        <!--      Boton de guardar-->
+        <div class="col-md-2 pt-6">
+          <button class="btn btn-success margin-left" (click)="save()">
+            <i class="fas fa-save" data-placement="top" data-toggle="tooltip"></i> Guardar
+          </button>
+        </div>
+        <!--      boton de volver-->
+        <div class="col-md-2 pt-6">
+          <button class="btn btn-warning margin-left" routerLink="/reports">
+            <i class="fas fa-arrow-left" data-placement="top" data-toggle="tooltip"></i> Volver
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card-body py-3">
+  <div class="table-responsive">
+    <div class="card card-flush">
+      <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+        <div class="card-title">
+          <h3 class="mb-0">Registro</h3>
+        </div>
+        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+          <form [formGroup]="form" id="range">
+            <div class="row p-t-20 col-md-12">
+              <div class="col-md-4">
+                <label class="form-label">Mes</label>
+                <select class="form-select" formControlName="month" id="month">
+                  <option>Seleccione Mes</option>
+                  <option [value]="0" class="bold">Todos</option>
+                  <option [value]="1">Enero</option>
+                  <option [value]="2">Febrero</option>
+                  <option [value]="3">Marzo</option>
+                  <option [value]="4">Abril</option>
+                  <option [value]="5">Mayo</option>
+                  <option [value]="6">Junio</option>
+                  <option [value]="7">Julio</option>
+                  <option [value]="8">Agosto</option>
+                  <option [value]="9">Setiembre</option>
+                  <option [value]="10">Octubre</option>
+                  <option [value]="11">Noviembre</option>
+                  <option [value]="12">Diciembre</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Seleccione Sucursal</label>
+                <select class="form-select" formControlName="branch" id="branch">
+                  <option>Seleccione Sucursal</option>
+                  <option *ngFor="let b of branches" [ngValue]="b">{{b.name}}</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <br>
+                <input class="button btn btn-outline-success" type="submit" value="Buscar" (click)="cargarDatos()">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <table class="table table-striped table-rounded border border-gray-300 table-row-bordered table-row-gray-300 gy-7 gs-7">
+        <thead>
+        <tr class="fw-semibold fs-4 text-gray-800">
+          <th>Trampa</th>
+          <th>Bodega</th>
+          <th>Fecha</th>
+          <th>Roedor</th>
+          <th>Insectos</th>
+          <th>Sucia</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let r of reports; let i = index">
+          <td>{{r.trampa}}</td>
+          <td>{{r.warehouse.name}}</td>
+          <td>{{r.createAt | date:'dd/MM/yyyy'}}</td>
+          <td>{{r.roedor ? 'Si' : 'No'}}</td>
+          <td>{{r.insectos ? 'Si' : 'No'}}</td>
+          <td>{{r.sucia ? 'Si' : 'No'}}</td>
+          <td>
+            <button class="btn btn-icon btn-bg-light btn-primary btn-sm me-1" (click)="editar(r)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-icon btn-bg-light btn-danger btn-sm" (click)="eliminar(r)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="card-body py-3">
+  <div class="card card-flush">
+    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+      <div class="card-title">
+        <h3 class="mb-0">Grafico consumo total</h3>
+      </div>
+      <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+        <form *ngIf="yearly"  [formGroup]="graphForm" id="graphForm">
+          <label class="form-label">Filtrar por:</label>
+          <select class="form-select" formControlName="filter">
+            <option value="roedor">Roedores</option>
+            <option value="insectos">Insectos</option>
+            <option value="sucia">Sucia</option>
+          </select>
+        </form>
+      </div>
+    </div>
+    <div id="chartdiv" style="height: 400px;"></div>
+  </div>
+</div>

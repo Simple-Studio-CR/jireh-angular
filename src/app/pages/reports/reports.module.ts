@@ -22,6 +22,7 @@ import {HistorialCapturasLamparasComponent} from "./historial-capturas-lamparas/
 import {TrampasGomosasComponent} from "./trampas-gomosas/trampas-gomosas.component";
 import {MatSortModule} from "@angular/material/sort";
 import {MatTableModule} from "@angular/material/table";
+import {HistorialCapturasTrampasComponent} from "./historial-capturas-trampas/historial-capturas-trampas.component";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {MatTableModule} from "@angular/material/table";
     LamparasChartComponent,
     HistorialCapturasLamparasComponent,
     TrampasGomosasComponent,
+    HistorialCapturasTrampasComponent
   ],
   imports: [
     CommonModule,
@@ -72,6 +74,10 @@ import {MatTableModule} from "@angular/material/table";
       {
         path: 'trampas-gomosas',
         component: TrampasGomosasComponent,
+      },
+      {
+        path: 'historial-capturas-trampas',
+        component: HistorialCapturasTrampasComponent,
       }
     ]),
     WidgetsModule,

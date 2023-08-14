@@ -15,6 +15,7 @@ import {ClientsBranchesService} from "../../../services/clients-branches.service
 import {ClientsWarehouseService} from "../../../services/clients-warehouse.service";
 import {MatInputModule} from "@angular/material/input";
 import {FunctionsService} from "../../common/functions.service";
+import swal from "sweetalert2";
 
 
 @Component({
@@ -173,10 +174,19 @@ export class LamparasCapturasMesComponent implements OnInit {
 
     // Guardar el nuevoConteoForm
     this.service.save(formData).subscribe(response => {
-      this.resetForm();
+      swal.fire({
+        title: 'Nuevo conteo en la trampa' + ` ${response.trampa}`,
+        text: 'El conteo de plagas se ha guardado correctamente con un total de ' + `${response.total}` + ' insectos',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3085d6',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.resetForm();
+          this.setFechaHoy();
+        }
+      })
     });
-
-    this.setFechaHoy();
   }
 
 // Función para analizar y guardar trampas por mes
@@ -256,27 +266,6 @@ export class LamparasCapturasMesComponent implements OnInit {
   }
 
   private _getBranches(): void {
-    // Subscribe to changes in the 'start' date of the range
-    this.form.valueChanges.subscribe(date => {
-      // Clear the 'nuevoConteo' array
-      this.nuevoConteo = [];
-
-      // Retrieve the clientId from sessionStorage or set it to 0
-      const clientId = Number.parseInt(sessionStorage.getItem('clientId') || '0');
-
-      // Fetch reports based on the clientId and selected date
-      this.service.findByDate(clientId, date.start).subscribe((all: LamparasCapturasMes[]) => {
-        // Store fetched reports in 'reports' variable
-        this.reports = all;
-
-        // Store 'reports' in sessionStorage
-        sessionStorage.setItem('reports', JSON.stringify(this.reports));
-
-        // Detect changes in the Angular component
-        this.cd.detectChanges();
-      });
-    });
-
     // Fetch branches for the given clientId
     this.branchService.findByClientId(this.clientId, 1, 100).subscribe((response: any) => {
       // Store fetched branches in 'branches' variable
@@ -329,6 +318,31 @@ export class LamparasCapturasMesComponent implements OnInit {
   }
 
   cargarDatos() {
+    let month = this.form.get('month')?.value;
+    let branchId = this.form.get('branch')?.value;
+    this.reports = [];
+    sessionStorage.removeItem('reports')
+    if(month == 0){
+      this.service.findByYear(branchId.id, this.functions.anioActual()).subscribe((all: LamparasCapturasMes[]) => {
+        // Store fetched reports in 'reports' variable
+        this.reports = all;
+        // Store 'reports' in sessionStorage
+        sessionStorage.setItem('reports', JSON.stringify(this.reports));
+        this.cd.detectChanges();
+      });
+    }
+    if(month != 0){
+      this.service.findByDate(branchId.id, month).subscribe((all: LamparasCapturasMes[]) => {
+        // Store fetched reports in 'reports' variable
+        this.reports = all;
+        // Store 'reports' in sessionStorage
+        sessionStorage.setItem('reports', JSON.stringify(this.reports));
+        this.cd.detectChanges();
+      });
+    }
+  }
+
+  editar(r: any) {
 
   }
 }

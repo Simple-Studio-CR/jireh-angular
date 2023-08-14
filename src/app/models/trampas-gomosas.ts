@@ -12,7 +12,7 @@ export class TrampasGomosas {
   branchOffice: ClientsBranchOffice;
   warehouse: ClientsWarehouse;
   trampa: number;
-  roedores: boolean;
+  roedor: boolean;
   insectos: boolean;
   sucia: boolean;
 

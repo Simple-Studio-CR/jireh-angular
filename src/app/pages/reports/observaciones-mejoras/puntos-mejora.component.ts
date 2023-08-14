@@ -10,6 +10,7 @@ import {PuntosMejora} from "../../../models/puntos-mejora";
 import {PuntosMejoraService} from "../../../services/puntos-mejora.service";
 import {FunctionsService} from "../../common/functions.service";
 import {IncidenciasPlagasMensual} from "../../../models/incidencias-plagas-mensual";
+import swal from "sweetalert2";
 
 @Component({
   selector: 'app-puntos-mejora',
@@ -47,6 +48,17 @@ export class PuntosMejoraComponent implements OnInit{
 
   guardar() {
     this.service.save(this.puntosMejora.value).subscribe(iF => {
+      swal.fire({
+        title: 'Punto de mejora registrado' + ` ${iF.puntosDeMejora}`,
+        text: 'Se ha registrado el punto de mejora',
+        icon: 'success',
+        confirmButtonText: 'Listo'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.puntosMejora.reset();
+          this.setFechaHoy();
+        }
+      })
     })
   }
 
@@ -112,4 +124,11 @@ export class PuntosMejoraComponent implements OnInit{
     })
   }
 
+  eliminar(iM: any) {
+
+  }
+
+  editar(iM: any) {
+
+  }
 }

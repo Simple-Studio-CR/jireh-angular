@@ -41,6 +41,15 @@ export class LamparasCapturasMesService {
       );
   }
 
+  findByYear(id: number, year: number): Observable<any> {
+    return this.http.get<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/get-by-year/' + id + '/' + year + '/', {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.variables.notAllowed(err);
+            return throwError(err);
+          })
+      );
+  }
+
   findAll(): Observable<any> {
     return this.http.get<any>(this.variables.getServicingEndpoint() + '/lamparas-capturas-x-mes/get-all', {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {

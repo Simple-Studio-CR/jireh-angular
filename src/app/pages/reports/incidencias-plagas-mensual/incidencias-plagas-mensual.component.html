@@ -161,10 +161,10 @@
           <ng-container matColumnDef="acciones">
             <mat-header-cell *matHeaderCellDef class="fw-semibold fs-4 text-gray-800 min-w-200px">Acciones</mat-header-cell>
             <mat-cell *matCellDef="let iM">
-              <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="openDialog(iM)">
+              <button class="btn btn-icon btn-bg-light btn-primary btn-sm me-1" (click)="openDialog(iM)">
                 <i class="fas fa-edit"></i>
               </button>
-              <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" (click)="delete(iM)">
+              <button class="btn btn-icon btn-bg-light btn-danger btn-sm" (click)="delete(iM)">
                 <i class="fas fa-trash-alt"></i>
               </button>
             </mat-cell>

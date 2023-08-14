@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 import {GlobalVariablesService} from "./globalVariables.service";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {ReportData} from "../models/ReportData.model";
 
 @Injectable({
   providedIn: 'root'
@@ -69,7 +70,7 @@ export class TrampasGomosasService {
 
   // Actualizar una Trampa Gomosa existente
   update(trampasGomosas: any): Observable<any> {
-    return this.http.post<any>(this.variables.getServicingEndpoint() + '/trampas-gomosas/update', trampasGomosas, {headers: this.variables.getAuthHeader()})
+    return this.http.put<any>(this.variables.getServicingEndpoint() + '/trampas-gomosas/edit', trampasGomosas, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.variables.notAllowed(err);
             return throwError(err);
@@ -100,6 +101,47 @@ export class TrampasGomosasService {
             return throwError(err);
           }
         )
+      );
+  }
+
+  findByMonth(id: number, month: any): Observable<any> {
+    return this.http.get<any>(this.variables.getServicingEndpoint() + '/trampas-gomosas/get-by-date/' + id + '/' + month + '/', {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.variables.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
+  findByYear(id: number, year: any): Observable<any> {
+    return this.http.get<any>(this.variables.getServicingEndpoint() + '/trampas-gomosas/get-by-year/' + id + '/' + year + '/', {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.variables.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
+  // Borrar una trampa
+  delete(id: number): Observable<any> {
+    return this.http.delete<any>(this.variables.getServicingEndpoint() + '/trampas-gomosas/delete/' + id + '/', {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+            this.variables.notAllowed(err);
+            return throwError(err);
+          }
+        )
+      );
+  }
+
+  findReportePorAnio(branchId: any, year: any): Observable<ReportData> {
+    return this.http.get<ReportData>(this.variables.getServicingEndpoint() + '/trampas-gomosas/get-reporte-por-anio/' +
+      year + '/' + branchId + '/', {headers: this.variables.getAuthHeader()})
+      .pipe(catchError(err => {
+          this.variables.notAllowed(err);
+          return throwError(err);
+        })
       );
   }
 }

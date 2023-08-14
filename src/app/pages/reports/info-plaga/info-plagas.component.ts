@@ -137,4 +137,11 @@ import {FunctionsService} from "../../common/functions.service";
     })
   }
 
+  editar(r: any) {
+
+  }
+
+  eliminar(r: any) {
+
+  }
 }

@@ -16,7 +16,7 @@ export class IncidenciaPlagaMensualService {
   }
 
   save(incidenciasPlagasMensual: IncidenciasPlagasMensual): Observable<any> {
-    return this.http.post<IncidenciasPlagasMensual>(this.variables.getServicingEndpoint() + '/incidencia-mensual/save', incidenciasPlagasMensual, {headers: this.variables.getAuthHeader()})
+    return this.http.post<IncidenciasPlagasMensual>(this.variables.getServicingEndpoint() + '/incidencia-mensual/save/', incidenciasPlagasMensual, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {
             this.variables.notAllowed(err);
             return throwError(err);

@@ -129,9 +129,17 @@
             <td>{{iM.puntosDeMejora}}</td>
             <td>{{iM.observaciones}}</td>
             <td>{{iM.otrasLabores}}</td>
-            <td>pronto</td>
-            <td>pronto</td>
-            <td></td>
+            <td>
+              <img [src]="" alt="imagen" width="100px" height="100px">
+            </td>
+            <td>
+              <button class="btn btn-icon btn-bg-light btn-primary btn-sm me-1" (click)="editar(iM)">
+              <i class="fas fa-edit"></i>
+            </button>
+              <button class="btn btn-icon btn-bg-light btn-danger btn-sm" (click)="eliminar(iM)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
           </tr>
           </tbody>
         </table>

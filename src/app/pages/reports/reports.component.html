@@ -1,13 +1,34 @@
 <div class="card">
-  <div class="card-header border-0 pt-6">
+
+
+  <div class="card-header align-items-center py-5 gap-2 gap-md-5">
     <div class="card-title">
       <h3 class="--kt-primary"> Programa Manejo Integrado de Plagas Para </h3><br>
+    </div>
+
+    <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
       <div class="d-flex align-items-center position-relative my-1">
         <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
           <span [inlineSVG]="'./assets/media/icons/duotune/general/gen022.svg'" class="path1"></span>
         </i>
         <label class="form-control form-control-solid w-250px ps-13"> {{cliente}}</label>
       </div>
+      <button type="button" class="btn btn-sm btn-primary"
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Editar Usuarios con acceso a la empresa {{cliente}}">
+        <i class="fa fa-users-cog"></i>
+      </button>
+      <button type="button" class="btn btn-sm btn-info"
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Generar Reporte">
+        <i class="fa fa-print"></i>
+      </button>
+      <button type="button" class="btn btn-sm btn-danger"
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Editar Cliente">
+        <i class="fa fa-edit"></i>
+      </button>
+      <button type="button" class="btn btn-sm btn-warning" routerLink="/dashboard"
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Atras">
+        <i class="fa fa-arrow-left-long"></i>
+      </button>
     </div>
   </div>
   <div class="card-body">
@@ -55,18 +76,7 @@
               iconColor="white"
               description=""
               routerLink="/reports/historial-capturas-lamparas"
-              title='Historial Capturas por Lámparas UV'
-            ></app-stats-widget5>
-          </div>
-          <div class="col-xl-3">
-            <app-stats-widget5
-              svgIcon="assets/media/icons/duotune/general/gen035.svg"
-              class="card bg-success hoverable card-xl-stretch mb-xl-8"
-              color="success"
-              iconColor="white"
-              description=""
-              routerLink="/"
-              title='Incidencia en Trampas Internas'
+              title='Lámparas UV Historial Capturas'
             ></app-stats-widget5>
           </div>
           <div class="col-xl-3">
@@ -77,7 +87,18 @@
               iconColor="white"
               description=""
               routerLink="/reports/trampas-gomosas"
-              title='Consumo cebaderos mensual'
+              title='Incidencia en Trampas Internas'
+            ></app-stats-widget5>
+          </div>
+          <div class="col-xl-3">
+            <app-stats-widget5
+              svgIcon="assets/media/icons/duotune/general/gen035.svg"
+              class="card bg-success hoverable card-xl-stretch mb-xl-8"
+              color="success"
+              iconColor="white"
+              description=""
+              routerLink="/reports/historial-capturas-trampas"
+              title='Cebaderos Historial Capturas'
             ></app-stats-widget5>
           </div>
           <div class="col-xl-3">
