@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {ClientsService} from "../../services/clients.service";
-import {Router} from "@angular/router";
-import {PageEvent} from "@angular/material/paginator";
-import {Clients} from "../../models/clients";
-import {AuthHTTPService} from "../../modules/auth/services/auth-http";
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ClientsService } from "../../services/clients.service";
+import { Router } from "@angular/router";
+import { PageEvent } from "@angular/material/paginator";
+import { Clients } from "../../models/clients";
+import { AuthHTTPService } from "../../modules/auth/services/auth-http";
 
 @Component({
   selector: 'app-clients',
@@ -19,11 +19,12 @@ export class ClientsComponent implements OnInit {
   clients: Clients[];
   edit = false;
 
-  constructor(private service: ClientsService,
-              public authHttpService: AuthHTTPService,
-              private router: Router,
-              private cd: ChangeDetectorRef) {
-  }
+  constructor(
+    private service: ClientsService,
+    public authHttpService: AuthHTTPService,
+    private router: Router,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     sessionStorage.removeItem('clientId');
@@ -32,25 +33,25 @@ export class ClientsComponent implements OnInit {
     this.rangePage();
   }
 
-  clickEnterReport(id: number, name: string, client: Clients) {
+  clickEnterReport(id: number, name: string, client: Clients): void {
     sessionStorage.setItem('clientId', String(id));
     sessionStorage.setItem('clientName', name);
     sessionStorage.setItem('client', JSON.stringify(client));
     this.router.navigate(['reports']);
   }
 
-  clickEnterClientForm(id: number | null, name: string | null, client: Clients | null) {
-    if (typeof id === "number") {
+  clickEnterClientForm(id: number | null, name: string | null, client: Clients | null): void {
+    if (id) {
       sessionStorage.setItem('clientId', String(id));
     }
-    if (typeof name === "string") {
+    if (name) {
       sessionStorage.setItem('clientName', name);
     }
     if (client) {
       sessionStorage.setItem('client', JSON.stringify(client));
     }
 
-    this.router.navigate(['clients/view'])
+    this.router.navigate(['clients/view']);
   }
 
   paginator(event: PageEvent): void {
@@ -59,13 +60,13 @@ export class ClientsComponent implements OnInit {
     this.rangePage();
   }
 
-  private rangePage() {
+  private rangePage(): void {
     this.service.listAll(this.pageNo + 1, this.pageSize)
       .subscribe(i => {
         this.clients = i.content as Clients[];
-        this.totalRegister = i.totalElements
+        this.totalRegister = i.totalElements;
         this.cd.detectChanges();
-      })
+      });
   }
 
 }
