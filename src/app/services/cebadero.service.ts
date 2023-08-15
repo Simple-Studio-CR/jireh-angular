@@ -21,7 +21,7 @@ export class CebaderosService {
               private variables: GlobalVariablesService) {
   }
 
-  getDetailedReport(branchOfficeId: number, year: number): Observable<CebaderosReport> {
+  getDetailedReport(branchOfficeId: number, year: number): Observable<any> {
     const url = `/cebaderos/detailedReport/branch/${branchOfficeId}/year/${year}`;
     return this.http.get<CebaderosReport>(this.variables.getServicingEndpoint() + url, {headers: this.variables.getAuthHeader()})
       .pipe(catchError(err => {

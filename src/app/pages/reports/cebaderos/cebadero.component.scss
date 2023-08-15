@@ -2,3 +2,20 @@
  * Copyright (c) 2023
  * Creado por Andres Mayorga, si lo mejoran compartir a andres.mayorga07@gmail.com
  */
+
+/* tu-componente.component.css */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+thead {
+  background-color: #f2f2f2;
+}
