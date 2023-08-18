@@ -1,0 +1,68 @@
+<!--
+  ~ Copyright (c) 2023
+  ~ Creado por Andres Mayorga, si lo mejoran compartir a andres.mayorga07@gmail.com
+  -->
+<div class="modal-header">
+  <h1 class="modal-title">Ingrese Nuevo Cebadero</h1>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+<div class="card">
+  <div class="card-header border-0 pt-5 pb-5">
+    <form [formGroup]="nuevoCebaderoForm" id="nuevoCebaderoForm">
+      <div class="row p-t-20 col-md-12">
+        <!--Escoger Sucursal-->
+        <div class="col-md-6">
+          <label class="form-label" for="clientBranch">Sucursal</label>
+          <select class="form-select" formControlName="branchOffice" id="clientBranch">
+            <option>Seleccione Sucursal</option>
+            <option *ngFor="let b of branches" [ngValue]="b">{{b.name}}</option>
+          </select>
+        </div>
+        <!--Escoger Bodega-->
+        <div class="col-md-6">
+          <label class="form-label" for="warehouse">Bodega</label>
+          <select class="form-select" formControlName="warehouse" id="warehouse">
+            <option>Seleccione Bodega/Oficina</option>
+            <option *ngFor="let w of warehouse" [ngValue]="w">{{w.name}}</option>
+          </select>
+        </div>
+        <!--      Escoger mes-->
+        <div class="col-md-3 pt-2">
+          <label class="form-label">Fecha</label>
+          <input class="form-control" formControlName="createAt" type="date">
+        </div>
+
+        <!--      Escoger Numero Cebadero-->
+        <div class="col-md-3 pt-2">
+          <label class="form-label">Numero</label>
+          <input class="form-control" formControlName="cebadero" type="number">
+        </div>
+
+        <!--      Consumo-->
+        <div class="col-md-2 pt-2">
+          <label class="form-label">Consumo </label>
+          <select class="form-select" formControlName="consumo">
+            <option>Seleccione Consumo</option>
+            <option [ngValue]="true">Si</option>
+            <option [ngValue]="false">No</option>
+          </select>
+        </div>
+
+
+        <!--      Boton de guardar-->
+        <div class="col-md-2 pt-6">
+          <button class="btn btn-success margin-left" (click)="guardar()">
+            <i class="fas fa-save" data-placement="top" data-toggle="tooltip"></i> Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Cerrar</button>
+</div>

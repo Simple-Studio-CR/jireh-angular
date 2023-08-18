@@ -12,7 +12,43 @@ import {ClientsBranchesService} from "../../services/clients-branches.service";
 })
 export class FunctionsService {
 
+  private days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  private months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+    'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
   constructor() {
+  }
+
+  numberToMonth(monthNumber: number): string | null {
+    if (monthNumber >= 0 && monthNumber < 12) {
+      return this.months[monthNumber];
+    }
+    return null; // Retorna null si el número no es válido
+  }
+
+  // Convierte un string de mes a un número
+  monthToNumber(monthName: string): number {
+    const index = this.months.indexOf(monthName);
+    if (index !== -1) {
+      return index;
+    }
+    return -1; // Retorna -1 si el string del mes no es válido
+  }
+
+  numberToDay(dayNumber: number): string | null {
+    if (dayNumber >= 0 && dayNumber < 7) {
+      return this.days[dayNumber];
+    }
+    return null; // Retorna null si el número no es válido
+  }
+
+  // Convierte un string de día a un número
+  dayToNumber(dayName: string): number {
+    const index = this.days.indexOf(dayName);
+    if (index !== -1) {
+      return index;
+    }
+    return -1; // Retorna -1 si el string del día no es válido
   }
 
   fechaActual(): string {

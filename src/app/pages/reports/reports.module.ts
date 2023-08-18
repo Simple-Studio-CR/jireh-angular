@@ -23,6 +23,10 @@ import {TrampasGomosasComponent} from "./trampas-gomosas/trampas-gomosas.compone
 import {MatSortModule} from "@angular/material/sort";
 import {MatTableModule} from "@angular/material/table";
 import {CebaderoComponent} from "./cebaderos/cebadero.component";
+import {ModalCebaderoBlancoComponent} from "./cebaderos/modals/blanco/modal-cebadero-blanco.component";
+import {ModalUltimoMesComponent} from "./cebaderos/modals/ultimo-mes/modal-ultimo-mes.component";
+import {ModalTodosComponent} from "./cebaderos/modals/todos/modal-todos.component";
+import {ModalSoloUnoComponent} from "./cebaderos/modals/solo-uno/modal-solo-uno.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +38,11 @@ import {CebaderoComponent} from "./cebaderos/cebadero.component";
     LamparasChartComponent,
     HistorialCapturasLamparasComponent,
     TrampasGomosasComponent,
-    CebaderoComponent
+    CebaderoComponent,
+    ModalCebaderoBlancoComponent,
+    ModalUltimoMesComponent,
+    ModalTodosComponent,
+    ModalSoloUnoComponent
   ],
   imports: [
     CommonModule,

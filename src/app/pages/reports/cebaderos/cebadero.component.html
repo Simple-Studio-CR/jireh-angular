@@ -12,19 +12,29 @@
         <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
           <form [formGroup]="range" id="range">
             <div class="row p-t-20 col-md-12">
-              <div class="col-md-9">
+              <div class="col-md-12">
                 <label class="form-label" for="branch">Sucursal</label>
                 <select class="form-select" formControlName="branch" id="branch">
                   <option>Seleccione Sucursal</option>
                   <option *ngFor="let b of branches" [ngValue]="b">{{b.name}}</option>
                 </select>
               </div>
-              <div class="col-md-3">
-                <br>
-                <input type="button" class="btn btn-warning" value="Atras" routerLink="/reports">
-              </div>
             </div>
           </form>
+          <div class="d-flex align-items-center position-relative my-1">
+                <button type="button" class="btn btn-sm btn-success"
+                        data-bs-toggle="tooltip" data-bs-placement="top" (click)="nuevoIncidente()" title="Generar Nuevo Incidente">
+                  <i class="fa fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-info"
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Generar Reporte">
+                  <i class="fa fa-print"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-warning" routerLink="/reports"
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Atras">
+                  <i class="fa fa-arrow-left-long"></i>
+                </button>
+          </div>
         </div>
       </div>
     </div>
@@ -34,44 +44,49 @@
   <div class="row">
     <div class="col-sm">
       <div class="table-responsive">
-<table>
-  <thead>
-  <tr>
-    <th>Cebaderos</th>
-    <ng-container *ngFor="let monthData of reportArray">
-      <ng-container *ngFor="let dayData of monthData.days">
-        <th>{{ monthData.month }} - {{ dayData.day }}</th>
-      </ng-container>
-    </ng-container>
-    <th>Total por Cebadero</th>
-  </tr>
-  </thead>
-  <tbody>
-  <ng-container *ngFor="let cebadero of cebaderos">
-    <tr>
-      <td>{{ cebadero }}</td>
-      <ng-container *ngFor="let monthData of reportArray">
-        <ng-container *ngFor="let dayData of monthData.days">
-          <td (click)="editCebaderoValue(monthData.month, dayData.day, cebadero)">
-            {{ dayData.values[cebadero] ? '✔️' : ' ' }}</td>
-        </ng-container>
-      </ng-container>
-      <td>{{ calculateTotalForCebadero(cebadero) }}</td>
-    </tr>
-  </ng-container>
-  </tbody>
+        <table>
+          <thead>
+          <tr>
+            <th>Cebaderos</th>
+            <ng-container *ngFor="let monthData of reportArray">
+              <ng-container *ngFor="let dayData of monthData.days">
+                <th>{{ monthData.month }} - {{ dayData.day }}</th>
+              </ng-container>
+            </ng-container>
+            <th>Total por Cebadero</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let cebadero of cebaderos">
+            <tr>
+              <td>{{ cebadero }}</td>
+              <ng-container *ngFor="let monthData of reportArray">
+                <ng-container *ngFor="let dayData of monthData.days">
+                  <td (click)="editCebaderoValue(monthData.month, dayData.day, cebadero)"
+                      [ngClass]="{'border-red': dayData.values[cebadero] == null}">
+                    {{ dayData.values[cebadero] ? '✔️' : '  ' }}
+                  </td>
+                </ng-container>
+              </ng-container>
+              <td>{{ calculateTotalForCebadero(cebadero) }}</td>
+            </tr>
+          </ng-container>
+          </tbody>
 
-  <tfoot>
-  <tr>
-    <td>Totales:</td>
-    <ng-container *ngFor="let monthData of reportArray">
-      <ng-container *ngFor="let dayData of monthData.days">
-        <td>{{ getTrueCountForDay(monthData.month, dayData.day) }}</td>
-      </ng-container>
-    </ng-container>
-  </tr>
-  </tfoot>
+          <tfoot>
+          <tr>
+            <td>Totales:</td>
+            <ng-container *ngFor="let monthData of reportArray">
+              <ng-container *ngFor="let dayData of monthData.days">
+                <td>{{ getTrueCountForDay(monthData.month, dayData.day) }}</td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          </tfoot>
 
 
-</table>
-      </div></div></div></div>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
